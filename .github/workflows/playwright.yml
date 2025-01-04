@@ -17,6 +17,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Setting up project
+        run: npm run setup  
       - name: Run Playwright tests
         run: npm run visual-test
       - uses: actions/upload-artifact@v4
@@ -29,19 +31,17 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results/
+          name: allure-results
           path: allure-results/
           retention-days: 1
-      - name: Generate allure report
+      - name: Generate Allure report
         run: npm run allure-test-report
-
       - name: Upload Allure report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
           retention-days: 1
-
       - name: Generate Overall Test Report
         run: npm run folderStructure
       - name: Wait for 10 seconds before generating the report
