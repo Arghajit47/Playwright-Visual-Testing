@@ -35,18 +35,22 @@ jobs:
           path: allure-results/
           retention-days: 1
       - name: Generate Allure report
+        if: success() || failure()  
         run: npm run allure-test-report
       - name: Upload Allure report
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
           retention-days: 1
       - name: Generate Overall Test Report
+        if: success() || failure()
         run: npm run folderStructure
       - name: Wait for 10 seconds before generating the report
         run: sleep 10
       - name: Upload All-in-One report
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: new-report
