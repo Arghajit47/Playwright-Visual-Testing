@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="report/style.css" />
+  </head>
+  <body>
+    <!-- Loader -->
+    <div id="loader">
+      <span class="loader-letter">SDET Studios</span>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" style="display: none;">
+      <header>
+        Testing Report Dashboard
+        <button id="dark-mode-toggle" class="dark-mode-btn">🌙</button>
+      </header>
+
+      <div class="container">
+        <h2>Available Reports</h2>
+        <p>Select a category to explore detailed testing results.</p>
+
+        <!-- Dynamic categories will be rendered here -->
+        <div id="categories" class="grid"></div>
+
+        <!-- Folder Structure (Hidden by default) -->
+        <div id="folder-structure" style="display: none;">
+          <div id="report-container" data-category=""></div>
+        </div>
+      </div>
+
+    </div>
+    <footer>
+      &copy; Test Report Insights | Built dynamically by <b>Arghajit Singha</b>
+    </footer>
+
+    <script src="/report/script.js"></script>
+  </body>
+</html>

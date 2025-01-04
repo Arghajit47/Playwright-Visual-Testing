@@ -1,0 +1,8 @@
+{
+  "allure-report": {
+    "index.html": "file"
+  },
+  "playwright-report": {
+    "index.html": "file"
+  }
+}

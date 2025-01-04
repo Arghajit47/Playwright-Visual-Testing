@@ -1,0 +1,28 @@
+{
+  "name": "visual-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "rm -rf screenshots",
+    "visual-test": "npx playwright test --project Visual-Test",
+    "folderStructure": "cd report/ && node app.js ",
+    "allure-test-report": "npx allure generate --clean --single-file allure-results"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "allure-commandline": "^2.32.0",
+    "allure-playwright": "^3.0.7"
+  },
+  "dependencies": {
+    "canvas": "^3.0.1",
+    "dotenv": "^16.4.5",
+    "netlify-cli": "^17.37.2",
+    "playwright": "^1.49.1",
+    "resemblejs": "^5.0.0"
+  }
+}
