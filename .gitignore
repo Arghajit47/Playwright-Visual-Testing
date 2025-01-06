@@ -1,10 +1,21 @@
+# Ignore node_modules and test results
 node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /.vscode
+
+# Ignore allure report and results
 allure-report
 allure-results
+
+# Ignore folder structure file
 folderStructure.json
+
+# Ignore allure configuration
 .allure
+
+# Ignore screenshots
+/screenshots/current/*
+/screenshots/diff/*/*
