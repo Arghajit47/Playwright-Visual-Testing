@@ -58,4 +58,20 @@ jobs:
             index.html
             report/
           retention-days: 5
+      - name: Deploy Reports to netlify
+        if: always()
+        run: |
+          rm -rf combined-report
+          mkdir combined-report
+          cp -r allure-report/ combined-report/
+          cp -r playwright-report/ combined-report/
+          cp -r report combined-report/
+          cp index.html combined-report/
+  
+          npx netlify deploy --site 58194967-300c-4c40-8cd2-a2966e55a6c9 --prod --dir combined-report
+
+          echo "To see the final report kindly visit https://all-report-management.netlify.app/"
+
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}    
     continue-on-error: true

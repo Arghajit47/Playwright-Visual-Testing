@@ -57,7 +57,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -84,7 +84,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -111,7 +111,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -138,7 +138,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -165,7 +165,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -192,7 +192,7 @@ test.describe("Take screenshots for Visual Regression Testing", () => {
       return;
     }
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -246,7 +246,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -266,7 +266,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -286,7 +286,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -306,7 +306,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -326,7 +326,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -346,7 +346,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -366,7 +366,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot
@@ -386,7 +386,7 @@ test.describe("Visual Regression Testing with ResembleJs", () => {
     await helper.wait(); // Use the helper's wait method
     await page.screenshot({ path: currentScreenshot, fullPage: true });
 
-    const mismatch = await helper.compareScreenshots(
+    const mismatch = await helper.compareScreenshotsWithText(
       currentScreenshot,
       baselineScreenshot,
       diffScreenshot

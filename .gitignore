@@ -11,7 +11,7 @@ allure-report
 allure-results
 
 # Ignore folder structure file
-folderStructure.json
+/report/folderStructure.json
 
 # Ignore allure configuration
 .allure

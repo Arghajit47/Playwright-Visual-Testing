@@ -23,6 +23,7 @@
     "dotenv": "^16.4.5",
     "netlify-cli": "^17.37.2",
     "playwright": "^1.49.1",
-    "resemblejs": "^5.0.0"
+    "resemblejs": "^5.0.0",
+    "tesseract.js": "^5.1.1"
   }
 }

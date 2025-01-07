@@ -1,3 +1,6 @@
+const dashboard = document.getElementById("dashboard");
+const folderStructureUrl = "report/folderStructure.json"; // Adjust this to your actual file path or API endpoint
+
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   const content = document.getElementById("content");
@@ -9,121 +12,10 @@ window.addEventListener("load", () => {
   }, 1000); // Adjust the time as needed
 });
 
-// Function to toggle the folder structure section
-function toggleReports(category, data) {
-  const folderStructure = document.getElementById("folder-structure");
-  const reportContainer = document.getElementById("report-container");
-
-  // Check if the reports section is already visible and contains the current category
-  if (
-    folderStructure.style.display === "block" &&
-    reportContainer.dataset.category === category
-  ) {
-    folderStructure.style.display = "none"; // Hide the section
-    reportContainer.dataset.category = ""; // Reset the category
-  } else {
-    // Render the reports and show the section
-    renderReports(category, data);
-    folderStructure.style.display = "block";
-    reportContainer.dataset.category = category; // Store the current category
-  }
-}
-
-// Function to render folder categories dynamically
-function renderCategories(folderStructure) {
-  console.log("Rendering categories:", folderStructure);
-
-  const categoriesContainer = document.getElementById("categories");
-  if (!categoriesContainer) {
-    console.error("Categories container not found in the DOM!");
-    return;
-  }
-
-  categoriesContainer.innerHTML = ""; // Clear existing content
-
-  Object.keys(folderStructure).forEach((category) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-          <h3>${category.replace(/-/g, " ")}</h3>
-          <p>Explore detailed performance reports.</p>
-          <a href="javascript:void(0);" data-category="${category}">View Reports</a>
-        `;
-
-    console.log(`Created card for category: ${category}`);
-
-    card.querySelector("a").addEventListener("click", () => {
-      console.log(`Toggling reports for category: ${category}`);
-      toggleReports(category, folderStructure[category]);
-    });
-
-    categoriesContainer.appendChild(card);
-  });
-}
-
-// Utility to create a list of files with nested paths
-function createFileList(subfolderName, files) {
-  console.log("Creating file list for:", subfolderName, files); // Debug log
-  const ul = document.createElement("ul");
-  console.log(files);
-  Object.entries(files).forEach(([fileName, fileType]) => {
-    console.log(fileType);
-    if (fileType === "file") {
-      const li = document.createElement("li");
-      console.log("first");
-      const filePath = `/${subfolderName}/${fileName}`; // Adjusted to root folder path
-      li.innerHTML = `<a href="${filePath}" target="_blank">${fileName}</a>`;
-      ul.appendChild(li);
-    }
-  });
-
-  return ul;
-}
-
-// Utility to create subfolder content
-function createSubfolders(parentFolderName, subfolders) {
-  // console.log("create sub folder ", parentFolderName, subfolders);
-  const div = document.createElement("div");
-
-  Object.entries(subfolders).forEach(([folderName, folderContent]) => {
-    if (typeof folderContent === "object") {
-      const folderDiv = document.createElement("div");
-      folderDiv.className = "subfolder";
-      folderDiv.innerHTML = `<h4>${folderName}</h4>`;
-      folderDiv.appendChild(
-        createFileList(`${parentFolderName}/${folderName}`, folderContent)
-      );
-      div.appendChild(folderDiv);
-    } else if (folderContent === "file") {
-      const fileDiv = document.createElement("div");
-      fileDiv.className = "file";
-      const filePath = `/${parentFolderName}/${folderName}`;
-      fileDiv.innerHTML = `<a href="${filePath}" target="_blank">${folderName}</a>`;
-      div.appendChild(fileDiv);
-    }
-  });
-
-  return div;
-}
-
-// Function to render reports dynamically
-function renderReports(category, data) {
-  const container = document.getElementById("report-container");
-  container.innerHTML = `<h3>${category.replace(/-/g, " ")}</h3>`;
-  container.appendChild(createSubfolders(category, data));
-}
-
-// Initialize the app
-async function setupReportViewer() {
-  const folderStructure = await fetchFolderStructure();
-  if (!folderStructure) return;
-
-  renderCategories(folderStructure);
-}
 // Function to fetch folder structure JSON
 async function fetchFolderStructure() {
   try {
-    const response = await fetch("report/folderStructure.json"); // Adjusted path to root folder
+    const response = await fetch(folderStructureUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -134,41 +26,113 @@ async function fetchFolderStructure() {
   }
 }
 
-// Function to toggle dark mode
-async function toggleDarkMode() {
-  const body = document.body;
-  const toggleButton = document.getElementById("dark-mode-toggle");
+// Function to create a category with subcategories and files
+function createCategory(title, subCategories, basePath) {
+  const section = document.createElement("section");
+  section.classList.add("category");
 
-  // Toggle the dark-mode class
-  body.classList.toggle("dark-mode");
+  const header = document.createElement("h2");
+  header.textContent = title;
+  section.appendChild(header);
 
-  // Save the user's preference
-  const isDarkMode = body.classList.contains("dark-mode");
-  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+  const subcategoryList = document.createElement("ul");
 
-  // Update the icon based on the current mode
-  toggleButton.textContent = isDarkMode ? "🌞" : "🌙";
+  // Loop through each subcategory in the current category
+  Object.keys(subCategories).forEach((subCategory) => {
+    const files = subCategories[subCategory];
+
+    if (Array.isArray(files)) {
+      // Handle subcategories with files
+      const subcategory = document.createElement("li");
+      subcategory.textContent = subCategory;
+      subcategory.addEventListener("click", () => {
+        const subcategoryFiles = subcategory.querySelector(".subcategory");
+        subcategoryFiles.classList.toggle("active");
+      });
+
+      const subcategoryFiles = document.createElement("ul");
+      subcategoryFiles.classList.add("subcategory");
+
+      files.forEach((file) => {
+        const listItem = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `${basePath}/${subCategory}/${file}`;
+        link.textContent = file.split("-performance")[0];
+        listItem.appendChild(link);
+        subcategoryFiles.appendChild(listItem);
+      });
+
+      subcategory.appendChild(subcategoryFiles);
+      subcategoryList.appendChild(subcategory);
+    } else {
+      // Handle direct files (when files are not in subcategories)
+      const listItem = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `${basePath}/${subCategory}`;
+      link.textContent = subCategory.split("-performance")[0];
+      listItem.appendChild(link);
+      subcategoryList.appendChild(listItem);
+    }
+  });
+
+  section.appendChild(subcategoryList);
+  return section;
 }
 
-// Function to load the user's dark mode preference
-async function loadDarkModePreference() {
-  const darkMode = localStorage.getItem("darkMode");
-  const toggleButton = document.getElementById("dark-mode-toggle");
+// Render categories based on the folder structure
+function renderCategories(folderStructure) {
+  Object.keys(folderStructure).forEach((category) => {
+    const subCategories = folderStructure[category];
+    const section = createCategory(category, subCategories, category);
+    dashboard.appendChild(section);
+  });
+}
+// Function to change theme based on the selected option
+function changeTheme() {
+  const body = document.body;
+  const themeDropdown = document.getElementById("theme-dropdown");
+  const selectedTheme = themeDropdown.value;
 
-  if (darkMode === "enabled") {
-    document.body.classList.add("dark-mode");
-    toggleButton.textContent = "🌞"; // Sun icon for dark mode
+  // Remove all existing theme classes
+  body.classList.remove("light-mode", "dark-mode");
+
+  // Add the selected theme class
+  body.classList.add(`${selectedTheme}-mode`);
+
+  // Save the user's theme preference
+  localStorage.setItem("theme", selectedTheme);
+}
+
+// Load and apply the user's theme preference from localStorage
+function loadThemePreference() {
+  const savedTheme = localStorage.getItem("theme");
+  const themeDropdown = document.getElementById("theme-dropdown");
+
+  if (savedTheme) {
+    document.body.classList.add(`${savedTheme}-mode`);
+    themeDropdown.value = savedTheme; // Set the dropdown to the saved theme
   } else {
-    toggleButton.textContent = "🌙"; // Moon icon for light mode
+    // Default to light theme if no preference is saved
+    document.body.classList.add("light-mode");
+    themeDropdown.value = "light";
   }
 }
 
-// Add event listener to the dark mode toggle button
+// Event listener for theme dropdown change
 document
-  .getElementById("dark-mode-toggle")
-  .addEventListener("click", toggleDarkMode);
+  .getElementById("theme-dropdown")
+  .addEventListener("change", changeTheme);
 
-// Load dark mode preference on page load
-window.addEventListener("DOMContentLoaded", loadDarkModePreference);
+// Load theme preference when the page loads
+window.addEventListener("DOMContentLoaded", loadThemePreference);
 
+// Initialize the app
+async function setupReportViewer() {
+  const folderStructure = await fetchFolderStructure();
+  if (!folderStructure) return;
+
+  renderCategories(folderStructure);
+}
+
+// Call the setup function when the page loads
 setupReportViewer();
