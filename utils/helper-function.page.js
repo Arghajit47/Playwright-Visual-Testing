@@ -1,29 +1,69 @@
 const { expect } = require("@playwright/test");
 import resemble from "resemblejs";
+const Tesseract = require("tesseract.js");
 import fs from "fs";
-
 
 export class HelperFunction {
   constructor(page) {
     this.page = page;
   }
 
-  async compareScreenshots(currentPath, baselinePath, diffPath) {
+  async extractText(imagePath) {
     return new Promise((resolve, reject) => {
-      resemble(baselinePath)
-        .compareTo(currentPath)
-        .onComplete((data) => {
-          try {
-            if (data && data.getBuffer) {
-              fs.writeFileSync(diffPath, data.getBuffer(true));
-            }
+      Tesseract.recognize(imagePath, "eng") // Specify language
+        .then(({ data: { text } }) => {
+          resolve(text);
+        })
+        .catch(reject);
+    });
+  }
 
-            // Log more detailed information
-            console.log("Detailed Comparison Logs:");
-            console.log(
-              `Mismatch Percentage: ${data.rawMisMatchPercentage.toFixed(2)}%`
-            );
-            console.log(`Is Same Dimensions: ${data.isSameDimensions}`);
+  async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Extract text from both images
+        const [currentText, baselineText] = await Promise.all([
+          extractText(currentPath),
+          extractText(baselinePath),
+        ]);
+
+        console.log("Baseline Text:\n", baselineText);
+        console.log("Current Text:\n", currentText);
+
+        // Compare the text
+        if (currentText !== baselineText) {
+          console.log("Text Differences Found!");
+          const baselineLines = baselineText.split("\n");
+          const currentLines = currentText.split("\n");
+          baselineLines.forEach((line, index) => {
+            if (line !== currentLines[index]) {
+              console.log(`Line ${index + 1} differs:`);
+              console.log(`Baseline: ${line}`);
+              console.log(`Current: ${currentLines[index] || "Missing line"}`);
+            }
+          });
+        } else {
+          console.log("No text differences found.");
+        }
+
+        // Image comparison
+        resemble(baselinePath)
+          .compareTo(currentPath)
+          .onComplete((data) => {
+            try {
+              if (data && data.getBuffer) {
+                fs.writeFileSync(diffPath, data.getBuffer(true));
+              }
+
+              console.log("Mismatch Percentage:", data.rawMisMatchPercentage);
+              if (data.diffBounds) {
+                console.log("Difference Bounds:", data.diffBounds);
+              }
+
+              resolve(data.rawMisMatchPercentage);
+            } catch (error) {
+              reject({ error, screenshotPath: diffPath });
+            }
 
             if (!data.isSameDimensions) {
               console.log(
@@ -58,15 +98,12 @@ export class HelperFunction {
                 JSON.stringify(data.diffClusters.slice(0, 3))
               ); // Log first 3 clusters
             }
-
-            resolve(data.rawMisMatchPercentage);
-          } catch (error) {
-            reject({ error, screenshotPath: diffPath });
-          }
-        });
+          });
+      } catch (error) {
+        reject(error);
+      }
     });
   }
-  
 
   async wait() {
     await this.page.waitForLoadState("domcontentloaded");
