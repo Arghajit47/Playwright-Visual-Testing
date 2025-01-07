@@ -23,8 +23,8 @@ export class HelperFunction {
       try {
         // Extract text from both images
         const [currentText, baselineText] = await Promise.all([
-          extractText(currentPath),
-          extractText(baselinePath),
+          this.extractText(currentPath),
+          this.extractText(baselinePath),
         ]);
 
         console.log("Baseline Text:\n", baselineText);
