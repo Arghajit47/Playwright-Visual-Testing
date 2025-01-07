@@ -12,12 +12,53 @@ export class HelperFunction {
     return new Promise((resolve, reject) => {
       resemble(baselinePath)
         .compareTo(currentPath)
-        // .ignoreAntialiasing()
         .onComplete((data) => {
           try {
             if (data && data.getBuffer) {
               fs.writeFileSync(diffPath, data.getBuffer(true));
             }
+
+            // Log more detailed information
+            console.log("Detailed Comparison Logs:");
+            console.log(
+              `Mismatch Percentage: ${data.rawMisMatchPercentage.toFixed(2)}%`
+            );
+            console.log(`Is Same Dimensions: ${data.isSameDimensions}`);
+
+            if (!data.isSameDimensions) {
+              console.log(
+                `Dimension Differences: ${JSON.stringify(
+                  data.dimensionDifference
+                )}`
+              );
+            }
+
+            console.log(`Analysis Time: ${data.analysisTime}ms`);
+
+            // Log additional metrics if available
+            if (data.misMatchPercentage) {
+              console.log(
+                `Rounded MisMatch Percentage: ${data.misMatchPercentage}%`
+              );
+            }
+
+            // Optional: Log pixel difference map (if Resemble supports it in your version)
+            if (data.diffBounds) {
+              console.log(
+                `Difference Bounds: ${JSON.stringify(data.diffBounds)}`
+              );
+            }
+
+            if (data.diffClusters) {
+              console.log(
+                `Number of Difference Clusters: ${data.diffClusters.length}`
+              );
+              console.log(
+                "Clusters (sample):",
+                JSON.stringify(data.diffClusters.slice(0, 3))
+              ); // Log first 3 clusters
+            }
+
             resolve(data.rawMisMatchPercentage);
           } catch (error) {
             reject({ error, screenshotPath: diffPath });
@@ -25,6 +66,7 @@ export class HelperFunction {
         });
     });
   }
+  
 
   async wait() {
     await this.page.waitForLoadState("domcontentloaded");
