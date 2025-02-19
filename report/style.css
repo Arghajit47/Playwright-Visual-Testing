@@ -1,250 +1,210 @@
-/* General Styles */
+/* Global Styles */
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background: #f4f4f9;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  header {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: bold;
-  }
-
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    flex: 1; /* Pushes the footer to the bottom */
-  }
-
-  h2 {
-    color: #4facfe;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  p {
-    font-size: 1.1em;
-    margin: 10px 0;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-.card {
-  background: var(--card-background);
-  color: var(--text-color);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Elevate on hover */
-}
-
-h3 {
-  text-transform: capitalize;
-}
-
-.card p {
-  font-size: 0.9em;
-  color: var(--text-color); /* Use theme-based text color */
-}
-
-.card a {
-  text-decoration: none;
-  color: var(--text-color); /* Use theme-based text color */
-  font-weight: bold;
-  border: 1px solid var(--text-color);
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-.card a:hover {
-  background: var(--text-color);
-  color: var(--background-color); /* Contrast on hover */
-}
-
-
-  /* Folder Structure Styles */
-  #folder-structure {
-    display: none;
-    margin-top: 30px;
-  }
-
-  .folder {
-    background: #f9f9ff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .subfolder {
-    margin-left: 20px;
-    margin-top: 10px;
-  }
-
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  li {
-    padding: 5px;
-    background-color: #eef2f7;
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-
-  footer {
-    text-align: center;
-    padding: 15px;
-    background: #4facfe;
-    color: white;
-    font-size: 1em;
-    padding: 10px 20px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-  }
-
-
-  /* Define CSS variables for light mode */
-:root {
-  --background-color: #f4f4f9;
-  --text-color: #333;
-  --card-background: #ffffff;
-  --header-background: linear-gradient(90deg, #4facfe, #00f2fe);
-  --footer-background: linear-gradient(90deg, #4facfe, #00f2fe);
-}
-
-/* Dark mode variables */
-.dark-mode {
-  --background-color: #181a1b;
-  --text-color: #e4e6eb;
-  --card-background: #242526;
-  --header-background: linear-gradient(90deg, #2a2a72, #009ffd);
-  --footer-background: linear-gradient(90deg, #2a2a72, #009ffd);
-}
-
-/* Apply variables globally */
-body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
 }
 
-/* Header and footer */
 header {
   background: var(--header-background);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Updated category style */
+.category {
+  background-color: var(--card-background);
+  border-radius: 12px; /* Slightly rounder corners */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+  cursor: pointer;
+  padding: 15px; /* Added padding for better content spacing */
+  margin: 12px 0; /* Space between category blocks */
+}
+
+/* Hover effects */
+.category:hover {
+  transform: translateY(-8px); /* Slight raise on hover for dynamic effect */
+}
+
+/* Optional: Active state for more interactive feel */
+.category:active {
+  transform: translateY(2px); /* Slight downward movement when clicked */
+  /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); Subtle reduction in shadow on active */
+}
+
+
+.category h2 {
+  background-color: var(--category-header-background);
+  color: #fff;
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.subcategory {
+  content: "📂"; /* Folder icon */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: none;
+  background-color: var(--subcategory-background);
+}
+
+.subcategory.active {
+  display: block;
+}
+
+.subcategory li {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.subcategory a {
+  color: var(--link-color);
+  text-decoration:color(from green srgb 23 45 0);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.subcategory a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Footer Styles */
 footer {
   background: var(--footer-background);
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* Cards */
-.card {
-  background: var(--card-background);
+footer a {
+  color: #fff;
+  text-decoration: none;
 }
 
-/* Dark Mode Toggle Button */
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: var(--dark-background-color) !important;
+  color: var(--dark-text-color) !important;
+}
+
+body.dark-mode .category {
+  background-color: var(--dark-card-background);
+  color: var(--dark-text-color);
+}
+
+body.dark-mode .category a {
+  color: var(--dark-link-color);
+}
+
+body.dark-mode .category a:hover {
+  color: var(--dark-link-hover-color);
+}
+
+body.dark-mode .subcategory {
+  background-color: var(--dark-subcategory-background);
+}
+
+body.dark-mode .subcategory a {
+  color: var(--dark-link-color);
+}
+
+body.dark-mode .subcategory a:hover {
+  color: var(--dark-link-hover-color);
+}
+
+/* Dark Mode Button */
 .dark-mode-btn {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background-color: var(--card-background);
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
-  border-radius: 5px;
-  padding: 5px 10px;
+  top: 18px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  z-index: 1000;
+  transition: color 0.2s;
 }
 
 .dark-mode-btn:hover {
-  background-color: var(--text-color);
-  color: var(--background-color);
+  color: var(--dark-btn-hover-color);
 }
 
-/* Container Styles */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background: var(--card-background); /* Use dynamic background color */
-  color: var(--text-color); /* Use dynamic text color */
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Pushes the footer to the bottom */
+/* Light Mode Color Variables */
+:root {
+  --background-color: #f4f4f9;
+  --text-color: #333;
+  --card-background: #fff; /* Card background color */
+  --highlight-background: #2b2929; /* Light color when hovering */
+  --header-background: linear-gradient(90deg, #4CAF50, #2e7d32);
+  --category-header-background: #4CAF50;
+  --subcategory-background: #f9f9f9;
+  --link-color: #388E3C;
+  --link-hover-color: #66bb6a;
+  --footer-background: #4CAF50;
+  --footer-text-color: #ffffff;
+  --dark-btn-hover-color: #ffffff;
 }
 
-.file a {
-  text-decoration: none;
-  color: var(--text-color); /* Use theme-based text color */
-  font-weight: bold;
-  border: 1px solid var(--text-color);
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+/* Dark Mode Color Variables */
+body.dark-mode {
+  --dark-background-color: #181a1b;
+  --text-color: #e4e6eb;
+  --card-background: #242526;
+  --header-background: linear-gradient(90deg, #162f1f, #0b572f);
+  --category-header-background: #162f1f;
+  --subcategory-background: #333;
+  --link-color: #80e27e;
+  --link-hover-color: #66bb6a;
+  --footer-background: linear-gradient(90deg, #162f1f, #0b572f);
+  --footer-text-color: #ffffff;
+  --dark-btn-hover-color: #80e27e;
+  --dark-link-color: #80e27e;
+  --dark-link-hover-color: #66bb6a;
+  --dark-card-background: #333;
+  --dark-subcategory-background: #242526;
+  --dark-text-color: #e4e6eb;
 }
 
-.file a:hover {
-  background: var(--text-color);
-  color: var(--background-color); /* Contrast on hover */
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-}
-
-/* General styles for footer */
-footer {
-  text-align: center;
-  padding: 10px 15px; /* Adjust padding for responsiveness */
-  font-size: 1rem; /* Base font size */
-  color: #ffffff; /* White text */
-  width: 100%; /* Full width */
-  box-sizing: border-box; /* Include padding in width calculation */
-}
-
-/* Responsive font size for smaller screens */
-@media (max-width: 768px) {
-  footer {
-    font-size: 0.9rem; /* Slightly smaller font size on tablets */
-    padding: 8px 10px; /* Adjust padding for smaller devices */
-  }
-}
-
-@media (max-width: 480px) {
-  footer {
-    font-size: 0.8rem; /* Smaller font size on phones */
-    padding: 5px 8px; /* Less padding on very small screens */
-  }
+/* Smooth Transitions */
+* {
+  transition: all 0.2s ease;
 }
 
 /* Loader container styles */
@@ -254,7 +214,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #f0f0f0; /* Light background color */
+  background-color: #82b38e; /* Light background color */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -264,9 +224,9 @@ footer {
 
 /* Loader letter styling */
 .loader-letter {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #3498db; /* Blue color */
+  color: #116130; 
   margin-bottom: 10px; /* Space between the text and loading bar */
   animation: pulse 1s infinite ease-in-out;
 }
@@ -286,7 +246,7 @@ footer {
 /* Loading bar container */
 .loading-bar-container {
   width: calc(100% - 20%); /* Slightly broader than the text */
-  max-width: 400px; /* Cap maximum width for larger screens */
+  max-width: 500px; /* Cap maximum width for larger screens */
   height: 10px; /* Bar thickness */
   background-color: #ddd; /* Light gray background */
   border-radius: 5px;
@@ -298,7 +258,7 @@ footer {
 .loading-bar {
   width: 0%; /* Initial width */
   height: 100%;
-  background-color: #3498db; /* Blue bar color */
+  background-color: #116130; 
   border-radius: 5px;
   animation: loading 2s infinite ease-in-out;
 }
@@ -338,5 +298,179 @@ footer {
   100% {
     width: 100%;
   }
+}
+
+/* Style for category list items */
+.category li {
+  padding: 12px 18px;
+  margin: 8px 0; /* Space between items */
+  background-color: var(--card-background);
+  border-radius: 8px; 
+  transition: all 0.2s ease; /* Smooth transition on hover */
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Hover effect to enhance the interactivity */
+.category li:hover {
+  transform: scale(1.03); /* Slight scale up for hover effect */
+}
+
+/* Style for links inside list items */
+.category li a {
+  color: var(--link-color);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effect for links */
+.category li a:hover {
+  color: var(--link-hover-color); /* Darker green on hover */
+  text-decoration: underline; /* Underline text on hover */
+  transform: translateX(5px); /* Subtle shift to the right */
+}
+
+/* Icon for the list items (for category li, not the link) */
+.category li::before {
+  content: "📂"; /* Folder icon before each item */
+  margin-right: 12px; /* Space between icon and text */
+  color: var(--link-color); /* Icon color */
+  font-size: 1.4rem; /* Larger icon size */
+  vertical-align: middle; /* Aligns the icon vertically with the text */
+}
+
+/* No icon for the links inside the list items */
+.category li a::before {
+  content: none; /* Remove icon from the link */
+}
+
+/* Active state when the subcategory list is visible */
+.subcategory.active {
+  display: block;
+}
+
+/* Default styles for larger screens */
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* At least 300px width per column */
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* 1920px */
+@media (max-width: 1920px) {
+  main {
+    grid-template-columns: repeat(2, 1fr); /* 4 columns on large screens */
+  }
+
+  .category h2 {
+    font-size: 1.5rem;
+  }
+
+}
+
+/* 1366px */
+@media (max-width: 1366px) {
+  main {
+    grid-template-columns: repeat(2, 1fr); /* 3 columns on medium screens */
+  }
+
+  .category h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* 1240px */
+@media (max-width: 1240px) {
+  main {
+    grid-template-columns: repeat(2, 1fr); /* 3 columns */
+  }
+
+  .category h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* 1040px */
+@media (max-width: 1040px) {
+  main {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+
+  .category h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* 980px */
+@media (max-width: 980px) {
+  main {
+    grid-template-columns: repeat(1, 1fr); /* 2 columns on small screens */
+  }
+
+  .category h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* 640px */
+@media (max-width: 640px) {
+  main {
+    grid-template-columns: 1fr; /* Single column layout for mobile */
+  }
+
+  .category h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* 320px */
+@media (max-width: 320px) {
+  main {
+    grid-template-columns: 1fr; /* Single column layout for smaller mobile screens */
+  }
+
+  .category h2 {
+    font-size: 1rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .dark-mode-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* Style the theme dropdown with rounded borders */
+#theme-dropdown {
+  padding: 8px 1px; /* Slightly smaller padding for compactness */
+  cursor: pointer;
+  margin-top: 12px;
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid var(--link-color); /* Use variable for dynamic border color */
+  background-color: transparent; /* Transparent background for minimal look */
+  font-size: 12px; /* Compact font size */
+  color: var(--link-color); /* Use variable for dynamic text color */
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 1000; /* Ensure dropdown stays above other elements */
+  transition: color 0.2s ease, background-color 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for better interactivity */
+#theme-dropdown:hover {
+  background-color: var(--link-color); /* Highlight background on hover */
+  color: #fff; /* Text color contrast on hover */
 }
 
