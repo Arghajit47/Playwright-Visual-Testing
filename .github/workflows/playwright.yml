@@ -68,7 +68,7 @@ jobs:
           cp -r report combined-report/
           cp index.html combined-report/
   
-          npx netlify deploy --site 58194967-300c-4c40-8cd2-a2966e55a6c9 --prod --dir combined-report
+          npx netlify deploy --site cf737fea-218c-45b0-b5a2-d1246cb10c83 --prod --dir combined-report
 
           echo "To see the final report kindly visit https://all-report-management.netlify.app/"
 
