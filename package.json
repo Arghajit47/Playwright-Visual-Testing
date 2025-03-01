@@ -7,7 +7,11 @@
     "setup": "rm -rf screenshots",
     "visual-test": "npx playwright test --project Visual-Test",
     "folderStructure": "cd report/ && node app.js ",
-    "allure-test-report": "npx allure generate --clean --single-file allure-results"
+    "allure-test-report": "npx allure generate --clean --single-file allure-results",
+    "test-setup": "npx playwright test --grep @setupProject --project=Visual-Test --project=Visual-Chrome",
+    "test-validate": "npx playwright test --grep @validation --project=Visual-Test --project=Visual-Chrome",
+    "test": "npm run test-setup && node images.mjs &&  npm run test-validate",
+    "test-run": "node images.mjs &&  npm run test-validate"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +23,13 @@
     "allure-playwright": "^3.0.7"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
     "canvas": "^3.0.1",
     "dotenv": "^16.4.5",
     "netlify-cli": "^17.37.2",
     "playwright": "^1.49.1",
     "resemblejs": "^5.0.0",
-    "tesseract.js": "^5.1.1"
+    "tesseract.js": "^5.1.1",
+    "fs-extra": "^11.3.0"
   }
 }

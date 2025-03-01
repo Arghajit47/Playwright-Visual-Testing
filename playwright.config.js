@@ -55,10 +55,17 @@ module.exports = defineConfig({
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: "Visual-Chrome",
+      use: {
+        ...devices["Pixel 5"],
+        launchOptions: {
+          slowMo: 3000,
+          timeout: 120000,
+          headless: true,
+        },
+      },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
