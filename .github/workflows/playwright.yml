@@ -29,8 +29,8 @@ jobs:
       - name: Setting up project
         run: |
           npm run setup
-          chmod +x desktop-run.sh
-          chmod +x mobile-run.sh
+          sudo chmod +x desktop-run.sh
+          sudo chmod +x mobile-run.sh
       - name: Run Playwright tests
         env:
           SUPABASE_BUCKET_NAME: ${{secrets.SUPABASE_BUCKET_NAME}}
