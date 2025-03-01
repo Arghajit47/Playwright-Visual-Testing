@@ -12,13 +12,6 @@ for arg in "$@"; do
   fi
 done
 
-# # Install dependencies
-# npm ci
-# npm install -g allure-commandline
-
-# # Install Playwright Browsers
-# npx playwright install --with-deps
-
 # Download Base images
 node images.mjs
 
