@@ -13,11 +13,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+  
+      - name: Install npm dependencies
+        run: npm ci    
       - name: Install dependencies
         run: |
-          npm ci
-          apt-get update
-          apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
           apt-get install -y default-jdk    
           npm install -g allure-commandline
           npx playwright install --with-deps
