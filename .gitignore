@@ -22,3 +22,6 @@ allure-results
 /screenshots/diff/*
 /screenshots/baseline/desktop/*
 /screenshots/baseline/mobile/*
+
+# Ignore txt files
+eng.traineddata

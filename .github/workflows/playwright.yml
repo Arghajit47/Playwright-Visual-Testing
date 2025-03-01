@@ -13,14 +13,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Setting up project
-        run: npm run setup  
+        run: |
+          npm run setup
+          chmod +x desktop-run.sh
+          chmod +x mobile-run.sh
       - name: Run Playwright tests
-        run: npm run visual-test
+        env:
+          SUPABASE_BUCKET_NAME: ${{secrets.SUPABASE_BUCKET_NAME}}
+          SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+          SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
+        run: |
+          npm run setup
+          ./desktop-run.sh --shard=1/2
+          ./mobile-run.sh --shard=2/2
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -138,3 +138,10 @@ export class HelperFunction {
     }
   }
 }
+
+export async function createFolders(baselineDir, diffDir) {
+  fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
+  fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
+}

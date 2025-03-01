@@ -11,7 +11,6 @@ const { defineConfig, devices } = require("@playwright/test");
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -44,6 +43,7 @@ module.exports = defineConfig({
   projects: [
     {
       name: "Visual-Test",
+      testDir: "./tests/DesktopView",
       use: {
         ...devices["Desktop Chrome"],
         launchOptions: {
@@ -57,6 +57,7 @@ module.exports = defineConfig({
     /* Test against mobile viewports. */
     {
       name: "Visual-Chrome",
+      testDir: "./tests/MobileView",
       use: {
         ...devices["Pixel 5"],
         launchOptions: {
