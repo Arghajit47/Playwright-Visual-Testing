@@ -13,11 +13,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies for canvas
+      - name: Install dependencies
         run: |
+          npm ci
           apt-get update
           apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
           apt-get install -y default-jdk    
+          npm install -g allure-commandline
+          npx playwright install --with-deps
       - name: Setting up project
         run: |
           npm run setup
