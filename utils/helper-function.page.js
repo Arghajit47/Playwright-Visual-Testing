@@ -124,7 +124,7 @@ export class HelperFunction {
 
   async validateMismatch(test, mismatch, diffPath) {
     try {
-      expect(parseFloat(mismatch)).toBeLessThan(5);
+      expect.soft(parseFloat(mismatch)).toBeLessThan(5);
     } catch (error) {
       // Log the error message with the base64 encoded screenshot
       const errorMessage = `Mismatch for Home page: ${mismatch}`;
