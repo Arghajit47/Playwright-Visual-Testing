@@ -145,3 +145,5 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
+
+
