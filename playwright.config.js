@@ -21,11 +21,7 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [
-        ["list"],
-        ["html", { open: "never" }],
-        ["allure-playwright", { open: "never" }],
-      ]
+    ? [["list"], ["blob"], ["allure-playwright", { open: "never" }]]
     : [
         ["html", { open: "never" }],
         ["allure-playwright", { open: "never" }],
