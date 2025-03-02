@@ -30,7 +30,7 @@ jobs:
           SUPABASE_URL: ${{secrets.SUPABASE_URL}}
           SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
         run: |
-          npm run test:validate --shard=${{ matrix.shard }}/2
+          npm run test-validate --shard=${{ matrix.shard }}/2
 
       - uses: actions/upload-artifact@v4
         if: always()
