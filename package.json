@@ -12,8 +12,8 @@
     "test:mobile-setup": "npx playwright test --grep @setupProject --project=Visual-Chrome",
     "test-validate": "npx playwright test --grep @validation --project=Visual-Test --project=Visual-Chrome",
     "test": "npm run test-setup && node images.mjs &&  npm run test-validate",
-    "test:desktop-run": "npx playwright test --grep @validation --project=Visual-Test",
-    "test:mobile-run": "npx playwright test --grep @validation --project=Visual-Chrome"
+    "test:desktop-run": "node images.mjs && npx playwright test --grep @validation --project=Visual-Test",
+    "test:mobile-run": "node images.mjs && npx playwright test --grep @validation --project=Visual-Chrome"
   },
   "keywords": [],
   "author": "",
