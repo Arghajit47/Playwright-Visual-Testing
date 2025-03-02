@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
-    "canvas": "^3.0.1",
     "dotenv": "^16.4.5",
     "netlify-cli": "^17.37.2",
     "playwright": "^1.49.1",
