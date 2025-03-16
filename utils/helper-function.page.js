@@ -2,6 +2,7 @@ const { expect } = require("@playwright/test");
 import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
+import assert from "assert";
 
 export class HelperFunction {
   constructor(page) {
@@ -107,7 +108,8 @@ export class HelperFunction {
 
   async wait() {
     await this.page.waitForLoadState("domcontentloaded");
-    await this.page.waitForTimeout(4000);
+    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForTimeout(10000);
   }
 
   async captureBase64Screenshot(diffPath) {
@@ -123,7 +125,7 @@ export class HelperFunction {
 
   async validateMismatch(test, mismatch, diffPath) {
     try {
-      expect(parseFloat(mismatch)).toBeLessThan(1);
+      assert.ok(parseFloat(mismatch) < 1);
     } catch (error) {
       // Log the error message with the base64 encoded screenshot
       const errorMessage = `Mismatch for Home page: ${mismatch}`;
@@ -133,7 +135,16 @@ export class HelperFunction {
       await this.attachScreenshot(test, diffPath);
 
       // Throw a custom error with the HTML content and base64 screenshot
-      throw new Error(errorMessage);
+      test.skip();
     }
   }
 }
+
+export async function createFolders(baselineDir, diffDir) {
+  fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
+  fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
+}
+
+

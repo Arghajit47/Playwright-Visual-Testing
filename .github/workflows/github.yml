@@ -5,8 +5,50 @@ on:
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  playwright-test:
     timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install system dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev    
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        env:
+          SUPABASE_BUCKET_NAME: ${{secrets.SUPABASE_BUCKET_NAME}}
+          SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+          SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
+        run: |
+          npm run test-validate --shard=${{ matrix.shard }}/2
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blob-report-${{ matrix.shard}}
+          path: blob-report
+      - name: Upload Allure results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.shard }}
+          path: allure-results/
+          retention-days: 1
+
+    continue-on-error: true
+
+  merge-reports:
+    needs: [playwright-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,35 +57,37 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Setting up project
-        run: npm run setup  
-      - name: Run Playwright tests
-        run: npm run visual-test
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 1
-      - name: Upload Allure results
-        if: success() || failure()
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+      - name: Merge Playwright Report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+      - name: Upload Merged Playwright Report
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
+          name: playwright-report
+          path: playwright-report
+          retention-days: 1  
+      - name: Download Allure Results
+        uses: actions/download-artifact@v4
+        with:
           path: allure-results/
-          retention-days: 1
-      - name: Generate Allure report
-        if: success() || failure()  
+          pattern: allure-results-*
+          merge-multiple: true
+
+      - name: Generate allure report
         run: npm run allure-test-report
+
       - name: Upload Allure report
-        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
-          retention-days: 1
+          retention-days: 1  
+
       - name: Generate Overall Test Report
         if: success() || failure()
         run: npm run folderStructure
@@ -67,11 +111,12 @@ jobs:
           cp -r playwright-report/ combined-report/
           cp -r report combined-report/
           cp index.html combined-report/
-  
+    
           npx netlify deploy --site 58194967-300c-4c40-8cd2-a2966e55a6c9 --prod --dir combined-report
-
-          echo "To see the final report kindly visit https://all-report-management.netlify.app/"
-
+  
+          echo "To see the final report kindly visit https://visual-testing-report.netlify.app/"
+  
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}    
     continue-on-error: true
+  

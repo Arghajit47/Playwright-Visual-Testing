@@ -5,6 +5,7 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /.vscode
+.env
 
 # Ignore allure report and results
 allure-report
@@ -18,4 +19,9 @@ allure-results
 
 # Ignore screenshots
 /screenshots/current/*
-/screenshots/diff/*/*
+/screenshots/diff/*
+/screenshots/baseline/desktop/*
+/screenshots/baseline/mobile/*
+
+# Ignore txt files
+eng.traineddata

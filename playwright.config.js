@@ -11,7 +11,6 @@ const { defineConfig, devices } = require("@playwright/test");
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -22,11 +21,7 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [
-        ["list"],
-        ["html", { open: "never" }],
-        ["allure-playwright", { open: "never" }],
-      ]
+    ? [["list"], ["blob"], ["allure-playwright", { open: "never" }]]
     : [
         ["html", { open: "never" }],
         ["allure-playwright", { open: "never" }],
@@ -44,6 +39,7 @@ module.exports = defineConfig({
   projects: [
     {
       name: "Visual-Test",
+      testDir: "./tests/DesktopView",
       use: {
         ...devices["Desktop Chrome"],
         launchOptions: {
@@ -55,10 +51,18 @@ module.exports = defineConfig({
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: "Visual-Chrome",
+      testDir: "./tests/MobileView",
+      use: {
+        ...devices["Pixel 5"],
+        launchOptions: {
+          slowMo: 3000,
+          timeout: 120000,
+          headless: true,
+        },
+      },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
