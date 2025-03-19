@@ -214,90 +214,12 @@ body.dark-mode {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #82b38e; /* Light background color */
+  background-color: #000000; /* Light background color */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-}
-
-/* Loader letter styling */
-.loader-letter {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #116130; 
-  margin-bottom: 10px; /* Space between the text and loading bar */
-  animation: pulse 1s infinite ease-in-out;
-}
-
-/* Keyframes for loader letter */
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.7;
-  }
-}
-
-/* Loading bar container */
-.loading-bar-container {
-  width: calc(100% - 20%); /* Slightly broader than the text */
-  max-width: 500px; /* Cap maximum width for larger screens */
-  height: 10px; /* Bar thickness */
-  background-color: #ddd; /* Light gray background */
-  border-radius: 5px;
-  overflow: hidden;
-  position: relative;
-}
-
-/* Loading bar animation */
-.loading-bar {
-  width: 0%; /* Initial width */
-  height: 100%;
-  background-color: #116130; 
-  border-radius: 5px;
-  animation: loading 2s infinite ease-in-out;
-}
-
-/* Keyframes for loading animation */
-@keyframes loading {
-  0% {
-    width: 0%;
-  }
-  10% {
-    width: 10%;
-  }
-  20% {
-    width: 20%;
-  }
-  30% {
-    width: 30%;
-  }
-  40% {
-    width: 40%;
-  }
-  50% {
-    width: 50%;
-  }
-  60% {
-    width: 60%;
-  }
-  70% {
-    width: 70%;
-  }
-  80% {
-    width: 80%;
-  }
-  90% {
-    width: 90%;
-  }
-  100% {
-    width: 100%;
-  }
 }
 
 /* Style for category list items */
@@ -472,5 +394,63 @@ main {
 #theme-dropdown:hover {
   background-color: var(--link-color); /* Highlight background on hover */
   color: #fff; /* Text color contrast on hover */
+}
+
+
+/* Terminal container */
+.terminal {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #000;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Blinking cursor animation */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background-color: #00ff00;
+  animation: blink 0.5s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+}
+
+/* Loading text */
+.loading-text {
+  font-size: 18px;
+  color: #66bb6a;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ff00;
+  animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+      width: 0;
+  }
+  to {
+      width: 150%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+      border-color: transparent;
+  }
+  150% {
+      border-color: #00ff00;
+  }
 }
 

@@ -109,7 +109,7 @@ export class HelperFunction {
   async wait() {
     await this.page.waitForLoadState("domcontentloaded");
     await this.page.waitForLoadState("networkidle");
-    await this.page.waitForTimeout(10000);
+    await this.page.waitForTimeout(5000);
   }
 
   async captureBase64Screenshot(diffPath) {
