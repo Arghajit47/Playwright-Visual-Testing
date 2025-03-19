@@ -214,7 +214,7 @@ body.dark-mode {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #82b38e; /* Light background color */
+  background-color: #000000; /* Light background color */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -472,5 +472,63 @@ main {
 #theme-dropdown:hover {
   background-color: var(--link-color); /* Highlight background on hover */
   color: #fff; /* Text color contrast on hover */
+}
+
+
+/* Terminal container */
+.terminal {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #000;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Blinking cursor animation */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background-color: #00ff00;
+  animation: blink 0.5s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+}
+
+/* Loading text */
+.loading-text {
+  font-size: 18px;
+  color: #66bb6a;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ff00;
+  animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+      width: 0;
+  }
+  to {
+      width: 150%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+      border-color: transparent;
+  }
+  150% {
+      border-color: #00ff00;
+  }
 }
 
