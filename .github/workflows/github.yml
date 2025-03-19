@@ -64,7 +64,7 @@ jobs:
           pattern: blob-report-*
           merge-multiple: true
       - name: Merge Playwright Report
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
+        run: npm run script playwright-report-generate
       - name: Upload Merged Playwright Report
         uses: actions/upload-artifact@v4
         with:
@@ -90,7 +90,7 @@ jobs:
 
       - name: Generate Overall Test Report
         if: success() || failure()
-        run: npm run folderStructure
+        run: npm run script folderStructure
       - name: Wait for 10 seconds before generating the report
         run: sleep 10
       - name: Upload All-in-One report
@@ -108,7 +108,11 @@ jobs:
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-          cp -r playwright-report/ combined-report/
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/ combined-report/
+          else
+            echo "Warning: playwright-report directory not found. Skipping copy."
+          fi
           cp -r report combined-report/
           cp index.html combined-report/
     

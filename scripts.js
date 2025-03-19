@@ -18,6 +18,8 @@ const scripts = {
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Test",
   "test:mobile-run":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Chrome",
+  "playwright-report-generate":
+    "npx playwright merge-reports --reporter html ./all-blob-reports",
 };
 
 // Get the script name from command-line arguments
