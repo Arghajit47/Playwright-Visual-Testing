@@ -30,7 +30,7 @@ jobs:
           SUPABASE_URL: ${{secrets.SUPABASE_URL}}
           SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
         run: |
-          npm run test-validate --shard=${{ matrix.shard }}/2
+          npm run script test-validate --shard=${{ matrix.shard }}/2
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -79,7 +79,7 @@ jobs:
           merge-multiple: true
 
       - name: Generate allure report
-        run: npm run allure-test-report
+        run: npm run script allure-test-report
 
       - name: Upload Allure report
         uses: actions/upload-artifact@v4
