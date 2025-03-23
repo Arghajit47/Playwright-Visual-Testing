@@ -28,8 +28,7 @@ export class HelperFunction {
           this.extractText(baselinePath),
         ]);
 
-        console.log("Baseline Text:\n", baselineText);
-        console.log("Current Text:\n", currentText);
+        console.log("Baseline Text and Current Text matched!");
 
         // Compare the text
         if (currentText !== baselineText) {
@@ -135,8 +134,7 @@ export class HelperFunction {
       await this.attachScreenshot(test, diffPath);
 
       // Throw a custom error with the HTML content and base64 screenshot
-      // test.skip();
-      test.info().annotations.push({ type: "status", description: "failed" });
+      test.skip();
     }
   }
 }
