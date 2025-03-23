@@ -13,7 +13,7 @@ const scripts = {
     "npx playwright test --grep @setupProject --project=Visual-Mobile-Test",
   "test-validate":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test --project=Visual-Mobile-Test",
-  test: "npm run test-setup &&  npm run test-validate",
+  test: "npm run setup &&  npm run test-validate",
   "test:desktop-run":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test",
   "test:mobile-run":
