@@ -2,7 +2,6 @@ const { execSync } = require("child_process");
 
 const scripts = {
   setup: "rm -rf screenshots/",
-
   "visual-test": "npx playwright test --project Visual-Desktop-Test",
   folderStructure: "cd report/ && node app.js ",
   "allure-test-report":
@@ -13,7 +12,7 @@ const scripts = {
     "npx playwright test --grep @setupProject --project=Visual-Mobile-Test",
   "test-validate":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test --project=Visual-Mobile-Test",
-  test: "npm run setup &&  npm run test-validate",
+  test: "npm run script setup && npm run script test-validate",
   "test:desktop-run":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test",
   "test:mobile-run":
