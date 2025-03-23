@@ -38,7 +38,7 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "Visual-Test",
+      name: "Visual-Desktop-Test",
       testDir: "./tests/DesktopView",
       use: {
         ...devices["Desktop Chrome"],
@@ -52,7 +52,7 @@ module.exports = defineConfig({
 
     /* Test against mobile viewports. */
     {
-      name: "Visual-Chrome",
+      name: "Visual-Mobile-Test",
       testDir: "./tests/MobileView",
       use: {
         ...devices["Pixel 5"],
