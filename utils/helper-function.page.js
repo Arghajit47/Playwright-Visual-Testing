@@ -135,7 +135,8 @@ export class HelperFunction {
       await this.attachScreenshot(test, diffPath);
 
       // Throw a custom error with the HTML content and base64 screenshot
-      test.skip();
+      // test.skip();
+      test.info().annotations.push({ type: "status", description: "failed" });
     }
   }
 }
