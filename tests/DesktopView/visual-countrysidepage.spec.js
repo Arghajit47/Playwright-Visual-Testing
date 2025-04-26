@@ -41,7 +41,7 @@ test.describe("Take screenshots for Visual Regression Testing - Countryside page
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(currentScreenshot, baselineScreenshot);
       await uploadImage(
-        `desktop/Countryside-page-baseline.png`,
+        `baseline/desktop/Countryside-page-baseline.png`,
         baselineScreenshot
       );
       console.log("Baseline created. Run the test again for comparisons.");
@@ -51,7 +51,7 @@ test.describe("Take screenshots for Visual Regression Testing - Countryside page
   test(
     "Countryside page - Desktop - Validate Mismatch",
     { tag: "@validation" },
-    async ({ page }) => {
+    async ({ page }, testInfo) => {
       await allure.severity("minor");
       const currentScreenshot = `${currentDir}/desktop/Countryside-page-current.png`;
       const baselineScreenshot = `${baselineDir}/desktop/Countryside-page-baseline.png`;
@@ -74,7 +74,17 @@ test.describe("Take screenshots for Visual Regression Testing - Countryside page
       );
 
       console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
-      await helper.validateMismatch(test, mismatch, diffScreenshot);
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffScreenshot,
+        testInfo,
+        "Desktop"
+      );
+      await uploadImage(
+        `diff/desktop/Countryside-page-diff.png`,
+        diffScreenshot
+      );
     }
   );
 });

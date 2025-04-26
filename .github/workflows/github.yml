@@ -31,6 +31,9 @@ jobs:
           SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
         run: |
           npm run script test --shard=${{ matrix.shard }}/2
+          
+      - name: Merge test results
+        run: node merge-results.js    
 
       - uses: actions/upload-artifact@v4
         if: always()

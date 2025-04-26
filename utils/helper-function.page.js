@@ -122,9 +122,10 @@ export class HelperFunction {
     });
   }
 
-  async validateMismatch(test, mismatch, diffPath) {
+  async validateMismatch(test, mismatch, diffPath, testInfo, device) {
     try {
       assert.ok(parseFloat(mismatch) < 1);
+      createDashboardJson(testInfo, device, "passed", diffPath);
     } catch (error) {
       // Log the error message with the base64 encoded screenshot
       const errorMessage = `Mismatch for Home page: ${mismatch}`;
@@ -132,7 +133,7 @@ export class HelperFunction {
       // Log the error
       console.error(errorMessage);
       await this.attachScreenshot(test, diffPath);
-
+      createDashboardJson(testInfo, device, "failed", diffPath);
       // Throw a custom error with the HTML content and base64 screenshot
       test.skip();
     }
@@ -144,6 +145,31 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
   fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
+}
+
+export async function createDashboardJson(testInfo, device, status, diffPath) {
+  const image = diffPath.replace("screenshot", "");
+  let data;
+  switch (status) {
+    case "passed":
+      data = {
+        name: testInfo.title,
+        device: device,
+        status: "passed",
+      };
+      break;
+    case "failed":
+      data = {
+        name: testInfo.title,
+        device: device,
+        status: "failed",
+        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${diffPath}`,
+      };
+      break;
+    default:
+      throw new Error("Invalid test status");
+  }
+  fs.writeFileSync(testInfo.outputPath("./result.json"), JSON.stringify(data));
 }
 
 

@@ -40,7 +40,10 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
 
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(currentScreenshot, baselineScreenshot);
-      await uploadImage(`desktop/Beach-page-baseline.png`, baselineScreenshot);
+      await uploadImage(
+        `baseline/desktop/Beach-page-baseline.png`,
+        baselineScreenshot
+      );
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -48,7 +51,7 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
   test(
     "Beach page - Desktop - Validate Mismatch",
     { tag: "@validation" },
-    async ({ page }) => {
+    async ({ page }, testInfo) => {
       await allure.severity("minor");
       const currentScreenshot = `${currentDir}/desktop/Beach-page-current.png`;
       const baselineScreenshot = `${baselineDir}/desktop/Beach-page-baseline.png`;
@@ -71,7 +74,14 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
       );
 
       console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
-      await helper.validateMismatch(test, mismatch, diffScreenshot);
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffScreenshot,
+        testInfo,
+        "Desktop"
+      );
+      await uploadImage(`diff/desktop/Beach-page-diff.png`, diffScreenshot);
     }
   );
 });
