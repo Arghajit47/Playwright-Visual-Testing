@@ -30,7 +30,8 @@ jobs:
             libpango1.0-dev \
             libjpeg-dev \
             libgif-dev \
-            librsvg2-dev
+            librsvg2-dev \
+            jq
 
       - name: Install dependencies
         run: npm ci
