@@ -95,7 +95,7 @@ jobs:
 
       - name: Merge all JSONs into one
         run: |
-          jq -s '{ tests: map(.tests) | add }' visual-report/*.json > visual-report/merged-results.json
+          jq -s 'add' visual-report/*.json > visual-report/merged-results.json
 
       - name: Upload Merged JSON
         env:
