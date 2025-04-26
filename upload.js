@@ -12,13 +12,14 @@ console.log("Supabase URL:", supabaseUrl);
 console.log("Supabase Key:", supabaseKey);
 
 const supabase = createClient(supabaseUrl, supabaseKey);
+const mergedPath = "./visual-report/merged-results.json"; // Path to the merged JSON file
 
 // 2. Merge all result.json files
 async function uploadJson() {
   try {
     // 3. Upload to Supabase Storage
     const fileContent = fs.readFileSync(mergedPath);
-    const fileName = `./visual-report/merged-results.json`; // Unique filename
+    const fileName = `merged-results.json`; // Unique filename
 
     const { data, error } = await supabase.storage
       .from(bucketName)
