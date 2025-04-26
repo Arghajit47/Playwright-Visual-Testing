@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        config: 
-          - { type: 'desktop', project: 'Visual-Desktop-Test' }
-          - { type: 'mobile', project: 'Visual-Mobile-Test' }
+        config:
+          - { type: "desktop", project: "Visual-Desktop-Test" }
+          - { type: "mobile", project: "Visual-Mobile-Test" }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -31,32 +31,38 @@ jobs:
             libjpeg-dev \
             libgif-dev \
             librsvg2-dev
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run Playwright tests
         env:
           SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
         run: npm run script test:${{ matrix.config.type }}-run
-      
+
       - name: Merge test results
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
         run: node merge-results.js
-      
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: merged-results-${{ matrix.config.type }}
+          path: test-results/merged-results.json
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: blob-report-${{ matrix.config.type }}
           path: blob-report
-      
+
       - name: Upload Allure results
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -64,7 +70,7 @@ jobs:
           name: allure-results-${{ matrix.config.type }}
           path: allure-results/
           retention-days: 1
-    
+
     continue-on-error: true
 
   merge-reports:
@@ -75,51 +81,65 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
+      - name: Download Result Json
+        uses: actions/download-artifact@v4
+        with:
+          path: visual-report
+          pattern: merged-results-*
+          merge-multiple: true
+
+      - name: Merge all JSONs into one
+        run: |
+          jq -s 'reduce .[] as $item ({}; . * $item)' visual-report/*.json > visual-report/merged-results.json
+
+      - name: Upload Merged JSON
+        run : node upload.js    
+
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
           path: all-blob-reports
           pattern: blob-report-*
           merge-multiple: true
-      
+
       - name: Merge Playwright Report
         run: npm run script playwright-report-generate
-      
+
       - name: Upload Merged Playwright Report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report
           retention-days: 1
-      
+
       - name: Download Allure Results
         uses: actions/download-artifact@v4
         with:
           path: allure-results/
           pattern: allure-results-*
           merge-multiple: true
-      
+
       - name: Generate allure report
         run: npm run script allure-test-report
-      
+
       - name: Upload Allure report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
           retention-days: 1
-      
+
       - name: Generate Overall Test Report
         if: success() || failure()
         run: npm run script folderStructure
-      
+
       - name: Wait for 10 seconds before generating the report
         run: sleep 10
-      
+
       - name: Upload All-in-One report
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -129,27 +149,27 @@ jobs:
             index.html
             report/
           retention-days: 5
-      
+
       - name: Deploy Reports to Netlify
         if: always()
         run: |
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-          
+
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/ combined-report/
           else
             echo "Warning: playwright-report directory not found. Skipping copy."
           fi
-          
+
           cp -r report combined-report/
           cp index.html combined-report/
-          
+
           npx netlify deploy --site 58194967-300c-4c40-8cd2-a2966e55a6c9 --prod --dir combined-report
-          
+
           echo "To see the final report kindly visit https://visual-testing-report.netlify.app/"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-    
+
     continue-on-error: true
