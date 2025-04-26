@@ -95,7 +95,7 @@ jobs:
 
       - name: Merge all JSONs into one
         run: |
-          jq -s 'reduce .[] as $item ({}; . * $item)' visual-report/*.json > visual-report/merged-results.json
+          find visual-report/ -name "*.json" -exec cat {} + | jq -s 'reduce .[] as $item ({}; . * $item)' > visual-report/merged-results.json
 
       - name: Upload Merged JSON
         env:
