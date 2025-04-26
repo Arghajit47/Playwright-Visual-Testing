@@ -163,7 +163,7 @@ export async function createDashboardJson(testInfo, device, status, diffPath) {
         name: testInfo.title,
         device: device,
         status: "failed",
-        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${diffPath}`,
+        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${image}`,
       };
       break;
     default:
