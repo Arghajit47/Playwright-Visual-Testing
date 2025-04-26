@@ -48,15 +48,18 @@ jobs:
 
       - name: Merge test results
         env:
+          DEVICE_TYPE: ${{ matrix.config.type }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
         run: node merge-results.js
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload merged result JSON
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: merged-results-${{ matrix.config.type }}
-          path: test-results/merged-results.json
+          path: test-results/merged-results-${{ matrix.config.type }}.json
+      
 
       - uses: actions/upload-artifact@v4
         if: always()

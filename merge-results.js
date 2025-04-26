@@ -9,6 +9,10 @@ async function mergeAndUpload() {
     const outputDir = "./test-results";
     const mergedData = [];
 
+    const deviceType = process.env.DEVICE_TYPE || "desktop"; // fallback to desktop if not set
+
+    console.log(`🛠 Merging results for device type: ${deviceType}`);
+
     // Find all result.json files recursively
     const findFiles = (dir) => {
       const files = fs.readdirSync(dir);
@@ -29,14 +33,21 @@ async function mergeAndUpload() {
     // Read and merge data
     files.forEach((file) => {
       const data = JSON.parse(fs.readFileSync(file, "utf-8"));
-      mergedData.push(data);
+      if (Array.isArray(data)) {
+        mergedData.push(...data); // flatten arrays
+      } else {
+        mergedData.push(data);
+      }
     });
 
-    // Save merged file locally
-    const mergedPath = path.join(outputDir, "merged-results.json");
+    // Save merged file locally with device type in the name
+    const mergedPath = path.join(
+      outputDir,
+      `merged-results-${deviceType}.json`
+    );
     fs.writeFileSync(mergedPath, JSON.stringify(mergedData, null, 2));
 
-    console.log(`✅ Merged ${files.length} test results`);
+    console.log(`✅ Merged ${files.length} result files into ${mergedPath}`);
   } catch (error) {
     console.error("❌ Error:", error.message);
     process.exit(1);
