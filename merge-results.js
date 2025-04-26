@@ -1,13 +1,16 @@
 const { createClient } = require("@supabase/supabase-js");
 const path = require("path");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv");
 const fs = require("fs");
-// dotenv.config();
+dotenv.config();
 
 // 1. Supabase Configuration
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_TOKEN;
 const bucketName = "visual-dashboard-json"; // e.g., 'test-reports'
+
+console.log("Supabase URL:", supabaseUrl);
+console.log("Supabase Key:", supabaseKey);
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
