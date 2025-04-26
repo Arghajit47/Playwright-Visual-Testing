@@ -18,7 +18,7 @@ const mergedPath = "./visual-report/merged-results.json"; // Path to the merged 
 async function uploadJson() {
   try {
     // 3. Upload to Supabase Storage
-    const fileContent = fs.readFileSync(mergedPath);
+    const fileContent = fs.readFileSync(mergedPath, "utf-8");
     const fileName = `merged-results.json`; // Unique filename
 
     const { data, error } = await supabase.storage
