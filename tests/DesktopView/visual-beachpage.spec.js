@@ -48,7 +48,7 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
     }
   );
 
-  test.only(
+  test(
     "Beach page - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {

@@ -148,7 +148,7 @@ export async function createFolders(baselineDir, diffDir) {
 }
 
 export async function createDashboardJson(testInfo, device, status, diffPath) {
-  const image = diffPath.replace("screenshot", "");
+  const image = diffPath.replace("screenshots", "");
   let data;
   switch (status) {
     case "passed":
