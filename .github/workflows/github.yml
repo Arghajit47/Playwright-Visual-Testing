@@ -93,6 +93,13 @@ jobs:
           pattern: merged-results-*
           merge-multiple: true
 
+      - name: Show JSON files
+        run: |
+          echo "Listing downloaded JSON files..."
+          ls -lh visual-report/
+          echo "Printing JSON file contents..."
+          find visual-report/ -name "*.json" -exec cat {} \;
+
       - name: Merge all JSONs into one
         run: |
           jq -s 'add' visual-report/*.json > visual-report/merged-results.json
