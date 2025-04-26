@@ -16,7 +16,6 @@ const diffDir = `${screenshotsDir}/diff`;
 
 test.describe("Take screenshots for Visual Regression Testing - Windmills page", () => {
   let helper; // Define the HelperFunction instance
-
   test.beforeAll(async () => {
     // Create directories if they don't exist
     await createFolders(baselineDir, diffDir);
@@ -81,7 +80,6 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
         testInfo,
         "Mobile"
       );
-      await uploadImage(`diff/mobile/Windmills-page-diff.png`, diffScreenshot);
     }
   );
 });

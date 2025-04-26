@@ -81,7 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
         testInfo,
         "Desktop"
       );
-      await uploadImage(`diff/desktop/Windmills-page-diff.png`, diffScreenshot);
     }
   );
 });

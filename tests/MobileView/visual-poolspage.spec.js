@@ -81,7 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Pools page", () 
         testInfo,
         "Mobile"
       );
-      await uploadImage(`diff/mobile/Pools-page-diff.png`, diffScreenshot);
     }
   );
 });

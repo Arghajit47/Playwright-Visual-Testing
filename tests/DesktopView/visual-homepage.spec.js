@@ -80,7 +80,6 @@ test.describe("Take screenshots for Visual Regression Testing - Home page", () =
         testInfo,
         "Desktop"
       );
-      await uploadImage(`diff/desktop/Home-page-diff.png`, diffScreenshot);
     }
   );
 });

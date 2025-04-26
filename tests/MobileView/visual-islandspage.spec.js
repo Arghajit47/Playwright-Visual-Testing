@@ -81,7 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Islands page", (
         testInfo,
         "Mobile"
       );
-      await uploadImage(`diff/mobile/Islands-page-diff.png`, diffScreenshot);
     }
   );
 });

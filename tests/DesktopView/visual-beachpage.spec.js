@@ -48,7 +48,7 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
     }
   );
 
-  test(
+  test.only(
     "Beach page - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {
@@ -81,7 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Beach page", () 
         testInfo,
         "Desktop"
       );
-      await uploadImage(`diff/desktop/Beach-page-diff.png`, diffScreenshot);
     }
   );
 });

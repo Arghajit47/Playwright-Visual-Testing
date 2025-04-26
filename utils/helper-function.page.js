@@ -3,6 +3,7 @@ import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
+const { uploadImage } = require("./supabase-function");
 
 export class HelperFunction {
   constructor(page) {
@@ -134,6 +135,8 @@ export class HelperFunction {
       console.error(errorMessage);
       await this.attachScreenshot(test, diffPath);
       createDashboardJson(testInfo, device, "failed", diffPath);
+      const image = diffPath.replace("screenshots", "");
+      await uploadImage(image, diffPath);
       // Throw a custom error with the HTML content and base64 screenshot
       test.skip();
     }

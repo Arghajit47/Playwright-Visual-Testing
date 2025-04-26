@@ -81,7 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Modern page", ()
         testInfo,
         "Mobile"
       );
-      await uploadImage(`diff/mobile/Modern-page-diff.png`, diffScreenshot);
     }
   );
 });

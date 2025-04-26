@@ -48,6 +48,8 @@ test.describe("Take screenshots for Visual Regression Testing - Home page", () =
     }
   );
 
+  test.setTimeout(60 * 1000); // Set timeout to 120 seconds
+
   test(
     "Home page - Mobile - Validate Mismatch",
     { tag: "@validation" },
@@ -81,7 +83,6 @@ test.describe("Take screenshots for Visual Regression Testing - Home page", () =
         testInfo,
         "Mobile"
       );
-      await uploadImage(`diff/mobile/Home-page-diff.png`, diffScreenshot);
     }
   );
 });

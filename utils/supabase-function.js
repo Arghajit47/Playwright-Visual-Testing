@@ -33,3 +33,4 @@ export async function uploadImage(fileName, pathContent) {
     console.error("Test Passed with 0% difference ✅");
   }
 }
+

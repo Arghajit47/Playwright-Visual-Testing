@@ -81,10 +81,6 @@ test.describe("Take screenshots for Visual Regression Testing - Countryside page
         testInfo,
         "Mobile"
       );
-      await uploadImage(
-        `diff/mobile/Countryside-page-diff.png`,
-        diffScreenshot
-      );
     }
   );
 });
