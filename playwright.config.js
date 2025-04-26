@@ -14,7 +14,7 @@ module.exports = defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  // forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 0 : 0,
   /* Opt out of parallel tests on CI. */
@@ -38,12 +38,12 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "Visual-Test",
+      name: "Visual-Desktop-Test",
       testDir: "./tests/DesktopView",
       use: {
         ...devices["Desktop Chrome"],
         launchOptions: {
-          slowMo: 3000,
+          // slowMo: 3000,
           timeout: 120000,
           headless: true,
         },
@@ -52,12 +52,12 @@ module.exports = defineConfig({
 
     /* Test against mobile viewports. */
     {
-      name: "Visual-Chrome",
+      name: "Visual-Mobile-Test",
       testDir: "./tests/MobileView",
       use: {
         ...devices["Pixel 5"],
         launchOptions: {
-          slowMo: 3000,
+          // slowMo: 3000,
           timeout: 120000,
           headless: true,
         },

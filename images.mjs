@@ -14,7 +14,7 @@ const SUPABASE_BUCKET = process.env.SUPABASE_BUCKET_NAME; // Change to your buck
 const SUPABASE_API_KEY = process.env.SUPABASE_TOKEN;
 
 // Ensure folder exists
-const folderPath = "./screenshots/baseline";
+const folderPath = "./screenshots";
 fs.ensureDirSync(folderPath);
 
 // Function to download images from Supabase Storage
@@ -71,5 +71,5 @@ async function downloadImages(folder) {
 }
 
 // Run function before tests
-downloadImages("desktop");
-downloadImages("mobile");
+downloadImages("baseline/desktop");
+downloadImages("baseline/mobile");

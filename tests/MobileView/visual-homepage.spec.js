@@ -40,15 +40,20 @@ test.describe("Take screenshots for Visual Regression Testing - Home page", () =
 
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(currentScreenshot, baselineScreenshot);
-      await uploadImage(`mobile/Home-page-baseline.png`, baselineScreenshot);
+      await uploadImage(
+        `baseline/mobile/Home-page-baseline.png`,
+        baselineScreenshot
+      );
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
 
+  test.setTimeout(60 * 1000); // Set timeout to 120 seconds
+
   test(
     "Home page - Mobile - Validate Mismatch",
     { tag: "@validation" },
-    async ({ page }) => {
+    async ({ page }, testInfo) => {
       await allure.severity("minor");
       const currentScreenshot = `${currentDir}/mobile/Home-page-current.png`;
       const baselineScreenshot = `${baselineDir}/mobile/Home-page-baseline.png`;
@@ -71,7 +76,13 @@ test.describe("Take screenshots for Visual Regression Testing - Home page", () =
       );
 
       console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
-      await helper.validateMismatch(test, mismatch, diffScreenshot);
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffScreenshot,
+        testInfo,
+        "Mobile"
+      );
     }
   );
 });

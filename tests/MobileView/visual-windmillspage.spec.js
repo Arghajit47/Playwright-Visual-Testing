@@ -16,7 +16,6 @@ const diffDir = `${screenshotsDir}/diff`;
 
 test.describe("Take screenshots for Visual Regression Testing - Windmills page", () => {
   let helper; // Define the HelperFunction instance
-
   test.beforeAll(async () => {
     // Create directories if they don't exist
     await createFolders(baselineDir, diffDir);
@@ -41,7 +40,7 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(currentScreenshot, baselineScreenshot);
       await uploadImage(
-        `mobile/Windmills-page-baseline.png`,
+        `baseline/mobile/Windmills-page-baseline.png`,
         baselineScreenshot
       );
       console.log("Baseline created. Run the test again for comparisons.");
@@ -51,7 +50,7 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
   test(
     "Windmills page - Mobile - Validate Mismatch",
     { tag: "@validation" },
-    async ({ page }) => {
+    async ({ page }, testInfo) => {
       await allure.severity("minor");
       const currentScreenshot = `${currentDir}/mobile/Windmills-page-current.png`;
       const baselineScreenshot = `${baselineDir}/mobile/Windmills-page-baseline.png`;
@@ -74,7 +73,13 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
       );
 
       console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
-      await helper.validateMismatch(test, mismatch, diffScreenshot);
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffScreenshot,
+        testInfo,
+        "Mobile"
+      );
     }
   );
 });

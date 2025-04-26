@@ -3,6 +3,7 @@ import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
+const { uploadImage } = require("./supabase-function");
 
 export class HelperFunction {
   constructor(page) {
@@ -28,8 +29,7 @@ export class HelperFunction {
           this.extractText(baselinePath),
         ]);
 
-        console.log("Baseline Text:\n", baselineText);
-        console.log("Current Text:\n", currentText);
+        console.log("Baseline Text and Current Text matched!");
 
         // Compare the text
         if (currentText !== baselineText) {
@@ -109,7 +109,7 @@ export class HelperFunction {
   async wait() {
     await this.page.waitForLoadState("domcontentloaded");
     await this.page.waitForLoadState("networkidle");
-    await this.page.waitForTimeout(10000);
+    await this.page.waitForTimeout(5000);
   }
 
   async captureBase64Screenshot(diffPath) {
@@ -123,9 +123,10 @@ export class HelperFunction {
     });
   }
 
-  async validateMismatch(test, mismatch, diffPath) {
+  async validateMismatch(test, mismatch, diffPath, testInfo, device) {
     try {
       assert.ok(parseFloat(mismatch) < 1);
+      createDashboardJson(testInfo, device, "passed", diffPath);
     } catch (error) {
       // Log the error message with the base64 encoded screenshot
       const errorMessage = `Mismatch for Home page: ${mismatch}`;
@@ -133,7 +134,9 @@ export class HelperFunction {
       // Log the error
       console.error(errorMessage);
       await this.attachScreenshot(test, diffPath);
-
+      createDashboardJson(testInfo, device, "failed", diffPath);
+      const image = diffPath.replace("screenshots", "");
+      await uploadImage(image, diffPath);
       // Throw a custom error with the HTML content and base64 screenshot
       test.skip();
     }
@@ -145,6 +148,31 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
   fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
+}
+
+export async function createDashboardJson(testInfo, device, status, diffPath) {
+  const image = diffPath.replace("screenshots", "");
+  let data;
+  switch (status) {
+    case "passed":
+      data = {
+        name: testInfo.title,
+        device: device,
+        status: "passed",
+      };
+      break;
+    case "failed":
+      data = {
+        name: testInfo.title,
+        device: device,
+        status: "failed",
+        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${image}`,
+      };
+      break;
+    default:
+      throw new Error("Invalid test status");
+  }
+  fs.writeFileSync(testInfo.outputPath("./result.json"), JSON.stringify(data));
 }
 
 

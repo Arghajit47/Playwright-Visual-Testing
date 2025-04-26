@@ -4,16 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "rm -rf screenshots/",
-    "visual-test": "npx playwright test --project Visual-Test",
-    "folderStructure": "cd report/ && node app.js ",
-    "allure-test-report": "npx allure generate --clean --single-file allure-results",
-    "test:desktop-setup": "npx playwright test --grep @setupProject --project=Visual-Test",
-    "test:mobile-setup": "npx playwright test --grep @setupProject --project=Visual-Chrome",
-    "test-validate": "node images.mjs && npx playwright test --grep @validation --project=Visual-Test --project=Visual-Chrome",
-    "test": "npm run test-setup && node images.mjs &&  npm run test-validate",
-    "test:desktop-run": "node images.mjs && npx playwright test --grep @validation --project=Visual-Test",
-    "test:mobile-run": "node images.mjs && npx playwright test --grep @validation --project=Visual-Chrome"
+    "script": "node scripts.js"
   },
   "keywords": [],
   "author": "",
