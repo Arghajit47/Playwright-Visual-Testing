@@ -93,6 +93,12 @@ jobs:
           pattern: merged-results-*
           merge-multiple: true
 
+      - name: Unzip all artifacts
+        run: |
+          for zip in visual-report/*.zip; do
+            unzip -o "$zip" -d visual-report/
+          done
+
       - name: Merge all JSONs into one
         run: |
           find visual-report/ -name "*.json" -exec cat {} + | jq -s 'reduce .[] as $item ({}; . * $item)' > visual-report/merged-results.json
@@ -101,7 +107,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
-        run : node upload.js    
+        run: node upload.js
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
