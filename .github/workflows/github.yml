@@ -97,6 +97,9 @@ jobs:
           jq -s 'reduce .[] as $item ({}; . * $item)' visual-report/*.json > visual-report/merged-results.json
 
       - name: Upload Merged JSON
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
         run : node upload.js    
 
       - name: Download Artifacts
