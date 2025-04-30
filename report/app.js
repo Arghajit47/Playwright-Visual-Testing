@@ -18,7 +18,11 @@ function readReportFolders(folderPath) {
       .filter((item) => {
         const fullPath = path.join(folderPath, item);
         const isDirectory = fs.statSync(fullPath).isDirectory();
-        return isDirectory && item.endsWith("-report"); // Include only folders ending with '-report'
+        return (
+          isDirectory &&
+          item.endsWith("-report") &&
+          !item.endsWith("visual-report")
+        ); // Include only folders ending with '-report'
       })
       .reduce((acc, reportFolder) => {
         const fullPath = path.join(folderPath, reportFolder);
