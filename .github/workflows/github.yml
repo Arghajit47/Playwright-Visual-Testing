@@ -74,7 +74,7 @@ jobs:
           path: allure-results/
           retention-days: 1
       
-      - name: Upload Pulse results
+      - name: Upload Pulse Report results
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
