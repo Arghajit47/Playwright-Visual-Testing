@@ -1,5 +1,9 @@
 // @ts-check
 const { defineConfig, devices } = require("@playwright/test");
+import * as path from "path";
+
+// Define where the final report JSON and HTML should go
+const PULSE_REPORT_DIR = path.resolve(__dirname, "pulse-report-output"); // Example: a directory in your project root
 
 /**
  * Read environment variables from file.
@@ -21,10 +25,38 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [["list"], ["blob"], ["allure-playwright", { open: "never" }]]
+    ? [
+        ["list"],
+        ["blob"],
+        ["allure-playwright", { open: "never" }], // Add the Playwright Pulse Reporter
+        [
+          "@arghajit/playwright-pulse-report",
+          {
+            // Optional: Specify the output file name (defaults to 'playwright-pulse-report.json')
+            // outputFile: 'my-custom-report-name.json',
+
+            // REQUIRED: Specify the directory for the final JSON report
+            // The static HTML report will also be generated here.
+            // It's recommended to use an absolute path or one relative to the config file.
+            outputDir: PULSE_REPORT_DIR,
+          },
+        ],
+      ]
     : [
         ["html", { open: "never" }],
         ["allure-playwright", { open: "never" }],
+        [
+          "@arghajit/playwright-pulse-report",
+          {
+            // Optional: Specify the output file name (defaults to 'playwright-pulse-report.json')
+            // outputFile: 'my-custom-report-name.json',
+
+            // REQUIRED: Specify the directory for the final JSON report
+            // The static HTML report will also be generated here.
+            // It's recommended to use an absolute path or one relative to the config file.
+            outputDir: PULSE_REPORT_DIR,
+          },
+        ],
       ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

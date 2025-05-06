@@ -73,6 +73,14 @@ jobs:
           name: allure-results-${{ matrix.config.type }}
           path: allure-results/
           retention-days: 1
+      
+      - name: Upload Pulse results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-report-output-${{ matrix.config.type }}
+          path: pulse-report-output/
+          retention-days: 1    
 
     continue-on-error: true
 
