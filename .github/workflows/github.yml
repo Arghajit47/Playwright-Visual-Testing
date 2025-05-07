@@ -209,7 +209,7 @@ jobs:
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-
+          cp -r pulse-report-output/ combined-report/
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/ combined-report/
           else
