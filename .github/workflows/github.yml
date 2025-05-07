@@ -187,7 +187,7 @@ jobs:
           mkdir -p pulse-report-output
           for dir in downloaded-artifacts/pulse-report-output-*; do
             config_type=$(basename "$dir" | sed 's/pulse-report-output-//')
-            cp -r "$dir/attachment" "pulse-report-output/attachment-${config_type}"
+            cp -r "$dir/attachments" "pulse-report-output/attachments-${config_type}"
             cp "$dir/playwright-pulse-report.json" "pulse-report-output/playwright-pulse-report-${config_type}.json"
           done
 
