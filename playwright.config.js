@@ -3,7 +3,7 @@ const { defineConfig, devices } = require("@playwright/test");
 import * as path from "path";
 
 // Define where the final report JSON and HTML should go
-const PULSE_REPORT_DIR = path.resolve(__dirname, "pulse-report-output"); // Example: a directory in your project root
+const PULSE_REPORT_DIR = path.resolve(__dirname, "pulse-report"); // Example: a directory in your project root
 
 /**
  * Read environment variables from file.

@@ -78,8 +78,8 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: pulse-report-output-${{ matrix.config.type }}
-          path: pulse-report-output/
+          name: pulse-report-${{ matrix.config.type }}
+          path: pulse-report/
           retention-days: 1
 
     continue-on-error: true
@@ -179,16 +179,16 @@ jobs:
       - name: Download Pulse Report artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: pulse-report-output-*
+          pattern: pulse-report-*
           path: downloaded-artifacts
 
-      - name: Organize Pulse Report output
+      - name: Organize Pulse Report
         run: |
-          mkdir -p pulse-report-output
-          for dir in downloaded-artifacts/pulse-report-output-*; do
-            config_type=$(basename "$dir" | sed 's/pulse-report-output-//')
-            cp -r "$dir/attachments" "pulse-report-output/attachments"
-            cp "$dir/playwright-pulse-report.json" "pulse-report-output/playwright-pulse-report-${config_type}.json"
+          mkdir -p pulse-report
+          for dir in downloaded-artifacts/pulse-report-*; do
+            config_type=$(basename "$dir" | sed 's/pulse-report-//')
+            cp -r "$dir/attachments" "pulse-report/attachments"
+            cp "$dir/playwright-pulse-report.json" "pulse-report/playwright-pulse-report-${config_type}.json"
           done
 
       - name: Generate Pulse Report
@@ -200,7 +200,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pulse-report
-          path: pulse-report-output/
+          path: pulse-report/
           retention-days: 1
 
       - name: Deploy Reports to Netlify
@@ -209,7 +209,7 @@ jobs:
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-          cp -r pulse-report-output/ combined-report/
+          cp -r pulse-report/ combined-report/
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/ combined-report/
           else
