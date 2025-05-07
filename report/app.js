@@ -21,7 +21,8 @@ function readReportFolders(folderPath) {
         return (
           isDirectory &&
           item.endsWith("-report") &&
-          !item.endsWith("visual-report")
+          !item.endsWith("visual-report") &&
+          item.endsWith("pulse-report-output")
         ); // Include only folders ending with '-report'
       })
       .reduce((acc, reportFolder) => {
