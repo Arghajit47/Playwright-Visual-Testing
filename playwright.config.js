@@ -30,7 +30,7 @@ module.exports = defineConfig({
         ["blob"],
         ["allure-playwright", { open: "never" }], // Add the Playwright Pulse Reporter
         [
-          "@arghajit/playwright-pulse-report",
+          "@arghajit/playwright-pulse-reporter",
           {
             // Optional: Specify the output file name (defaults to 'playwright-pulse-report.json')
             // outputFile: 'my-custom-report-name.json',
@@ -46,7 +46,7 @@ module.exports = defineConfig({
         ["html", { open: "never" }],
         ["allure-playwright", { open: "never" }],
         [
-          "@arghajit/playwright-pulse-report",
+          "@arghajit/playwright-pulse-reporter",
           {
             // Optional: Specify the output file name (defaults to 'playwright-pulse-report.json')
             // outputFile: 'my-custom-report-name.json',
