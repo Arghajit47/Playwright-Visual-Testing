@@ -19,6 +19,8 @@ const scripts = {
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Mobile-Test",
   "playwright-report-generate":
     "npx playwright merge-reports --reporter html ./all-blob-reports",
+  "generate-report": "npx generate-pulse-report",
+  "merge-report": "npx merge-pulse-report",
 };
 
 // Get the script name from command-line arguments
