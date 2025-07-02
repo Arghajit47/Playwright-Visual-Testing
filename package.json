@@ -1,7 +1,7 @@
 {
   "name": "visual-testing",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Visual Testing Project using Playwright, ResembleJS and tesseractJS",
   "main": "index.js",
   "scripts": {
     "script": "node scripts.js"
@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@arghajit/playwright-pulse-report": "^0.1.4",
+    "@arghajit/playwright-pulse-report": "^0.2.4",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
     "allure-commandline": "^2.32.0",
-    "allure-playwright": "^3.0.7"
+    "allure-playwright": "^3.0.7",
+    "pulse-dashboard": "^1.1.1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

@@ -8,8 +8,7 @@ const scripts = {
     "npx allure generate --clean --single-file allure-results",
   "test:desktop-setup":
     "npx playwright test --grep @setupProject --project=Visual-Desktop-Test",
-  "test:mobile-setup":
-    "npx playwright test --grep @setupProject --project=Visual-Mobile-Test",
+  "test:mobile-setup": "npx playwright test --project=Visual-Mobile-Test",
   "test-validate":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test --project=Visual-Mobile-Test",
   test: "npm run script setup && npm run script test-validate",
