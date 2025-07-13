@@ -4,6 +4,8 @@ const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
+import Database from "better-sqlite3";
+import path from "path";
 
 export class HelperFunction {
   constructor(page) {
@@ -126,7 +128,7 @@ export class HelperFunction {
   async validateMismatch(test, mismatch, diffPath, testInfo, device) {
     try {
       assert.ok(parseFloat(mismatch) < 1);
-      createDashboardJson(testInfo, device, "passed", diffPath);
+      await insertVisualRecord(testInfo, device, "passed", diffPath);
     } catch (error) {
       // Log the error message with the base64 encoded screenshot
       const errorMessage = `Mismatch for Home page: ${mismatch}`;
@@ -134,11 +136,58 @@ export class HelperFunction {
       // Log the error
       console.error(errorMessage);
       await this.attachScreenshot(test, diffPath);
-      createDashboardJson(testInfo, device, "failed", diffPath);
+      await insertVisualRecord(testInfo, device, "failed", diffPath);
       const image = diffPath.replace("screenshots", "");
       await uploadImage(image, diffPath);
       // Throw a custom error with the HTML content and base64 screenshot
       test.skip();
+    }
+  }
+
+  async generateBaselineImage(baselineScreenshot) {
+    console.log("Baseline Image not found. Storing current image as baseline.");
+
+    // Initialize database table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS baseline (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    const sql = `
+      INSERT INTO baseline (name)
+      VALUES (@name)
+    `;
+
+    const stmt = db.prepare(sql);
+
+    try {
+      // Insert single record
+      const info = stmt.run({
+        name: baselineScreenshot, // Pass as object with @name property
+      });
+
+      console.log(`Record inserted with ID: ${info.lastInsertRowid}`);
+
+      // Optional: Still maintain JSON file if needed
+      const baselineFile = process.env.CI
+        ? `baseline-${process.env.DEVICE_TYPE}.json`
+        : `baseline.json`;
+
+      let baselineData = [];
+      if (fs.existsSync(baselineFile)) {
+        baselineData = JSON.parse(fs.readFileSync(baselineFile, "utf8"));
+      }
+
+      if (!baselineData.includes(baselineScreenshot)) {
+        baselineData.push(baselineScreenshot);
+        fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
+      }
+    } catch (error) {
+      console.error("Database operation failed:", error);
+      throw error;
     }
   }
 }
@@ -150,7 +199,32 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
 
-export async function createDashboardJson(testInfo, device, status, diffPath) {
+// 1. Initialize the database connection.
+// This will create the 'visual.db' file in your project root if it doesn't exist.
+// const db = new Database("visual.db", { verbose: console.log });
+const db = process.env.CI
+  ? new Database(`visual_${process.env.DEVICE_TYPE}.db`, {
+      verbose: console.log,
+    })
+  : new Database("visual.db", { verbose: console.log });
+
+// 2. Define the table schema and create the table if it doesn't exist.
+// This is a crucial step. This code will only run once to set up the table.
+const createTableStmt = `
+CREATE TABLE IF NOT EXISTS visual_matrix (
+    name TEXT NOT NULL,
+    device TEXT NOT NULL,
+    status TEXT NOT NULL,
+    imageUrl TEXT NOT NULL
+);
+`;
+db.exec(createTableStmt);
+
+// Add a function to gracefully close the database connection when the script exits
+process.on("exit", () => db.close());
+
+// The function signature remains the same, but the internal logic is now for SQLite.
+export async function insertVisualRecord(testInfo, device, status, diffPath) {
   const image = diffPath.replace("screenshots", "");
   let data;
   switch (status) {
@@ -159,6 +233,7 @@ export async function createDashboardJson(testInfo, device, status, diffPath) {
         name: testInfo.title,
         device: device,
         status: "passed",
+        imageUrl: "",
       };
       break;
     case "failed":
@@ -172,7 +247,35 @@ export async function createDashboardJson(testInfo, device, status, diffPath) {
     default:
       throw new Error("Invalid test status");
   }
-  fs.writeFileSync(testInfo.outputPath("./result.json"), JSON.stringify(data));
+  try {
+    // 1. Define the SQL query with named parameters (@name, @status, etc.).
+    // This is a secure way to insert data and prevents SQL injection attacks.
+    const sql = `
+      INSERT INTO visual_matrix (
+        name, 
+        device, 
+        status, 
+        imageUrl
+      ) VALUES (
+        @name, 
+        @device, 
+        @status, 
+        @imageUrl
+      )
+    `;
+
+    // 2. Prepare the statement. This compiles the SQL query for efficiency.
+    const stmt = db.prepare(sql);
+
+    // 3. Execute the statement with the record object.
+    // The keys in the 'record' object (@performance, etc.) are automatically mapped to the named parameters in the SQL query.
+    const info = stmt.run(data);
+
+    console.log(
+      `Record inserted successfully with ID: ${info.lastInsertRowid}`
+    );
+    return info;
+  } catch (error) {
+    console.error("Error inserting record into SQLite:", error);
+  }
 }
-
-

@@ -4,7 +4,8 @@
   "description": "A Visual Testing Project using Playwright, ResembleJS and tesseractJS",
   "main": "index.js",
   "scripts": {
-    "script": "node scripts.js"
+    "script": "node scripts.js",
+    "upload-db": "node storeDb.mjs"
   },
   "keywords": [],
   "author": "",
