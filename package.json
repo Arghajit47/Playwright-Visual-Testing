@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
+    "better-sqlite3": "^12.2.0",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.3.0",
     "netlify-cli": "^17.37.2",
