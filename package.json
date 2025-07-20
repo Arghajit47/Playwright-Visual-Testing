@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@arghajit/playwright-pulse-report": "^0.2.4",
+    "@arghajit/playwright-pulse-report": "^0.2.5",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
     "allure-commandline": "^2.32.0",
