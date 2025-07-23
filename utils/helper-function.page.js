@@ -4,22 +4,46 @@ const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
-import Database from "better-sqlite3";
-import path from "path";
+import dotenv from "dotenv";
+import db, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
+
+// Load environment variables
+dotenv.config();
+
+// Configuration constants
+const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
+const MISMATCH_THRESHOLD = process.env.MISMATCH_THRESHOLD || 1;
 
 export class HelperFunction {
   constructor(page) {
     this.page = page;
   }
 
+  /**
+   * Extract text from an image using Tesseract OCR
+   * @param {string} imagePath - Path to the image file
+   * @returns {Promise<string>} - Extracted text
+   */
   async extractText(imagePath) {
-    return new Promise((resolve, reject) => {
-      Tesseract.recognize(imagePath, "eng") // Specify language
-        .then(({ data: { text } }) => {
-          resolve(text);
-        })
-        .catch(reject);
-    });
+    try {
+      if (!fs.existsSync(imagePath)) {
+        throw new Error(`Image file not found: ${imagePath}`);
+      }
+
+      return new Promise((resolve, reject) => {
+        Tesseract.recognize(imagePath, "eng") // Specify language
+          .then(({ data: { text } }) => {
+            resolve(text);
+          })
+          .catch((error) => {
+            console.error(`OCR error: ${error.message}`);
+            reject(new Error(`Text extraction failed: ${error.message}`));
+          });
+      });
+    } catch (error) {
+      console.error(`Failed to extract text: ${error.message}`);
+      throw error;
+    }
   }
 
   async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
@@ -108,10 +132,19 @@ export class HelperFunction {
     });
   }
 
-  async wait() {
-    await this.page.waitForLoadState("domcontentloaded");
-    await this.page.waitForLoadState("networkidle");
-    await this.page.waitForTimeout(5000);
+  /**
+   * Wait for page to be fully loaded with configurable timeout
+   * @param {number} timeout - Optional custom timeout in ms
+   */
+  async wait(timeout = DEFAULT_WAIT_TIMEOUT) {
+    try {
+      await this.page.waitForLoadState("domcontentloaded");
+      await this.page.waitForLoadState("networkidle");
+      await this.page.waitForTimeout(parseInt(timeout));
+    } catch (error) {
+      console.error(`Error during page wait: ${error.message}`);
+      throw new Error(`Failed to wait for page to load: ${error.message}`);
+    }
   }
 
   async captureBase64Screenshot(diffPath) {
@@ -124,54 +157,78 @@ export class HelperFunction {
       contentType: "image/png",
     });
   }
-
+  /**
+   * Validate if the mismatch percentage is within acceptable threshold
+   * @param {Object} test - Test object
+   * @param {number} mismatch - Mismatch percentage
+   * @param {string} diffPath - Path to the diff image
+   * @param {Object} testInfo - Test info object
+   * @param {string} device - Device type (e.g., "desktop", "mobile")
+   */
   async validateMismatch(test, mismatch, diffPath, testInfo, device) {
     try {
-      assert.ok(parseFloat(mismatch) < 1);
+      // Use configurable threshold from environment or default
+      const threshold = parseFloat(MISMATCH_THRESHOLD);
+      assert.ok(
+        parseFloat(mismatch) < threshold,
+        `Mismatch of ${mismatch}% exceeds threshold of ${threshold}%`
+      );
+
+      console.log(
+        `✅ Test passed: Mismatch ${mismatch}% is below threshold ${threshold}%`
+      );
       await insertVisualRecord(testInfo, device, "passed", diffPath);
     } catch (error) {
-      // Log the error message with the base64 encoded screenshot
-      const errorMessage = `Mismatch for Home page: ${mismatch}`;
+      // Get the test name from testInfo or use a default
+      const testName = testInfo.title || "Unknown test";
+      const errorMessage = `Mismatch for ${testName}: ${mismatch}%`;
 
-      // Log the error
-      console.error(errorMessage);
-      await this.attachScreenshot(test, diffPath);
-      await insertVisualRecord(testInfo, device, "failed", diffPath);
-      const image = diffPath.replace("screenshots", "");
-      await uploadImage(image, diffPath);
-      // Throw a custom error with the HTML content and base64 screenshot
-      test.skip();
+      // Log the error with more context
+      console.error(`❌ ${errorMessage}`);
+      console.error(`   Test: ${testName}`);
+      console.error(`   Device: ${device}`);
+      console.error(`   Diff image: ${diffPath}`);
+
+      try {
+        // Attach screenshot to test report
+        await this.attachScreenshot(test, diffPath);
+
+        // Record the failure in the database
+        await insertVisualRecord(testInfo, device, "failed", diffPath);
+
+        // Upload the diff image for reporting
+        const image = diffPath.replace("screenshots", "");
+        await uploadImage(image, diffPath);
+      } catch (uploadError) {
+        console.error(
+          `❌ Error during result processing: ${uploadError.message}`
+        );
+      }
+
+      // Skip the test instead of failing it
+      test.skip(errorMessage);
     }
   }
 
+  /**
+   * Generate a baseline image when one doesn't exist
+   * @param {string} baselineScreenshot - Path to the baseline screenshot
+   */
   async generateBaselineImage(baselineScreenshot) {
-    console.log("Baseline Image not found. Storing current image as baseline.");
-
-    // Initialize database table
-    db.exec(`
-      CREATE TABLE IF NOT EXISTS baseline (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
-
-    const sql = `
-      INSERT INTO baseline (name)
-      VALUES (@name)
-    `;
-
-    const stmt = db.prepare(sql);
+    console.log(
+      "📸 Baseline Image not found. Storing current image as baseline."
+    );
 
     try {
-      // Insert single record
-      const info = stmt.run({
-        name: baselineScreenshot, // Pass as object with @name property
-      });
+      // Insert record into database using the db-service
+      const { insertBaselineRecord } = await import("./db-service");
+      const info = insertBaselineRecord(db, baselineScreenshot);
 
-      console.log(`Record inserted with ID: ${info.lastInsertRowid}`);
+      console.log(
+        `✅ Baseline record inserted with ID: ${info.lastInsertRowid}`
+      );
 
-      // Optional: Still maintain JSON file if needed
+      // Optional: Still maintain JSON file if needed for backward compatibility
       const baselineFile = process.env.CI
         ? `baseline-${process.env.DEVICE_TYPE}.json`
         : `baseline.json`;
@@ -184,9 +241,10 @@ export class HelperFunction {
       if (!baselineData.includes(baselineScreenshot)) {
         baselineData.push(baselineScreenshot);
         fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
+        console.log(`✅ Added baseline to JSON file: ${baselineFile}`);
       }
     } catch (error) {
-      console.error("Database operation failed:", error);
+      console.error(`❌ Baseline generation failed: ${error.message}`);
       throw error;
     }
   }
@@ -199,83 +257,19 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
 
-// 1. Initialize the database connection.
-// This will create the 'visual.db' file in your project root if it doesn't exist.
-// const db = new Database("visual.db", { verbose: console.log });
-const db = process.env.CI
-  ? new Database(`visual_${process.env.DEVICE_TYPE}.db`, {
-      verbose: console.log,
-    })
-  : new Database("visual.db", { verbose: console.log });
-
-// 2. Define the table schema and create the table if it doesn't exist.
-// This is a crucial step. This code will only run once to set up the table.
-const createTableStmt = `
-CREATE TABLE IF NOT EXISTS visual_matrix (
-    name TEXT NOT NULL,
-    device TEXT NOT NULL,
-    status TEXT NOT NULL,
-    imageUrl TEXT NOT NULL
-);
-`;
-db.exec(createTableStmt);
-
-// Add a function to gracefully close the database connection when the script exits
-process.on("exit", () => db.close());
-
-// The function signature remains the same, but the internal logic is now for SQLite.
+// Database is now managed by db-service.js/**
+/* Insert a visual test record into the database
+ * @param {Object} testInfo - Test information object
+ * @param {string} device - Device type (desktop/mobile)
+ * @param {string} status - Test status (passed/failed)
+ * @param {string} diffPath - Path to diff image
+ * @returns {Object} - Database operation result
+ */
 export async function insertVisualRecord(testInfo, device, status, diffPath) {
-  const image = diffPath.replace("screenshots", "");
-  let data;
-  switch (status) {
-    case "passed":
-      data = {
-        name: testInfo.title,
-        device: device,
-        status: "passed",
-        imageUrl: "",
-      };
-      break;
-    case "failed":
-      data = {
-        name: testInfo.title,
-        device: device,
-        status: "failed",
-        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${image}`,
-      };
-      break;
-    default:
-      throw new Error("Invalid test status");
-  }
   try {
-    // 1. Define the SQL query with named parameters (@name, @status, etc.).
-    // This is a secure way to insert data and prevents SQL injection attacks.
-    const sql = `
-      INSERT INTO visual_matrix (
-        name, 
-        device, 
-        status, 
-        imageUrl
-      ) VALUES (
-        @name, 
-        @device, 
-        @status, 
-        @imageUrl
-      )
-    `;
-
-    // 2. Prepare the statement. This compiles the SQL query for efficiency.
-    const stmt = db.prepare(sql);
-
-    // 3. Execute the statement with the record object.
-    // The keys in the 'record' object (@performance, etc.) are automatically mapped to the named parameters in the SQL query.
-    const info = stmt.run(data);
-
-    console.log(
-      `Record inserted successfully with ID: ${info.lastInsertRowid}`
-    );
-    return info;
+    return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
   } catch (error) {
-    console.error("Error inserting record into SQLite:", error);
+    console.error(`❌ Failed to insert visual record: ${error.message}`);
+    throw error;
   }
 }
