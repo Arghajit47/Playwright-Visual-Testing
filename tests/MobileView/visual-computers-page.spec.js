@@ -7,18 +7,16 @@ const {
 } = require("../../utils/helper-function.page.js");
 const allure = require("allure-js-commons");
 const { uploadImage } = require("../../utils/supabase-function.js");
+const { generateScreenshotName } = require("../../utils/utility-page.js");
 const {
   BASELINE_DIR,
   DIFF_DIR,
   BASELINE_MOBILE_DIR,
-  DIFF_MOBILE_DIR,
-  CURRENT_MOBILE_DIR,
   CURRENT_DIR,
   currentMobileScreenshot,
   baselineMobileScreenshot,
   diffMobileScreenshot,
 } = require("../../utils/enum.js");
-const { generateScreenshotName } = require("../../utils/utility-page.js");
 
 test.describe.configure({ mode: "serial" });
 
@@ -70,14 +68,15 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineMobileScreenshot(test.info().title))) {
-        helper.generateBaselineImage(
-          baselineMobileScreenshot(test.info().title)
+        await helper.generateBaselineImage(
+          baselineMobileScreenshot(test.info().title),
+          test
         );
         return;
       }
 
       await page.goto("https://demo.nopcommerce.com/computers");
-      await helper.wait();
+      await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentMobileScreenshot(test.info().title),
         fullPage: true,

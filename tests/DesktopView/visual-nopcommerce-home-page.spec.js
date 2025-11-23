@@ -67,8 +67,9 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineDesktopScreenshot(test.info().title))) {
-        helper.generateBaselineImage(
-          baselineDesktopScreenshot(test.info().title)
+        await helper.generateBaselineImage(
+          baselineDesktopScreenshot(test.info().title),
+          test
         );
         return;
       }

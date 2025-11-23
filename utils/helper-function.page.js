@@ -241,10 +241,11 @@ export class HelperFunction {
    * Generate a baseline image when one doesn't exist
    * @param {string} baselineScreenshot - Path to the baseline screenshot
    */
-  async generateBaselineImage(baselineScreenshot) {
+  async generateBaselineImage(baselineScreenshot, test) {
     console.log(
       "📸 Baseline Image not found. Storing current image as baseline."
     );
+    test.setTimeout(60000);
 
     try {
       // Insert record into database using the db-service

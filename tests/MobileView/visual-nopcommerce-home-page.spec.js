@@ -11,9 +11,7 @@ const {
   BASELINE_DIR,
   DIFF_DIR,
   CURRENT_DIR,
-  CURRENT_MOBILE_DIR,
   BASELINE_MOBILE_DIR,
-  DIFF_MOBILE_DIR,
   currentMobileScreenshot,
   baselineMobileScreenshot,
   diffMobileScreenshot,
@@ -40,7 +38,6 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
-
       await page.goto("https://demo.nopcommerce.com/");
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
@@ -70,8 +67,9 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineMobileScreenshot(test.info().title))) {
-        helper.generateBaselineImage(
-          baselineMobileScreenshot(test.info().title)
+        await helper.generateBaselineImage(
+          baselineMobileScreenshot(test.info().title),
+          test
         );
         return;
       }
