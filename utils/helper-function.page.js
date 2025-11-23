@@ -13,7 +13,15 @@ dotenv.config();
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
 const MISMATCH_THRESHOLD = process.env.MISMATCH_THRESHOLD || 1;
 
+/**
+ * Helper class providing utilities for visual regression testing,
+ * OCR text extraction, screenshot comparison, and database logging.
+ */
 export class HelperFunction {
+  /**
+   * Create a HelperFunction instance.
+   * @param {import('@playwright/test').Page} page - Playwright page object
+   */
   constructor(page) {
     this.page = page;
   }
@@ -45,6 +53,13 @@ export class HelperFunction {
     }
   }
 
+  /**
+   * Compare two screenshots both visually (pixel-wise) and textually (OCR).
+   * @param {string} currentPath - Path to the current screenshot
+   * @param {string} baselinePath - Path to the baseline screenshot
+   * @param {string} diffPath - Path where the diff image will be saved
+   * @returns {Promise<number>} - Raw mismatch percentage
+   */
   async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -133,7 +148,7 @@ export class HelperFunction {
 
   /**
    * Wait for page to be fully loaded with configurable timeout
-   * @param {number} timeout - Optional custom timeout in ms
+   * @param {number} [timeout=DEFAULT_WAIT_TIMEOUT] - Optional custom timeout in ms
    */
   async wait(timeout = DEFAULT_WAIT_TIMEOUT) {
     try {
@@ -146,9 +161,20 @@ export class HelperFunction {
     }
   }
 
+  /**
+   * Convert an image file to Base64 string.
+   * @param {Buffer|string} diffPath - Image buffer or file path
+   * @returns {string} Base64-encoded image
+   */
   async captureBase64Screenshot(diffPath) {
     return diffPath.toString("base64");
   }
+
+  /**
+   * Attach a screenshot to the Playwright test report.
+   * @param {Object} test - Playwright test object
+   * @param {string} screenshotPath - Absolute path to the screenshot
+   */
   async attachScreenshot(test, screenshotPath) {
     test.info().attachments.push({
       name: "Screenshot",
@@ -156,9 +182,10 @@ export class HelperFunction {
       contentType: "image/png",
     });
   }
+
   /**
    * Validate if the mismatch percentage is within acceptable threshold
-   * @param {Object} test - Test object
+   * @param {Object} test - Playwright test object
    * @param {number} mismatch - Mismatch percentage
    * @param {string} diffPath - Path to the diff image
    * @param {Object} testInfo - Test info object
@@ -259,6 +286,12 @@ export class HelperFunction {
   }
 }
 
+/**
+ * Create required folder structure for visual regression assets.
+ * @param {string} baselineDir - Root directory for baseline images
+ * @param {string} currentDir - Root directory for current images
+ * @param {string} diffDir - Root directory for diff images
+ */
 export async function createFolders(baselineDir, currentDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
@@ -268,8 +301,8 @@ export async function createFolders(baselineDir, currentDir, diffDir) {
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
 
-// Database is now managed by db-service.js/**
-/* Insert a visual test record into the database
+/**
+ * Insert a visual test record into the database
  * @param {Object} testInfo - Test information object
  * @param {string} device - Device type (desktop/mobile)
  * @param {string} status - Test status (passed/failed)

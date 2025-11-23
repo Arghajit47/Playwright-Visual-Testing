@@ -3,6 +3,15 @@ const fs = require("fs");
 import dotenv from "dotenv";
 dotenv.config();
 
+/**
+ * Uploads an image file to Supabase storage.
+ *
+ * @async
+ * @param {string} fileName - The name/path to be used for the file in Supabase storage.
+ * @param {string} pathContent - The local file system path of the image to upload.
+ * @returns {Promise<void>} A promise that resolves when the upload attempt is complete.
+ * @throws {Error} Logs an error message if the upload fails.
+ */
 export async function uploadImage(fileName, pathContent) {
   // Initialize Supabase client
   const supabase = createClient(
@@ -33,4 +42,3 @@ export async function uploadImage(fileName, pathContent) {
     console.error("Test Passed with 0% difference ✅");
   }
 }
-

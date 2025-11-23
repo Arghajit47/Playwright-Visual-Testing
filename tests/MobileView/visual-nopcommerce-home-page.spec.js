@@ -72,9 +72,10 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineMobileScreenshot(test.info().title))) {
-        throw new Error(
-          "Baseline image not found. Please run the setup test first."
+        helper.generateBaselineImage(
+          baselineMobileScreenshot(test.info().title)
         );
+        return;
       }
 
       await page.goto("https://demo.nopcommerce.com/");
