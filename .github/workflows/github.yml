@@ -88,7 +88,6 @@ jobs:
           SUPABASE_URL: ${{ secrets.DB_SUPABASE_URL }}
           SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
           DEVICE_TYPE: ${{ matrix.config.type }}
-
         run: npm run upload-db   
         
     continue-on-error: true
