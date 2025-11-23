@@ -9,14 +9,16 @@ import path from "path";
 // Load environment variables
 dotenv.config();
 
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
+
 // Database configuration
-const DB_VERBOSE = process.env.DB_VERBOSE === 'true';
+const DB_VERBOSE = process.env.DB_VERBOSE === "true";
 const DB_FILE = process.env.CI
-  ? `visual_${process.env.DEVICE_TYPE}.db`
+  ? `visual_${DEVICE_TYPE}.db`
   : process.env.DB_FILE || "visual.db";
 
 console.log("CI:", process.env.CI);
-console.log("DEVICE_TYPE raw:", JSON.stringify(process.env.DEVICE_TYPE));
+console.log("DEVICE_TYPE raw:", DEVICE_TYPE);
 console.log("DB_FILE result:", DB_FILE);  
 
 // Storage URL for images
