@@ -83,6 +83,13 @@ jobs:
           path: pulse-report/
           retention-days: 1
 
+      - name: Upload Screenshots folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.config.type }}
+          path: screenshots/
+          retention-days: 1    
+
       - name: Upload Visual Database
         env:
           DB_SUPABASE_BUCKET_NAME: ${{ secrets.DB_SUPABASE_BUCKET_NAME }}
