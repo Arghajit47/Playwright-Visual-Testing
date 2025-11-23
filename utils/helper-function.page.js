@@ -4,8 +4,8 @@ import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
 import dotenv from "dotenv";
-// Change the import
-import { getDb, insertVisualRecord as dbInsertVisualRecord } from "./db-service";
+// Fix the import to match the export
+import dbService, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
 
 // Load environment variables
 dotenv.config();
@@ -249,6 +249,7 @@ export class HelperFunction {
     try {
       // Insert record into database using the db-service
       const { insertBaselineRecord } = await import("./db-service");
+      const db = dbService.getDatabase(); // Use lazy initialization
       const info = insertBaselineRecord(db, baselineScreenshot);
 
       console.log(

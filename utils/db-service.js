@@ -5,8 +5,6 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import dotenv from "dotenv";
 import path from "path";
-// Update the export
-export default { getDatabase };
 
 // Load environment variables
 dotenv.config();
@@ -250,5 +248,5 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-// Remove this line:
-// export default db;
+// Export the lazy initialization function as default
+export default { getDatabase };
