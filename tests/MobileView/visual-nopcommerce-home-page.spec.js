@@ -95,7 +95,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
         mismatch,
         diffMobileScreenshot(test.info().title),
         testInfo,
-        "Desktop"
+        "Mobile"
       );
     }
   );

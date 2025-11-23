@@ -95,7 +95,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         mismatch,
         diffMobileScreenshot(test.info().title),
         testInfo,
-        "Desktop"
+        "Mobile"
       );
     }
   );

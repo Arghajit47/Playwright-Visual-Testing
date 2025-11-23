@@ -313,6 +313,6 @@ export function createFolders(baselineDir, currentDir, diffDir) {
  */
 // Update the insertVisualRecord function
 export async function insertVisualRecord(testInfo, device, status, diffPath) {
-  const db = getDb(); // Get database lazily
+  const db = dbService.getDatabase(); // Fix: use dbService.getDatabase() instead of getDb()
   return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
 }
