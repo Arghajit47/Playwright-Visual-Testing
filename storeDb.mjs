@@ -5,6 +5,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const DB_SUPABASE_URL = process.env.DB_SUPABASE_URL;
+const DB_SUPABASE_TOKEN = process.env.DB_SUPABASE_TOKEN;
+const DB_SUPABASE_BUCKET_NAME = process.env.DB_SUPABASE_BUCKET_NAME;
+
 // Get current readable date
 const date = new Date(Date.now());
 const readableDate = `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -20,11 +24,7 @@ const readableDate = `${date.getFullYear()}-${(date.getMonth() + 1)
 // Single file upload function
 export async function uploadDB(fileName, pathContent) {
   // Validate environment variables
-  if (
-    !process.env.DB_SUPABASE_URL ||
-    !process.env.DB_SUPABASE_TOKEN ||
-    !process.env.DB_SUPABASE_BUCKET_NAME
-  ) {
+  if (!DB_SUPABASE_URL || !DB_SUPABASE_TOKEN || !DB_SUPABASE_BUCKET_NAME) {
     console.error("❌ Missing required environment variables");
     return false;
   }
@@ -36,12 +36,9 @@ export async function uploadDB(fileName, pathContent) {
   }
 
   // Initialize Supabase client
-  const supabase = createClient(
-    process.env.DB_SUPABASE_URL,
-    process.env.DB_SUPABASE_TOKEN
-  );
+  const supabase = createClient(DB_SUPABASE_URL, DB_SUPABASE_TOKEN);
 
-  const bucketName = process.env.DB_SUPABASE_BUCKET_NAME;
+  const bucketName = DB_SUPABASE_BUCKET_NAME;
 
   try {
     console.log(`📤 Uploading ${pathContent} to ${bucketName}/${fileName}`);

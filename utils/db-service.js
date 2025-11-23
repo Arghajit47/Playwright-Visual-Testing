@@ -9,11 +9,17 @@ import path from "path";
 // Load environment variables
 dotenv.config();
 
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
+
 // Database configuration
-const DB_VERBOSE = process.env.DB_VERBOSE === 'true';
+const DB_VERBOSE = process.env.DB_VERBOSE === "true";
 const DB_FILE = process.env.CI
-  ? `visual_${process.env.DEVICE_TYPE || 'default'}.db`
+  ? `visual_${DEVICE_TYPE}.db`
   : process.env.DB_FILE || "visual.db";
+
+console.log("CI:", process.env.CI);
+console.log("DEVICE_TYPE raw:", DEVICE_TYPE);
+console.log("DB_FILE result:", DB_FILE);  
 
 // Storage URL for images
 const STORAGE_URL = process.env.STORAGE_URL || 
@@ -27,24 +33,40 @@ export function initDatabaseConnection() {
   try {
     // Create DB directory if it doesn't exist
     const dbDir = path.dirname(DB_FILE);
-    if (dbDir !== '.' && !fs.existsSync(dbDir)) {
+    if (dbDir !== "." && !fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir, { recursive: true });
     }
 
-    const db = new Database(DB_FILE, { 
-      verbose: DB_VERBOSE ? console.log : null 
-    });
-    
-    console.log(`✅ Connected to database: ${DB_FILE}`);
-    
-    // Set pragmas for better performance
-    db.pragma('journal_mode = WAL');
-    db.pragma('synchronous = NORMAL');
-    
-    return db;
+    // Check if better-sqlite3 is properly installed
+    try {
+      const db = new Database(DB_FILE, {
+        verbose: DB_VERBOSE ? console.log : null,
+      });
+
+      console.log(`✅ Connected to database: ${DB_FILE}`);
+
+      // Set pragmas for better performance
+      db.pragma("journal_mode = WAL");
+      db.pragma("synchronous = NORMAL");
+
+      return db;
+    } catch (bindingError) {
+      if (
+        bindingError.message.includes("bindings") ||
+        bindingError.message.includes("node-v")
+      ) {
+        console.error("❌ Better-sqlite3 bindings error detected.");
+        console.error("💡 Try running: npm rebuild better-sqlite3");
+        console.error(
+          "💡 Or reinstall: npm uninstall better-sqlite3 && npm install better-sqlite3"
+        );
+      }
+      throw bindingError;
+    }
   } catch (error) {
-    console.error(`❌ Failed to connect to database: ${error.message}`);
-    throw new Error(`Database connection failed: ${error.message}`);
+    console.error(`❌ Database connection failed: ${error.message}`);
+    // Log the error first, then throw
+    throw error;
   }
 }
 
@@ -204,9 +226,20 @@ export function closeDatabase(db) {
   }
 }
 
-// Initialize the database connection and schema
-const db = initDatabaseConnection();
-initDatabaseSchema(db);
+// Remove immediate initialization
+// const db = initDatabaseConnection();  // Remove this line
+// initDatabaseSchema(db);               // Remove this line
+
+// Add lazy initialization
+let db = null;
+
+export function getDatabase() {
+  if (!db) {
+    db = initDatabaseConnection();
+    initDatabaseSchema(db);
+  }
+  return db;
+}
 
 // Close connection when the process exits
 process.on("exit", () => closeDatabase(db));
@@ -215,4 +248,5 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-export default db;
+// Export the lazy initialization function as default
+export default { getDatabase };

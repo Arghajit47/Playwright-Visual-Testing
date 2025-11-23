@@ -6,9 +6,9 @@ dotenv.config(); // Load Supabase API Key from .env
 
 /**
  * Downloads all files from a specific folder in a Supabase Storage bucket.
- * @param folder - The folder path in the bucket (e.g., "desktop" or "mobile").
+ * @param {string} folder - The folder path in the bucket (e.g., "desktop" or "mobile").
+ * @returns {Promise<void>}
  */
-
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_BUCKET = process.env.SUPABASE_BUCKET_NAME; // Change to your bucket
 const SUPABASE_API_KEY = process.env.SUPABASE_TOKEN;
@@ -17,7 +17,11 @@ const SUPABASE_API_KEY = process.env.SUPABASE_TOKEN;
 const folderPath = "./screenshots";
 fs.ensureDirSync(folderPath);
 
-// Function to download images from Supabase Storage
+/**
+ * Downloads images from a specified folder in Supabase Storage and saves them locally.
+ * @param {string} folder - The folder path within the Supabase bucket.
+ * @returns {Promise<void>}
+ */
 async function downloadImages(folder) {
   try {
     const supabase = await createClient(

@@ -1,11 +1,11 @@
-const { expect } = require("@playwright/test");
 import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
 import dotenv from "dotenv";
-import db, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
+// Fix the import to match the export
+import dbService, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
 
 // Load environment variables
 dotenv.config();
@@ -14,7 +14,15 @@ dotenv.config();
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
 const MISMATCH_THRESHOLD = process.env.MISMATCH_THRESHOLD || 1;
 
+/**
+ * Helper class providing utilities for visual regression testing,
+ * OCR text extraction, screenshot comparison, and database logging.
+ */
 export class HelperFunction {
+  /**
+   * Create a HelperFunction instance.
+   * @param {import('@playwright/test').Page} page - Playwright page object
+   */
   constructor(page) {
     this.page = page;
   }
@@ -46,6 +54,13 @@ export class HelperFunction {
     }
   }
 
+  /**
+   * Compare two screenshots both visually (pixel-wise) and textually (OCR).
+   * @param {string} currentPath - Path to the current screenshot
+   * @param {string} baselinePath - Path to the baseline screenshot
+   * @param {string} diffPath - Path where the diff image will be saved
+   * @returns {Promise<number>} - Raw mismatch percentage
+   */
   async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -134,7 +149,7 @@ export class HelperFunction {
 
   /**
    * Wait for page to be fully loaded with configurable timeout
-   * @param {number} timeout - Optional custom timeout in ms
+   * @param {number} [timeout=DEFAULT_WAIT_TIMEOUT] - Optional custom timeout in ms
    */
   async wait(timeout = DEFAULT_WAIT_TIMEOUT) {
     try {
@@ -147,9 +162,20 @@ export class HelperFunction {
     }
   }
 
+  /**
+   * Convert an image file to Base64 string.
+   * @param {Buffer|string} diffPath - Image buffer or file path
+   * @returns {string} Base64-encoded image
+   */
   async captureBase64Screenshot(diffPath) {
     return diffPath.toString("base64");
   }
+
+  /**
+   * Attach a screenshot to the Playwright test report.
+   * @param {Object} test - Playwright test object
+   * @param {string} screenshotPath - Absolute path to the screenshot
+   */
   async attachScreenshot(test, screenshotPath) {
     test.info().attachments.push({
       name: "Screenshot",
@@ -157,9 +183,10 @@ export class HelperFunction {
       contentType: "image/png",
     });
   }
+
   /**
    * Validate if the mismatch percentage is within acceptable threshold
-   * @param {Object} test - Test object
+   * @param {Object} test - Playwright test object
    * @param {number} mismatch - Mismatch percentage
    * @param {string} diffPath - Path to the diff image
    * @param {Object} testInfo - Test info object
@@ -214,14 +241,16 @@ export class HelperFunction {
    * Generate a baseline image when one doesn't exist
    * @param {string} baselineScreenshot - Path to the baseline screenshot
    */
-  async generateBaselineImage(baselineScreenshot) {
+  async generateBaselineImage(baselineScreenshot, test) {
     console.log(
       "📸 Baseline Image not found. Storing current image as baseline."
     );
+    test.setTimeout(60000);
 
     try {
       // Insert record into database using the db-service
       const { insertBaselineRecord } = await import("./db-service");
+      const db = dbService.getDatabase(); // Use lazy initialization
       const info = insertBaselineRecord(db, baselineScreenshot);
 
       console.log(
@@ -235,7 +264,17 @@ export class HelperFunction {
 
       let baselineData = [];
       if (fs.existsSync(baselineFile)) {
-        baselineData = JSON.parse(fs.readFileSync(baselineFile, "utf8"));
+        try {
+          const fileContent = fs.readFileSync(baselineFile, "utf8").trim();
+          if (fileContent) {
+            baselineData = JSON.parse(fileContent);
+          }
+        } catch (parseError) {
+          console.warn(
+            `⚠️ Invalid JSON in ${baselineFile}, starting with empty array`
+          );
+          baselineData = [];
+        }
       }
 
       if (!baselineData.includes(baselineScreenshot)) {
@@ -250,26 +289,31 @@ export class HelperFunction {
   }
 }
 
-export async function createFolders(baselineDir, diffDir) {
+/**
+ * Create required folder structure for visual regression assets.
+ * @param {string} baselineDir - Root directory for baseline images
+ * @param {string} currentDir - Root directory for current images
+ * @param {string} diffDir - Root directory for diff images
+ */
+export function createFolders(baselineDir, currentDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
+  fs.mkdirSync(`${currentDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${currentDir}/mobile`, { recursive: true });
   fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
 
-// Database is now managed by db-service.js/**
-/* Insert a visual test record into the database
+/**
+ * Insert a visual test record into the database
  * @param {Object} testInfo - Test information object
  * @param {string} device - Device type (desktop/mobile)
  * @param {string} status - Test status (passed/failed)
  * @param {string} diffPath - Path to diff image
  * @returns {Object} - Database operation result
  */
+// Update the insertVisualRecord function
 export async function insertVisualRecord(testInfo, device, status, diffPath) {
-  try {
-    return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
-  } catch (error) {
-    console.error(`❌ Failed to insert visual record: ${error.message}`);
-    throw error;
-  }
+  const db = dbService.getDatabase(); // Fix: use dbService.getDatabase() instead of getDb()
+  return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
 }
