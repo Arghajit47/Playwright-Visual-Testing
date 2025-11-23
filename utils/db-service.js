@@ -5,6 +5,8 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import dotenv from "dotenv";
 import path from "path";
+// Update the export
+export default { getDatabase };
 
 // Load environment variables
 dotenv.config();
@@ -226,9 +228,20 @@ export function closeDatabase(db) {
   }
 }
 
-// Initialize the database connection and schema
-const db = initDatabaseConnection();
-initDatabaseSchema(db);
+// Remove immediate initialization
+// const db = initDatabaseConnection();  // Remove this line
+// initDatabaseSchema(db);               // Remove this line
+
+// Add lazy initialization
+let db = null;
+
+export function getDatabase() {
+  if (!db) {
+    db = initDatabaseConnection();
+    initDatabaseSchema(db);
+  }
+  return db;
+}
 
 // Close connection when the process exits
 process.on("exit", () => closeDatabase(db));
@@ -237,4 +250,5 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-export default db;
+// Remove this line:
+// export default db;

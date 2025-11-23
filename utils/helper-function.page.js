@@ -4,7 +4,8 @@ import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
 import dotenv from "dotenv";
-import db, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
+// Change the import
+import { getDb, insertVisualRecord as dbInsertVisualRecord } from "./db-service";
 
 // Load environment variables
 dotenv.config();
@@ -309,11 +310,8 @@ export function createFolders(baselineDir, currentDir, diffDir) {
  * @param {string} diffPath - Path to diff image
  * @returns {Object} - Database operation result
  */
+// Update the insertVisualRecord function
 export async function insertVisualRecord(testInfo, device, status, diffPath) {
-  try {
-    return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
-  } catch (error) {
-    console.error(`❌ Failed to insert visual record: ${error.message}`);
-    throw error;
-  }
+  const db = getDb(); // Get database lazily
+  return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
 }
