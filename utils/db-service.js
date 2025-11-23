@@ -12,8 +12,12 @@ dotenv.config();
 // Database configuration
 const DB_VERBOSE = process.env.DB_VERBOSE === 'true';
 const DB_FILE = process.env.CI
-  ? `visual_${process.env.DEVICE_TYPE || 'default'}.db`
+  ? `visual_${process.env.DEVICE_TYPE}.db`
   : process.env.DB_FILE || "visual.db";
+
+console.log("CI:", process.env.CI);
+console.log("DEVICE_TYPE raw:", JSON.stringify(process.env.DEVICE_TYPE));
+console.log("DB_FILE result:", DB_FILE);  
 
 // Storage URL for images
 const STORAGE_URL = process.env.STORAGE_URL || 
