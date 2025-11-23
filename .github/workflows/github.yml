@@ -82,6 +82,14 @@ jobs:
           path: pulse-report/
           retention-days: 1
 
+      - name: Upload Visual Database
+        env:
+          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
+          
+        run: npm run upload-db   
+        
     continue-on-error: true
 
   merge-reports:
