@@ -235,7 +235,15 @@ export class HelperFunction {
 
       let baselineData = [];
       if (fs.existsSync(baselineFile)) {
-        baselineData = JSON.parse(fs.readFileSync(baselineFile, "utf8"));
+        try {
+          const fileContent = fs.readFileSync(baselineFile, "utf8").trim();
+          if (fileContent) {
+            baselineData = JSON.parse(fileContent);
+          }
+        } catch (parseError) {
+          console.warn(`⚠️ Invalid JSON in ${baselineFile}, starting with empty array`);
+          baselineData = [];
+        }
       }
 
       if (!baselineData.includes(baselineScreenshot)) {

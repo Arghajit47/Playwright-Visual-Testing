@@ -15,15 +15,11 @@ const baselineDir = `${screenshotsDir}/baseline`;
 const diffDir = `${screenshotsDir}/diff`;
 
 test.describe("Take screenshots for Visual Regression Testing - Pools page", () => {
-  let helper; // Define the HelperFunction instance
+  let helper = new HelperFunction(); // Define the HelperFunction instance
 
   test.beforeAll(async () => {
     // Create directories if they don't exist
     await createFolders(baselineDir, diffDir);
-  });
-
-  test.beforeEach(async ({ page }) => {
-    helper = new HelperFunction(page);
   });
 
   test(

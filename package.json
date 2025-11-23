@@ -11,21 +11,25 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@arghajit/playwright-pulse-report": "^0.2.5",
+    "@arghajit/playwright-pulse-report": "^0.2.9",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
     "allure-commandline": "^2.32.0",
     "allure-playwright": "^3.0.7",
-    "pulse-dashboard": "^1.1.1"
+    "pulse-dashboard": "^1.1.5"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^12.4.6",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.3.0",
-    "netlify-cli": "^17.37.2",
+    "netlify-cli": "^23.11.1",
     "playwright": "^1.49.1",
     "resemblejs": "^5.0.0",
     "tesseract.js": "^5.1.1"
+  },
+  "overrides": {
+    "glob": "^13.0.0",
+    "@rollup/rollup-android-arm-eabi": false
   }
 }

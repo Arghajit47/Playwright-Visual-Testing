@@ -27,24 +27,40 @@ export function initDatabaseConnection() {
   try {
     // Create DB directory if it doesn't exist
     const dbDir = path.dirname(DB_FILE);
-    if (dbDir !== '.' && !fs.existsSync(dbDir)) {
+    if (dbDir !== "." && !fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir, { recursive: true });
     }
 
-    const db = new Database(DB_FILE, { 
-      verbose: DB_VERBOSE ? console.log : null 
-    });
-    
-    console.log(`✅ Connected to database: ${DB_FILE}`);
-    
-    // Set pragmas for better performance
-    db.pragma('journal_mode = WAL');
-    db.pragma('synchronous = NORMAL');
-    
-    return db;
+    // Check if better-sqlite3 is properly installed
+    try {
+      const db = new Database(DB_FILE, {
+        verbose: DB_VERBOSE ? console.log : null,
+      });
+
+      console.log(`✅ Connected to database: ${DB_FILE}`);
+
+      // Set pragmas for better performance
+      db.pragma("journal_mode = WAL");
+      db.pragma("synchronous = NORMAL");
+
+      return db;
+    } catch (bindingError) {
+      if (
+        bindingError.message.includes("bindings") ||
+        bindingError.message.includes("node-v")
+      ) {
+        console.error("❌ Better-sqlite3 bindings error detected.");
+        console.error("💡 Try running: npm rebuild better-sqlite3");
+        console.error(
+          "💡 Or reinstall: npm uninstall better-sqlite3 && npm install better-sqlite3"
+        );
+      }
+      throw bindingError;
+    }
   } catch (error) {
-    console.error(`❌ Failed to connect to database: ${error.message}`);
-    throw new Error(`Database connection failed: ${error.message}`);
+    console.error(`❌ Database connection failed: ${error.message}`);
+    // Log the error first, then throw
+    throw error;
   }
 }
 
