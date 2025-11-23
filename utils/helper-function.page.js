@@ -292,7 +292,7 @@ export class HelperFunction {
  * @param {string} currentDir - Root directory for current images
  * @param {string} diffDir - Root directory for diff images
  */
-export async function createFolders(baselineDir, currentDir, diffDir) {
+export function createFolders(baselineDir, currentDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
   fs.mkdirSync(`${currentDir}/desktop`, { recursive: true });

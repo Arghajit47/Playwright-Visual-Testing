@@ -7,14 +7,12 @@ const {
 } = require("../../utils/helper-function.page.js");
 const allure = require("allure-js-commons");
 const { uploadImage } = require("../../utils/supabase-function.js");
+const { generateScreenshotName } = require("../../utils/utility-page.js");
 const {
   BASELINE_DIR,
   DIFF_DIR,
   BASELINE_DESKTOP_DIR,
   CURRENT_DIR,
-} = require("../../utils/enum.js");
-const { generateScreenshotName } = require("../../utils/utility-page.js");
-const {
   currentDesktopScreenshot,
   baselineDesktopScreenshot,
   diffDesktopScreenshot,
@@ -28,7 +26,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
 
   test.beforeAll(async () => {
     // Create directories if they don't exist
-    await createFolders(BASELINE_DIR, CURRENT_DIR, DIFF_DIR);
+    createFolders(BASELINE_DIR, CURRENT_DIR, DIFF_DIR);
   });
 
   test.beforeEach(async ({ page }) => {

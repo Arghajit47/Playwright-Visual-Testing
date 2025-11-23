@@ -14,8 +14,6 @@ const {
   DIFF_MOBILE_DIR,
   CURRENT_MOBILE_DIR,
   CURRENT_DIR,
-} = require("../../utils/enum.js");
-const {
   currentMobileScreenshot,
   baselineMobileScreenshot,
   diffMobileScreenshot,
@@ -30,7 +28,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
 
   test.beforeAll(async () => {
     // Create directories if they don't exist
-    await createFolders(BASELINE_DIR, CURRENT_DIR, DIFF_DIR);
+    createFolders(BASELINE_DIR, CURRENT_DIR, DIFF_DIR);
   });
 
   test.beforeEach(async ({ page }) => {
@@ -85,29 +83,20 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         fullPage: true,
       });
 
-      const isMatched = await helper.compareScreenshotsWithText(
+      const mismatch = await helper.compareScreenshotsWithText(
         currentMobileScreenshot(test.info().title),
         baselineMobileScreenshot(test.info().title),
         diffMobileScreenshot(test.info().title)
       );
 
-      if (isMatched) {
-        console.log("✅ Screenshots match! No visual changes detected.");
-      } else {
-        console.log("❌ Visual differences detected!");
-        await uploadImage(
-          `${CURRENT_MOBILE_DIR}/${generateScreenshotName(
-            test.info().title
-          )}-current.png`,
-          currentMobileScreenshot(test.info().title)
-        );
-        await uploadImage(
-          `${DIFF_MOBILE_DIR}/${generateScreenshotName(
-            test.info().title
-          )}-diff.png`,
-          diffMobileScreenshot(test.info().title)
-        );
-      }
+      console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffMobileScreenshot(test.info().title),
+        testInfo,
+        "Desktop"
+      );
     }
   );
 });

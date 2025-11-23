@@ -4,5 +4,5 @@
  * @returns {string} The cleaned string (first part before “ –”, spaces replaced by hyphens).
  */
 export function generateScreenshotName(testName) {
-  return `${testName.split(" -")[0].replace(" ", "-")}`;
+  return `${testName.split(" -")[0].replaceAll(" ", "-")}`;
 }
