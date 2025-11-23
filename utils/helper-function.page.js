@@ -1,4 +1,3 @@
-const { expect } = require("@playwright/test");
 import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
@@ -241,7 +240,9 @@ export class HelperFunction {
             baselineData = JSON.parse(fileContent);
           }
         } catch (parseError) {
-          console.warn(`⚠️ Invalid JSON in ${baselineFile}, starting with empty array`);
+          console.warn(
+            `⚠️ Invalid JSON in ${baselineFile}, starting with empty array`
+          );
           baselineData = [];
         }
       }
@@ -258,9 +259,11 @@ export class HelperFunction {
   }
 }
 
-export async function createFolders(baselineDir, diffDir) {
+export async function createFolders(baselineDir, currentDir, diffDir) {
   fs.mkdirSync(`${baselineDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${baselineDir}/mobile`, { recursive: true });
+  fs.mkdirSync(`${currentDir}/desktop`, { recursive: true });
+  fs.mkdirSync(`${currentDir}/mobile`, { recursive: true });
   fs.mkdirSync(`${diffDir}/desktop`, { recursive: true });
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
