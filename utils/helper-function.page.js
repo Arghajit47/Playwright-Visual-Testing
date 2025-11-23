@@ -193,20 +193,14 @@ export class HelperFunction {
    * @param {string} device - Device type (e.g., "desktop", "mobile")
    */
   async validateMismatch(test, mismatch, diffPath, testInfo, device) {
-    try {
-      // Use configurable threshold from environment or default
-      const threshold = parseFloat(MISMATCH_THRESHOLD);
-      assert.ok(
-        parseFloat(mismatch) < threshold,
-        `Mismatch of ${mismatch}% exceeds threshold of ${threshold}%`
-      );
-
+    // Use configurable threshold from environment or default
+    const threshold = parseFloat(MISMATCH_THRESHOLD);
+    if (parseFloat(mismatch) < threshold) {
       console.log(
         `✅ Test passed: Mismatch ${mismatch}% is below threshold ${threshold}%`
       );
       await insertVisualRecord(testInfo, device, "passed", diffPath);
-    } catch (error) {
-      // Get the test name from testInfo or use a default
+    } else {
       const testName = testInfo.title || "Unknown test";
       const errorMessage = `Mismatch for ${testName}: ${mismatch}%`;
 
@@ -215,23 +209,14 @@ export class HelperFunction {
       console.error(`   Test: ${testName}`);
       console.error(`   Device: ${device}`);
       console.error(`   Diff image: ${diffPath}`);
+      await this.attachScreenshot(test, diffPath);
 
-      try {
-        // Attach screenshot to test report
-        await this.attachScreenshot(test, diffPath);
+      // Record the failure in the database
+      await insertVisualRecord(testInfo, device, "failed", diffPath);
 
-        // Record the failure in the database
-        await insertVisualRecord(testInfo, device, "failed", diffPath);
-
-        // Upload the diff image for reporting
-        const image = diffPath.replace("screenshots", "");
-        await uploadImage(image, diffPath);
-      } catch (uploadError) {
-        console.error(
-          `❌ Error during result processing: ${uploadError.message}`
-        );
-      }
-
+      // Upload the diff image for reporting
+      const image = diffPath.replace("screenshots", "");
+      await uploadImage(image, diffPath);
       // Skip the test instead of failing it
       test.skip(errorMessage);
     }
