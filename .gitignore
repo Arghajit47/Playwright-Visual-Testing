@@ -10,6 +10,7 @@ node_modules/
 # Ignore allure report and results
 allure-report
 allure-results
+pulse-report
 
 # Ignore folder structure file
 /report/folderStructure.json

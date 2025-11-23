@@ -74,6 +74,14 @@ jobs:
           path: allure-results/
           retention-days: 1
 
+      - name: Upload Pulse Report results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-report-${{ matrix.config.type }}
+          path: pulse-report/
+          retention-days: 1
+
     continue-on-error: true
 
   merge-reports:
@@ -168,13 +176,40 @@ jobs:
             report/
           retention-days: 5
 
+      - name: Download Pulse Report artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pulse-report-*
+          path: downloaded-artifacts
+
+      - name: Organize Pulse Report
+        run: |
+          mkdir -p pulse-report
+          for dir in downloaded-artifacts/pulse-report-*; do
+            config_type=$(basename "$dir" | sed 's/pulse-report-//')
+            cp -r "$dir/attachments" "pulse-report/attachments" || true
+            cp "$dir/playwright-pulse-report.json" "pulse-report/playwright-pulse-report-${config_type}.json"
+          done
+
+      - name: Generate Pulse Report
+        run: |
+          npm run script merge-report
+          npm run script generate-report
+
+      - name: Upload Pulse report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-report
+          path: pulse-report/
+          retention-days: 1
+
       - name: Deploy Reports to Netlify
         if: always()
         run: |
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-
+          cp -r pulse-report/ combined-report/
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/ combined-report/
           else

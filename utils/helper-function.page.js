@@ -4,20 +4,46 @@ const Tesseract = require("tesseract.js");
 import fs from "fs";
 import assert from "assert";
 const { uploadImage } = require("./supabase-function");
+import dotenv from "dotenv";
+import db, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
+
+// Load environment variables
+dotenv.config();
+
+// Configuration constants
+const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
+const MISMATCH_THRESHOLD = process.env.MISMATCH_THRESHOLD || 1;
 
 export class HelperFunction {
   constructor(page) {
     this.page = page;
   }
 
+  /**
+   * Extract text from an image using Tesseract OCR
+   * @param {string} imagePath - Path to the image file
+   * @returns {Promise<string>} - Extracted text
+   */
   async extractText(imagePath) {
-    return new Promise((resolve, reject) => {
-      Tesseract.recognize(imagePath, "eng") // Specify language
-        .then(({ data: { text } }) => {
-          resolve(text);
-        })
-        .catch(reject);
-    });
+    try {
+      if (!fs.existsSync(imagePath)) {
+        throw new Error(`Image file not found: ${imagePath}`);
+      }
+
+      return new Promise((resolve, reject) => {
+        Tesseract.recognize(imagePath, "eng") // Specify language
+          .then(({ data: { text } }) => {
+            resolve(text);
+          })
+          .catch((error) => {
+            console.error(`OCR error: ${error.message}`);
+            reject(new Error(`Text extraction failed: ${error.message}`));
+          });
+      });
+    } catch (error) {
+      console.error(`Failed to extract text: ${error.message}`);
+      throw error;
+    }
   }
 
   async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
@@ -106,10 +132,19 @@ export class HelperFunction {
     });
   }
 
-  async wait() {
-    await this.page.waitForLoadState("domcontentloaded");
-    await this.page.waitForLoadState("networkidle");
-    await this.page.waitForTimeout(5000);
+  /**
+   * Wait for page to be fully loaded with configurable timeout
+   * @param {number} timeout - Optional custom timeout in ms
+   */
+  async wait(timeout = DEFAULT_WAIT_TIMEOUT) {
+    try {
+      await this.page.waitForLoadState("domcontentloaded");
+      await this.page.waitForLoadState("networkidle");
+      await this.page.waitForTimeout(parseInt(timeout));
+    } catch (error) {
+      console.error(`Error during page wait: ${error.message}`);
+      throw new Error(`Failed to wait for page to load: ${error.message}`);
+    }
   }
 
   async captureBase64Screenshot(diffPath) {
@@ -122,23 +157,95 @@ export class HelperFunction {
       contentType: "image/png",
     });
   }
-
+  /**
+   * Validate if the mismatch percentage is within acceptable threshold
+   * @param {Object} test - Test object
+   * @param {number} mismatch - Mismatch percentage
+   * @param {string} diffPath - Path to the diff image
+   * @param {Object} testInfo - Test info object
+   * @param {string} device - Device type (e.g., "desktop", "mobile")
+   */
   async validateMismatch(test, mismatch, diffPath, testInfo, device) {
     try {
-      assert.ok(parseFloat(mismatch) < 1);
-      createDashboardJson(testInfo, device, "passed", diffPath);
-    } catch (error) {
-      // Log the error message with the base64 encoded screenshot
-      const errorMessage = `Mismatch for Home page: ${mismatch}`;
+      // Use configurable threshold from environment or default
+      const threshold = parseFloat(MISMATCH_THRESHOLD);
+      assert.ok(
+        parseFloat(mismatch) < threshold,
+        `Mismatch of ${mismatch}% exceeds threshold of ${threshold}%`
+      );
 
-      // Log the error
-      console.error(errorMessage);
-      await this.attachScreenshot(test, diffPath);
-      createDashboardJson(testInfo, device, "failed", diffPath);
-      const image = diffPath.replace("screenshots", "");
-      await uploadImage(image, diffPath);
-      // Throw a custom error with the HTML content and base64 screenshot
-      test.skip();
+      console.log(
+        `✅ Test passed: Mismatch ${mismatch}% is below threshold ${threshold}%`
+      );
+      await insertVisualRecord(testInfo, device, "passed", diffPath);
+    } catch (error) {
+      // Get the test name from testInfo or use a default
+      const testName = testInfo.title || "Unknown test";
+      const errorMessage = `Mismatch for ${testName}: ${mismatch}%`;
+
+      // Log the error with more context
+      console.error(`❌ ${errorMessage}`);
+      console.error(`   Test: ${testName}`);
+      console.error(`   Device: ${device}`);
+      console.error(`   Diff image: ${diffPath}`);
+
+      try {
+        // Attach screenshot to test report
+        await this.attachScreenshot(test, diffPath);
+
+        // Record the failure in the database
+        await insertVisualRecord(testInfo, device, "failed", diffPath);
+
+        // Upload the diff image for reporting
+        const image = diffPath.replace("screenshots", "");
+        await uploadImage(image, diffPath);
+      } catch (uploadError) {
+        console.error(
+          `❌ Error during result processing: ${uploadError.message}`
+        );
+      }
+
+      // Skip the test instead of failing it
+      test.skip(errorMessage);
+    }
+  }
+
+  /**
+   * Generate a baseline image when one doesn't exist
+   * @param {string} baselineScreenshot - Path to the baseline screenshot
+   */
+  async generateBaselineImage(baselineScreenshot) {
+    console.log(
+      "📸 Baseline Image not found. Storing current image as baseline."
+    );
+
+    try {
+      // Insert record into database using the db-service
+      const { insertBaselineRecord } = await import("./db-service");
+      const info = insertBaselineRecord(db, baselineScreenshot);
+
+      console.log(
+        `✅ Baseline record inserted with ID: ${info.lastInsertRowid}`
+      );
+
+      // Optional: Still maintain JSON file if needed for backward compatibility
+      const baselineFile = process.env.CI
+        ? `baseline-${process.env.DEVICE_TYPE}.json`
+        : `baseline.json`;
+
+      let baselineData = [];
+      if (fs.existsSync(baselineFile)) {
+        baselineData = JSON.parse(fs.readFileSync(baselineFile, "utf8"));
+      }
+
+      if (!baselineData.includes(baselineScreenshot)) {
+        baselineData.push(baselineScreenshot);
+        fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
+        console.log(`✅ Added baseline to JSON file: ${baselineFile}`);
+      }
+    } catch (error) {
+      console.error(`❌ Baseline generation failed: ${error.message}`);
+      throw error;
     }
   }
 }
@@ -150,29 +257,19 @@ export async function createFolders(baselineDir, diffDir) {
   fs.mkdirSync(`${diffDir}/mobile`, { recursive: true });
 }
 
-export async function createDashboardJson(testInfo, device, status, diffPath) {
-  const image = diffPath.replace("screenshots", "");
-  let data;
-  switch (status) {
-    case "passed":
-      data = {
-        name: testInfo.title,
-        device: device,
-        status: "passed",
-      };
-      break;
-    case "failed":
-      data = {
-        name: testInfo.title,
-        device: device,
-        status: "failed",
-        imageUrl: `https://ocpaxmghzmfbuhxzxzae.supabase.co/storage/v1/object/public/visual_test${image}`,
-      };
-      break;
-    default:
-      throw new Error("Invalid test status");
+// Database is now managed by db-service.js/**
+/* Insert a visual test record into the database
+ * @param {Object} testInfo - Test information object
+ * @param {string} device - Device type (desktop/mobile)
+ * @param {string} status - Test status (passed/failed)
+ * @param {string} diffPath - Path to diff image
+ * @returns {Object} - Database operation result
+ */
+export async function insertVisualRecord(testInfo, device, status, diffPath) {
+  try {
+    return dbInsertVisualRecord(db, testInfo, device, status, diffPath);
+  } catch (error) {
+    console.error(`❌ Failed to insert visual record: ${error.message}`);
+    throw error;
   }
-  fs.writeFileSync(testInfo.outputPath("./result.json"), JSON.stringify(data));
 }
-
-

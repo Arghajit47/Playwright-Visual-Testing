@@ -58,7 +58,7 @@ test.describe("Take screenshots for Visual Regression Testing - Windmills page",
 
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineScreenshot)) {
-        console.log("Baseline does not exist. Run the setup test first.");
+        helper.generateBaselineImage(baselineScreenshot);
         return;
       }
 
