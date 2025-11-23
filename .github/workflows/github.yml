@@ -84,10 +84,10 @@ jobs:
 
       - name: Upload Visual Database
         env:
-          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
-          
+          SUPABASE_BUCKET_NAME: ${{ secrets.DB_SUPABASE_BUCKET_NAME }}
+          SUPABASE_URL: ${{ secrets.DB_SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
+
         run: npm run upload-db   
         
     continue-on-error: true
