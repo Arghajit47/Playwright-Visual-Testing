@@ -86,8 +86,6 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
         baselineDesktopScreenshot(test.info().title),
         diffDesktopScreenshot(test.info().title)
       );
-
-      console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
       await helper.validateMismatch(
         test,
         mismatch,

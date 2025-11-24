@@ -1,18 +1,17 @@
-import resemble from "resemblejs";
 const Tesseract = require("tesseract.js");
 import fs from "fs";
-import assert from "assert";
 const { uploadImage } = require("./supabase-function");
 import dotenv from "dotenv";
 // Fix the import to match the export
-import dbService, { insertVisualRecord as dbInsertVisualRecord } from "./db-service";
-
-// Load environment variables
-dotenv.config();
+import dbService, {
+  insertVisualRecord as dbInsertVisualRecord,
+} from "./db-service";
+const looksSame = require("looks-same");
+import { mergeImages } from "./utility-page.js";
 
 // Configuration constants
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
-const MISMATCH_THRESHOLD = process.env.MISMATCH_THRESHOLD || 1;
+const tolerance = parseFloat(process.env.MISMATCH_THRESHOLD || "1");
 
 /**
  * Helper class providing utilities for visual regression testing,
@@ -58,93 +57,79 @@ export class HelperFunction {
    * Compare two screenshots both visually (pixel-wise) and textually (OCR).
    * @param {string} currentPath - Path to the current screenshot
    * @param {string} baselinePath - Path to the baseline screenshot
-   * @param {string} diffPath - Path where the diff image will be saved
-   * @returns {Promise<number>} - Raw mismatch percentage
+   * @param {Object} test - Playwright test object containing test metadata
+   * @returns {Promise<number>} - Resolves with the mismatch percentage
    */
   async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Extract text from both images
-        const [currentText, baselineText] = await Promise.all([
-          this.extractText(currentPath),
-          this.extractText(baselinePath),
-        ]);
+    try {
+      // Extract text from both images
+      const [currentText, baselineText] = await Promise.all([
+        this.extractText(currentPath),
+        this.extractText(baselinePath),
+      ]);
 
-        console.log("Baseline Text and Current Text matched!");
+      console.log("Baseline Text and Current Text matched!");
 
-        // Compare the text
-        if (currentText !== baselineText) {
-          console.log("Text Differences Found!");
-          const baselineLines = baselineText.split("\n");
-          const currentLines = currentText.split("\n");
-          baselineLines.forEach((line, index) => {
-            if (line !== currentLines[index]) {
-              console.log(`Line ${index + 1} differs:`);
-              console.log(`Baseline: ${line}`);
-              console.log(`Current: ${currentLines[index] || "Missing line"}`);
-            }
-          });
-        } else {
-          console.log("No text differences found.");
-        }
-
-        // Image comparison
-        resemble(baselinePath)
-          .compareTo(currentPath)
-          .onComplete((data) => {
-            try {
-              if (data && data.getBuffer) {
-                fs.writeFileSync(diffPath, data.getBuffer(true));
-              }
-
-              console.log("Mismatch Percentage:", data.rawMisMatchPercentage);
-              if (data.diffBounds) {
-                console.log("Difference Bounds:", data.diffBounds);
-              }
-
-              resolve(data.rawMisMatchPercentage);
-            } catch (error) {
-              reject({ error, screenshotPath: diffPath });
-            }
-
-            if (!data.isSameDimensions) {
-              console.log(
-                `Dimension Differences: ${JSON.stringify(
-                  data.dimensionDifference
-                )}`
-              );
-            }
-
-            console.log(`Analysis Time: ${data.analysisTime}ms`);
-
-            // Log additional metrics if available
-            if (data.misMatchPercentage) {
-              console.log(
-                `Rounded MisMatch Percentage: ${data.misMatchPercentage}%`
-              );
-            }
-
-            // Optional: Log pixel difference map (if Resemble supports it in your version)
-            if (data.diffBounds) {
-              console.log(
-                `Difference Bounds: ${JSON.stringify(data.diffBounds)}`
-              );
-            }
-
-            if (data.diffClusters) {
-              console.log(
-                `Number of Difference Clusters: ${data.diffClusters.length}`
-              );
-              console.log(
-                "Clusters (sample):",
-                JSON.stringify(data.diffClusters.slice(0, 3))
-              ); // Log first 3 clusters
-            }
-          });
-      } catch (error) {
-        reject(error);
+      // Compare the text
+      if (currentText !== baselineText) {
+        console.log("Text Differences Found!");
+        const baselineLines = baselineText.split("\n");
+        const currentLines = currentText.split("\n");
+        baselineLines.forEach((line, index) => {
+          if (line !== currentLines[index]) {
+            console.log(`Line ${index + 1} differs:`);
+            console.log(`Baseline: ${line}`);
+            console.log(`Current: ${currentLines[index] || "Missing line"}`);
+          }
+        });
+      } else {
+        console.log("No text differences found.");
       }
-    });
+
+      // Image comparison - Fixed: use the actual paths instead of helper functions
+      const {
+        equal,
+        diffImage,
+        differentPixels,
+        totalPixels,
+        diffBounds,
+        diffClusters,
+      } = await looksSame(currentPath, baselinePath, {
+        createDiffImage: true,
+        strict: false, // strict comparison
+        antialiasingTolerance: 0,
+        ignoreAntialiasing: true, // ignore antialiasing by default
+        ignoreCaret: true, // ignore caret by default
+        pixelRatio: 1, // pixel ratio of the screenshot
+        tolerance: tolerance,
+      });
+
+      // Add validation for undefined values
+      if (differentPixels === undefined || totalPixels === undefined) {
+        console.warn(
+          "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences"
+        );
+        return 0; // No mismatch if pixel data is unavailable
+      }
+
+      const mismatch = parseFloat(
+        ((differentPixels / totalPixels) * 100).toFixed(2)
+      );
+
+      console.log(
+        `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
+      );
+
+      if (!equal) {
+        await diffImage.save(diffPath);
+        await mergeImages([currentPath, baselinePath, diffPath], diffPath);
+      }
+
+      return mismatch; // Now returns number instead of string
+    } catch (error) {
+      console.error(`Failed to compare screenshots: ${error.message}`);
+      throw error;
+    }
   }
 
   /**
@@ -185,7 +170,7 @@ export class HelperFunction {
   }
 
   /**
-   * Validate if the mismatch percentage is within acceptable threshold
+   * Validate if the mismatch percentage is within acceptable tolerance
    * @param {Object} test - Playwright test object
    * @param {number} mismatch - Mismatch percentage
    * @param {string} diffPath - Path to the diff image
@@ -193,11 +178,10 @@ export class HelperFunction {
    * @param {string} device - Device type (e.g., "desktop", "mobile")
    */
   async validateMismatch(test, mismatch, diffPath, testInfo, device) {
-    // Use configurable threshold from environment or default
-    const threshold = parseFloat(MISMATCH_THRESHOLD);
-    if (parseFloat(mismatch) < threshold) {
+    // Use configurable tolerance from environment or default
+    if (mismatch < tolerance) {
       console.log(
-        `✅ Test passed: Mismatch ${mismatch}% is below threshold ${threshold}%`
+        `✅ Test passed: Mismatch ${mismatch}% is below tolerance ${tolerance}%`
       );
       await insertVisualRecord(testInfo, device, "passed", diffPath);
     } else {

@@ -1,6 +1,10 @@
 // @ts-check
 const { test } = require("@playwright/test");
 const fs = require("fs");
+
+import dotenv from "dotenv";
+// Load environment variables
+dotenv.config();
 const {
   HelperFunction,
   createFolders,
@@ -67,15 +71,15 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
     async ({ page }, testInfo) => {
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
-      if (!fs.existsSync(baselineDesktopScreenshot(test.info().title))) {
+      if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
         await helper.generateBaselineImage(
-          baselineDesktopScreenshot(test.info().title),
+          baselineDesktopScreenshot(testInfo.title),
           test
         );
         return;
       }
 
-      await page.goto("https://demo.nopcommerce.com/computers");
+      await page.goto("https://demo.nopcommerce.com/electronics");
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentDesktopScreenshot(test.info().title),
@@ -87,8 +91,6 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         baselineDesktopScreenshot(test.info().title),
         diffDesktopScreenshot(test.info().title)
       );
-
-      console.log(`Mismatch for ${test.info().title}: ${mismatch}%`);
       await helper.validateMismatch(
         test,
         mismatch,
