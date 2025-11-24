@@ -79,7 +79,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         return;
       }
 
-      await page.goto("https://demo.nopcommerce.com/electronics");
+      await page.goto("https://demo.nopcommerce.com/computers");
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentDesktopScreenshot(test.info().title),
