@@ -1,7 +1,7 @@
 {
   "name": "visual-testing",
   "version": "1.0.0",
-  "description": "A Visual Testing Project using Playwright, ResembleJS and tesseractJS",
+  "description": "A Visual Testing Project using Playwright, Looks-Same",
   "main": "index.js",
   "scripts": {
     "script": "node scripts.js",
@@ -23,9 +23,10 @@
     "better-sqlite3": "^12.4.6",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.3.0",
+    "jimp": "^0.22.12",
+    "looks-same": "^10.0.1",
     "netlify-cli": "^23.11.1",
     "playwright": "^1.49.1",
-    "resemblejs": "^5.0.0",
     "tesseract.js": "^5.1.1"
   },
   "overrides": {
