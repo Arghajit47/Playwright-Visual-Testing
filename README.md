@@ -1,4 +1,4 @@
-# Visual Testing with Playwright
+# Visual Testing with Playwright, Looks-Same [master branch edition]
 
 ## Overview
 This project is designed to perform **visual regression testing** using Playwright. It captures screenshots of web pages or elements and compares them with baseline images to detect visual differences. The primary objective is to ensure the UI remains consistent across releases.
@@ -120,6 +120,13 @@ To integrate with Allure:
 3. **Threshold Tuning:**
    - Adjust the mismatch threshold for acceptable deviations.
 
+## Improvements
+- **Component-wise screenshots:** Capture element-level images via `captureElementSpecificScreenshot` using centralized selectors from `page-elements/computers-page-elements.js`.
+- **Deterministic comparisons:** Use `looks-same` with `ignoreAntialiasing`, `ignoreCaret`, and env-driven `MISMATCH_THRESHOLD` for consistent CI results.
+- **Standardized paths & names:** Paths from `utils/enum.ts` and filenames from `generateScreenshotName` ensure desktop/mobile segregation and clean artifacts.
+- **Baseline/validation workflow:** In `tests/DesktopView/visual-computers-element-page.spec.js`, use `@setupProject` to create baselines and `@validation` to compare and generate diffs.
+- **Merged triptych diffs:** Combine current, baseline, and diff into one image via `mergeImages` for faster review; optional upload to Supabase for centralized storage.
+
 ---
 
 ## Common Issues
@@ -132,5 +139,5 @@ To integrate with Allure:
 
 ---
 
-For further assistance, please refer to the official [Playwright Documentation](https://playwright.dev).
+For further assistance, please refer to the official [Playwright Documentation](https://playwright.dev) [looks-same](https://www.npmjs.com/package/looks-same).
 
