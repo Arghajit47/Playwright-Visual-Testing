@@ -1,4 +1,4 @@
-name: Playwright Visual Tests
+name: Playwright Visual Tests - Runs on Pull Request to main/master
 
 on:
   pull_request:
