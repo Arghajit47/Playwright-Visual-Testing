@@ -1,0 +1,231 @@
+name: Playwright Visual Tests
+
+on:
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  playwright-test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - { type: "desktop", project: "Visual-Desktop-Test" }
+          - { type: "mobile", project: "Visual-Mobile-Test" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        env:
+          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
+          DEVICE_TYPE: ${{ matrix.config.type }}
+        run: npm run script test:${{ matrix.config.type }}-setup
+
+      - name: Merge test results
+        env:
+          DEVICE_TYPE: ${{ matrix.config.type }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
+        run: node merge-results.js
+
+      - name: Upload merged result JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merged-results-${{ matrix.config.type }}
+          path: test-results/merged-results-${{ matrix.config.type }}.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blob-report-${{ matrix.config.type }}
+          path: blob-report
+
+      - name: Upload Allure results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.config.type }}
+          path: allure-results/
+          retention-days: 1
+
+      - name: Upload Pulse Report results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-report-${{ matrix.config.type }}
+          path: pulse-report/
+          retention-days: 1
+
+      - name: Upload Screenshots folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.config.type }}
+          path: screenshots/
+          retention-days: 1
+
+      - name: Upload Visual Database
+        env:
+          DB_SUPABASE_BUCKET_NAME: ${{ secrets.DB_SUPABASE_BUCKET_NAME }}
+          DB_SUPABASE_URL: ${{ secrets.DB_SUPABASE_URL }}
+          DB_SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
+          DEVICE_TYPE: ${{ matrix.config.type }}
+          DB_VERBOSE: ${{ secrets.DB_VERBOSE }}
+        run: npm run upload-db
+
+    continue-on-error: true
+
+  merge-reports:
+    needs: [playwright-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Download Result Json
+        uses: actions/download-artifact@v4
+        with:
+          path: visual-report
+          pattern: merged-results-*
+          merge-multiple: true
+
+      - name: Show JSON files
+        run: |
+          echo "Listing downloaded JSON files..."
+          ls -lh visual-report/
+          echo "Printing JSON file contents..."
+          find visual-report/ -name "*.json" -exec cat {} \;
+
+      - name: Merge all JSONs into one
+        run: |
+          jq -s 'add' visual-report/*.json > visual-report/merged-results.json
+
+      - name: Show merged file
+        run: |
+          echo "Merged Results:"
+          cat visual-report/merged-results.json
+
+      - name: Upload Merged JSON
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
+        run: node upload.js
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - name: Merge Playwright Report
+        run: npm run script playwright-report-generate
+
+      - name: Upload Merged Playwright Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 1
+
+      - name: Download Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          path: allure-results/
+          pattern: allure-results-*
+          merge-multiple: true
+
+      - name: Generate allure report
+        run: npm run script allure-test-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 1
+
+      - name: Generate Overall Test Report
+        if: success() || failure()
+        run: npm run script folderStructure
+
+      - name: Wait for 10 seconds before generating the report
+        run: sleep 10
+
+      - name: Upload All-in-One report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: new-report
+          path: |
+            index.html
+            report/
+          retention-days: 5
+
+      - name: Download Pulse Report artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pulse-report-*
+          path: downloaded-artifacts
+
+      - name: Organize Pulse Report
+        run: |
+          mkdir -p pulse-report
+          for dir in downloaded-artifacts/pulse-report-*; do
+            config_type=$(basename "$dir" | sed 's/pulse-report-//')
+            cp -r "$dir/attachments" "pulse-report/attachments" || true
+            cp "$dir/playwright-pulse-report.json" "pulse-report/playwright-pulse-report-${config_type}.json"
+          done
+
+      - name: Generate Pulse Report
+        run: |
+          npm run script merge-report
+          npm run script generate-report
+
+      - name: Upload Pulse report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-report
+          path: pulse-report/
+          retention-days: 1
+
+      - name: Deploy Reports to Netlify
+        if: always()
+        run: |
+          rm -rf combined-report
+          mkdir combined-report
+          cp -r allure-report/ combined-report/
+          cp -r pulse-report/ combined-report/
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/ combined-report/
+          else
+            echo "Warning: playwright-report directory not found. Skipping copy."
+          fi
+
+          cp -r report combined-report/
+          cp index.html combined-report/
+
+          npx netlify deploy --site 58194967-300c-4c40-8cd2-a2966e55a6c9 --prod --dir combined-report
+
+          echo "To see the final report kindly visit https://visual-testing-report.netlify.app/"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+    continue-on-error: true

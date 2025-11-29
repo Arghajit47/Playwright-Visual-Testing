@@ -102,6 +102,8 @@ export class HelperFunction {
         ignoreCaret: true, // ignore caret by default
         pixelRatio: 1, // pixel ratio of the screenshot
         tolerance: tolerance,
+        shouldCluster: true, // Groups pixel differences into "clusters" (Better reporting)
+        clustersSize: 10, // Merge clusters if they are within 10px of each other
       });
 
       // Add validation for undefined values
