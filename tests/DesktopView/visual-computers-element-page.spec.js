@@ -2,7 +2,6 @@
 const { test } = require("@playwright/test");
 const fs = require("fs");
 import dotenv from "dotenv";
-import { urls } from "../../constants/urls.js";
 const {
   HelperFunction,
   createFolders,
@@ -19,6 +18,8 @@ const {
   baselineDesktopScreenshot,
   diffDesktopScreenshot,
 } = require("../../utils/enum.js");
+import computersPageElements from "../../page-elements/computers-page-elements.js";
+import { urls } from "../../constants/urls.js";
 
 // Load environment variables
 dotenv.config();
@@ -39,17 +40,17 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   });
 
   test(
-    "Computers page - Desktop - Setup Baseline",
+    "Computers page Upper Headder - Desktop - Setup Baseline",
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
 
       await page.goto(urls.computersPage);
       await helper.wait(); // Use the helper's wait method
-      await page.screenshot({
-        path: currentDesktopScreenshot(test.info().title),
-        fullPage: true,
-      });
+      await helper.captureElementSpecificScreenshot(
+        computersPageElements.headerUpper,
+        currentDesktopScreenshot(test.info().title)
+      );
 
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(
@@ -67,7 +68,35 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   );
 
   test(
-    "Computers page - Desktop - Validate Mismatch",
+    "Computers page Lower Headder - Desktop - Setup Baseline",
+    { tag: "@setupProject" },
+    async ({ page }) => {
+      await allure.severity("minor");
+
+      await page.goto(urls.computersPage);
+      await helper.wait(); // Use the helper's wait method
+      await helper.captureElementSpecificScreenshot(
+        computersPageElements.headerLower,
+        currentDesktopScreenshot(test.info().title)
+      );
+
+      console.log(`Creating baseline for ${test.info().title} test...`);
+      fs.copyFileSync(
+        currentDesktopScreenshot(test.info().title),
+        baselineDesktopScreenshot(test.info().title)
+      );
+      await uploadImage(
+        `${BASELINE_DESKTOP_DIR}/${generateScreenshotName(
+          test.info().title
+        )}-baseline.png`,
+        baselineDesktopScreenshot(test.info().title)
+      );
+      console.log("Baseline created. Run the test again for comparisons.");
+    }
+  );
+
+  test(
+    "Computers page Upper Headder - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {
       await allure.severity("minor");
@@ -82,10 +111,46 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
 
       await page.goto(urls.computersPage);
       await helper.wait(); // Use the helper's wait method
-      await page.screenshot({
-        path: currentDesktopScreenshot(test.info().title),
-        fullPage: true,
-      });
+      await helper.captureElementSpecificScreenshot(
+        computersPageElements.headerUpper,
+        currentDesktopScreenshot(test.info().title)
+      );
+
+      const mismatch = await helper.compareScreenshotsWithText(
+        currentDesktopScreenshot(test.info().title),
+        baselineDesktopScreenshot(test.info().title),
+        diffDesktopScreenshot(test.info().title)
+      );
+      await helper.validateMismatch(
+        test,
+        mismatch,
+        diffDesktopScreenshot(test.info().title),
+        testInfo,
+        "Desktop"
+      );
+    }
+  );
+
+  test(
+    "Computers page Lower Headder - Desktop - Validate Mismatch",
+    { tag: "@validation" },
+    async ({ page }, testInfo) => {
+      await allure.severity("minor");
+      // Ensure the baseline exists before proceeding
+      if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
+        await helper.generateBaselineImage(
+          baselineDesktopScreenshot(testInfo.title),
+          test
+        );
+        return;
+      }
+
+      await page.goto(urls.computersPage);
+      await helper.wait(); // Use the helper's wait method
+      await helper.captureElementSpecificScreenshot(
+        computersPageElements.headerLower,
+        currentDesktopScreenshot(test.info().title)
+      );
 
       const mismatch = await helper.compareScreenshotsWithText(
         currentDesktopScreenshot(test.info().title),

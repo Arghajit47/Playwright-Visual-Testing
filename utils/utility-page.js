@@ -12,7 +12,7 @@ export function generateScreenshotName(testName) {
 
 /**
  * Merges three images horizontally into a single image file.
- * @param {string[]} imagePaths - An array of three paths to the images to merge.
+ * @param {string[]} imagePaths - An array of image paths to merge.
  * @param {string} outputPath - The path where the final combined image will be saved.
  */
 export async function mergeImages(imagePaths, outputPath) {

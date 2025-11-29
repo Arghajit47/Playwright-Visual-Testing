@@ -1,6 +1,7 @@
 // @ts-check
 const { test } = require("@playwright/test");
 const fs = require("fs");
+import dotenv from "dotenv";
 const {
   HelperFunction,
   createFolders,
@@ -17,6 +18,10 @@ const {
   diffDesktopScreenshot,
 } = require("../../utils/enum.js");
 const { generateScreenshotName } = require("../../utils/utility-page.js");
+import { urls } from "../../constants/urls.js";
+
+// Load environment variables
+dotenv.config();
 
 test.describe.configure({ mode: "serial" });
 
@@ -38,7 +43,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
-      await page.goto("https://demo.nopcommerce.com/");
+      await page.goto(urls.homePage);
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentDesktopScreenshot(test.info().title),
@@ -74,7 +79,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
         return;
       }
 
-      await page.goto("https://demo.nopcommerce.com/");
+      await page.goto(urls.homePage);
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentDesktopScreenshot(test.info().title),

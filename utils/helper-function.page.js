@@ -256,6 +256,11 @@ export class HelperFunction {
       throw error;
     }
   }
+
+  async captureElementSpecificScreenshot(elementSelector, screenshotPath) {
+    const element = await this.page.waitForSelector(elementSelector);
+    await element.screenshot({ path: screenshotPath });
+  }
 }
 
 /**
