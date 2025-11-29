@@ -40,7 +40,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   });
 
   test(
-    "Computers page Upper Headder - Desktop - Setup Baseline",
+    "Computers page Upper Header - Desktop - Setup Baseline",
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
@@ -68,7 +68,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   );
 
   test(
-    "Computers page Lower Headder - Desktop - Setup Baseline",
+    "Computers page Lower Header - Desktop - Setup Baseline",
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
@@ -96,7 +96,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   );
 
   test(
-    "Computers page Upper Headder - Desktop - Validate Mismatch",
+    "Computers page Upper Header - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {
       await allure.severity("minor");
@@ -132,7 +132,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   );
 
   test(
-    "Computers page Lower Headder - Desktop - Validate Mismatch",
+    "Computers page Lower Header - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {
       await allure.severity("minor");
