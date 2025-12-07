@@ -86,11 +86,13 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
         fullPage: true,
       });
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentDesktopScreenshot(test.info().title),
         baselineDesktopScreenshot(test.info().title),
-        diffDesktopScreenshot(test.info().title)
+        diffDesktopScreenshot(test.info().title),
+        test
       );
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,

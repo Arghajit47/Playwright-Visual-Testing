@@ -116,11 +116,13 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         currentMobileScreenshot(test.info().title)
       );
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentMobileScreenshot(test.info().title),
         baselineMobileScreenshot(test.info().title),
-        diffMobileScreenshot(test.info().title)
+        diffMobileScreenshot(test.info().title),
+        test
       );
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,
@@ -152,11 +154,13 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         currentMobileScreenshot(test.info().title)
       );
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentMobileScreenshot(test.info().title),
         baselineMobileScreenshot(test.info().title),
-        diffMobileScreenshot(test.info().title)
+        diffMobileScreenshot(test.info().title),
+        test
       );
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,

@@ -37,13 +37,14 @@ const scripts = {
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test --project=Visual-Mobile-Test",
   test: "npm run script setup && npm run script test-validate",
   "test:desktop-run":
-    "node images.mjs && npx playwright test --grep @validation --project=Visual-Desktop-Test",
+    "npx playwright test --grep @validation --project=Visual-Desktop-Test",
   "test:mobile-run":
     "node images.mjs && npx playwright test --grep @validation --project=Visual-Mobile-Test",
   "playwright-report-generate":
     "npx playwright merge-reports --reporter html ./all-blob-reports",
   "generate-report": "npx generate-pulse-report",
   "merge-report": "npx merge-pulse-report",
+  "start-dashboard": "npx pulse-dashboard",
 };
 
 // Get the script name from command-line arguments
