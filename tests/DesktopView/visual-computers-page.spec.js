@@ -62,6 +62,11 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
+      
+      await helper.generateBaselineImage(
+        baselineDesktopScreenshot(test.info().title)
+      );
+      
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );

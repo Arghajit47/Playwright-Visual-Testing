@@ -56,6 +56,11 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
         )}-baseline.png`,
         baselineMobileScreenshot(test.info().title)
       );
+      
+      await helper.generateBaselineImage(
+        baselineMobileScreenshot(test.info().title)
+      );
+      
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
