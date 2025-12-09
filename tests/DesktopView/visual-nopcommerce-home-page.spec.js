@@ -73,8 +73,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineDesktopScreenshot(test.info().title))) {
         await helper.generateBaselineImage(
-          baselineDesktopScreenshot(test.info().title),
-          test
+          baselineDesktopScreenshot(test.info().title)
         );
         return;
       }

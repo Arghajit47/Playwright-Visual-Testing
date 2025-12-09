@@ -74,8 +74,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
         await helper.generateBaselineImage(
-          baselineDesktopScreenshot(testInfo.title),
-          test
+          baselineDesktopScreenshot(testInfo.title)
         );
         return;
       }

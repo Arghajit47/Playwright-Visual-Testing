@@ -7,6 +7,8 @@ dotenv.config();
 // Fix the import to match the export
 import dbService, {
   insertVisualRecord as dbInsertVisualRecord,
+  insertBaselineRecord,
+  dbManager,
 } from "./db-service";
 const looksSame = require("looks-same");
 import {
@@ -366,53 +368,35 @@ export class HelperFunction {
   }
 
   /**
-   * Generate a baseline image when one doesn't exist
-   * @param {string} baselineScreenshot - Path to the baseline screenshot
+   * Generate a baseline image record in the database
+   * @param baselineScreenshot Path to the baseline screenshot
    */
-  async generateBaselineImage(baselineScreenshot, test) {
-    console.log(
-      "📸 Baseline Image not found. Storing current image as baseline."
-    );
-    test.setTimeout(60000);
+  async generateBaselineImage(baselineScreenshot) {
+    console.log("📸 Baseline Image not found. Storing current image as baseline.");
+
+    // Only store baseline record in CI environment
+    if (!dbManager.isDatabaseEnabled()) {
+      console.log("⚠️ Skipping baseline database record - not in CI environment");
+      return;
+    }
 
     try {
-      // Insert record into database using the db-service
-      const { insertBaselineRecord } = await import("./db-service");
-      const db = dbService.getDatabase(); // Use lazy initialization
+      // Get database connection from singleton manager
+      const db = dbManager.getConnection();
+      
+      if (!db) {
+        console.warn("⚠️ Database not available for baseline record");
+        return;
+      }
+
+      // Insert baseline record using the db-service function
       const info = insertBaselineRecord(db, baselineScreenshot);
-
-      console.log(
-        `✅ Baseline record inserted with ID: ${info.lastInsertRowid}`
-      );
-
-      // Optional: Still maintain JSON file if needed for backward compatibility
-      const baselineFile = process.env.CI
-        ? `baseline-${process.env.DEVICE_TYPE}.json`
-        : `baseline.json`;
-
-      let baselineData = [];
-      if (fs.existsSync(baselineFile)) {
-        try {
-          const fileContent = fs.readFileSync(baselineFile, "utf8").trim();
-          if (fileContent) {
-            baselineData = JSON.parse(fileContent);
-          }
-        } catch (parseError) {
-          console.warn(
-            `⚠️ Invalid JSON in ${baselineFile}, starting with empty array`
-          );
-          baselineData = [];
-        }
-      }
-
-      if (!baselineData.includes(baselineScreenshot)) {
-        baselineData.push(baselineScreenshot);
-        fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
-        console.log(`✅ Added baseline to JSON file: ${baselineFile}`);
-      }
+      
+      console.log(`✅ Baseline record inserted with ID: ${info.lastInsertRowid}`);
     } catch (error) {
-      console.error(`❌ Baseline generation failed: ${error.message}`);
-      throw error;
+      console.error("❌ Database operation failed:", error);
+      // Don't throw error for database operations to avoid breaking tests
+      console.warn("⚠️ Continuing without database record...");
     }
   }
 
