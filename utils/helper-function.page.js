@@ -382,7 +382,7 @@ export class HelperFunction {
     );
 
     if (USE_AI) {
-      console.log("Gotcha!");
+      console.log("Gotcha!" + USE_AI);
     } else {
       console.log("No AI used for baseline image generation." + USE_AI);
     }
