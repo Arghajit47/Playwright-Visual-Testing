@@ -78,6 +78,15 @@ jobs:
           path: screenshots/
           retention-days: 1
 
+      - name: Upload Visual Database
+        env:
+          DB_SUPABASE_BUCKET_NAME: ${{ secrets.DB_SUPABASE_BUCKET_NAME }}
+          DB_SUPABASE_URL: ${{ secrets.DB_SUPABASE_URL }}
+          DB_SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
+          DEVICE_TYPE: ${{ matrix.config.type }}
+          DB_VERBOSE: ${{ secrets.DB_VERBOSE }}
+        run: npm run upload-db    
+
     continue-on-error: true
 
   merge-reports:
@@ -198,15 +207,6 @@ jobs:
           name: pulse-report
           path: pulse-report/
           retention-days: 1
-
-      - name: Upload Visual Database
-        env:
-          DB_SUPABASE_BUCKET_NAME: ${{ secrets.DB_SUPABASE_BUCKET_NAME }}
-          DB_SUPABASE_URL: ${{ secrets.DB_SUPABASE_URL }}
-          DB_SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
-          DEVICE_TYPE: ${{ matrix.config.type }}
-          DB_VERBOSE: ${{ secrets.DB_VERBOSE }}
-        run: npm run upload-db
 
       - name: Deploy Reports to Netlify
         if: always()
