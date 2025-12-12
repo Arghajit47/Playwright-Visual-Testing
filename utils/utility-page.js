@@ -52,3 +52,283 @@ export async function mergeImages(imagePaths, outputPath) {
     throw error;
   }
 }
+
+/**
+ * Takes a JSON object of UI changes and generates a modern, responsive HTML report.
+ *
+ * To use:
+ * 1. Define your JSON data (e.g., const data = { "changes": [...] };)
+ * 2. Call the function: const htmlContent = generateHtmlReport(data);
+ * 3. Output or save htmlContent to an .html file.
+ *
+ * @param {object} jsonData - The JSON object containing the 'changes' array.
+ * @returns {string} The complete HTML report string.
+ */
+export function generateHtmlReport(jsonData) {
+    if (!jsonData || !Array.isArray(jsonData.changes)) {
+        return "<h1>Error: Invalid JSON data format.</h1>";
+    }
+
+    // Helper function for basic HTML escaping (important for user-provided data)
+    const escapeHtml = (str) => {
+        if (typeof str !== 'string') return '';
+        return str.replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#039;');
+    };
+
+    const styles = `
+        /* CSS Variables */
+        :root {
+            --primary-blue: #1c7cd6;
+            --background-color: #f0f4f8;
+            --card-background: #ffffff;
+            --baseline-color: #e63946; /* Red for removed/old */
+            --current-color: #2a9d8f; /* Teal for new/current */
+            --text-color: #333d47;
+            --border-color: #e1e8ed;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .report-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary-blue);
+            padding-left: 15px;
+        }
+
+        .change-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .change-row {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: table-row;
+        }
+
+        th, td {
+            padding: 18px 20px;
+            text-align: left;
+            vertical-align: top;
+            display: table-cell;
+        }
+
+        th {
+            background-color: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .header-row th:first-child { border-top-left-radius: 8px; }
+        .header-row th:last-child { border-top-right-radius: 8px; }
+
+        .col-location {
+            font-weight: 700;
+            width: 18%;
+        }
+
+        .col-baseline {
+            color: var(--baseline-color);
+            background-color: #fef7f7;
+            width: 28%;
+            border-left: 3px solid var(--baseline-color);
+            font-style: italic;
+        }
+
+        .col-current {
+            color: var(--current-color);
+            background-color: #f4fcfb;
+            width: 28%;
+            border-left: 3px solid var(--current-color);
+            font-weight: 600;
+        }
+        
+        .col-description {
+            font-size: 0.9em;
+            color: #5a6a7c;
+            width: 26%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 850px) {
+            body { padding: 15px; }
+            .change-table { display: block; }
+            .header-row, th { display: none; }
+
+            .change-row {
+                display: block;
+                margin-bottom: 25px;
+                padding: 0;
+            }
+
+            td {
+                display: block;
+                width: auto !important;
+                border-left: none !important;
+                border-bottom: 1px dashed var(--border-color);
+            }
+            
+            td:last-child { border-bottom: none; }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: var(--primary-blue);
+                display: block;
+                margin-bottom: 5px;
+                font-size: 0.9em;
+            }
+            
+            .col-baseline, .col-current {
+                background-color: transparent;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+        }
+    `;
+
+    let tableRows = jsonData.changes.map(change => {
+        return `
+                <tr class="change-row">
+                    <td class="col-location" data-label="Location">${escapeHtml(change.location)}</td>
+                    <td class="col-baseline" data-label="Baseline State">${escapeHtml(change.baseline_state)}</td>
+                    <td class="col-current" data-label="Current State">${escapeHtml(change.current_state)}</td>
+                    <td class="col-description" data-label="Description">${escapeHtml(change.description)}</td>
+                </tr>
+        `;
+    }).join('\n');
+
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern UI Change Report</title>
+    <style>
+${styles}
+    </style>
+</head>
+<body>
+
+    <div class="report-container">
+        <h1>UI Change Detection Report: Category Switch</h1>
+
+        <table class="change-table">
+            <thead>
+                <tr class="header-row">
+                    <th>Location</th>
+                    <th>Baseline State (Old)</th>
+                    <th>Current State (New)</th>
+                    <th>Context / Description</th>
+                </tr>
+            </thead>
+            <tbody>
+${tableRows}
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
+    `;
+}
+
+/**
+ * Takes a JSON object of UI changes and converts it into a standard Markdown table report.
+ *
+ * @param {object} jsonData - The JSON object containing the 'changes' array.
+ * @returns {string} The Markdown formatted string.
+ */
+export function jsonToMarkdown(jsonData) {
+  if (!jsonData || !Array.isArray(jsonData.changes)) {
+    return "## Error: Invalid JSON data format.\n";
+  }
+
+  const changes = jsonData.changes;
+  let markdown = "## UI Change Detection Report: Category Switch\n\n";
+
+  const sanitizeCell = (text) => {
+    if (!text) return "";
+    return text
+      .toString()
+      .replace(/\|/g, "&#124;") // Escape pipes
+      .replace(/\n/g, "<br>") // CRITICAL: Convert newlines to <br> so table doesn't break
+      .trim();
+  };
+
+  markdown +=
+    "| Location | Baseline State (Old) | Current State (New) | Description |\n";
+  markdown += "| :--- | :--- | :--- | :--- |\n";
+
+  changes.forEach((change) => {
+    const location = sanitizeCell(change.location);
+    const baseline = sanitizeCell(change.baseline_state);
+    const current = sanitizeCell(change.current_state);
+    const description = sanitizeCell(change.description);
+
+    markdown += `| ${location} | ${baseline} | ${current} | ${description} |\n`;
+  });
+
+  return markdown;
+}
+
+/**
+ * Extracts a clean JSON string from a Markdown response.
+ * It removes ```json, ```, and surrounding whitespace.
+ *
+ * @param {string} fullResponse - The full text from the AI.
+ * @returns {string|null} The clean JSON string ready for parsing.
+ */
+export function extractJsonString(fullResponse) {
+  // Regex Explanation:
+  // 1. ```             -> Matches opening backticks
+  // 2. (?:json)?       -> Non-capturing group: allows "json" to exist, but doesn't capture it.
+  // 3. \s*             -> Matches any whitespace/newlines after the opening tags.
+  // 4. ([\s\S]*?)      -> THE TARGET: Captures everything inside (non-greedy).
+  // 5. ```             -> Matches closing backticks
+  const regex = /```(?:json)?\s*([\s\S]*?)\s*```/i;
+
+  const match = fullResponse.match(regex);
+
+  if (match && match[1]) {
+    // Return the capture group, trimmed.
+    return match[1].trim();
+  }
+
+  // FALLBACK:
+  // Sometimes AI doesn't use backticks at all and just returns the JSON.
+  // If no backticks found, check if the string itself starts with { and ends with }
+  const trimmed = fullResponse.trim();
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+    return trimmed;
+  }
+
+  return null;
+}

@@ -23,6 +23,7 @@ pulse-report
 /screenshots/diff/*
 /screenshots/baseline/desktop/*
 /screenshots/baseline/mobile/*
+/screenshots/ai-reports
 
 # Ignore txt files
 eng.traineddata

@@ -226,11 +226,80 @@ export function closeDatabase(db) {
   }
 }
 
-// Remove immediate initialization
-// const db = initDatabaseConnection();  // Remove this line
-// initDatabaseSchema(db);               // Remove this line
+/**
+ * Database connection management singleton
+ * Only initialize database in CI environment for performance optimization
+ */
+class DatabaseManager {
+  constructor() {
+    this.db = null;
+    this.isInitialized = false;
+  }
 
-// Add lazy initialization
+  static getInstance() {
+    if (!DatabaseManager.instance) {
+      DatabaseManager.instance = new DatabaseManager();
+    }
+    return DatabaseManager.instance;
+  }
+
+  initializeDatabase() {
+    if (!process.env.CI) {
+      console.log("⏭️  Skipping database initialization - not in CI environment");
+      return null;
+    }
+
+    if (this.isInitialized && this.db) {
+      return this.db;
+    }
+
+    try {
+      console.log("🔄 Initializing database for CI environment...");
+      this.db = initDatabaseConnection();
+      initDatabaseSchema(this.db);
+
+      this.isInitialized = true;
+      console.log("✅ Database initialized successfully");
+
+      process.on("exit", () => this.closeConnection());
+      process.on("SIGINT", () => this.closeConnection());
+      process.on("SIGTERM", () => this.closeConnection());
+
+      return this.db;
+    } catch (error) {
+      console.error("❌ Failed to initialize database:", error);
+      this.db = null;
+      return null;
+    }
+  }
+
+  getConnection() {
+    if (!process.env.CI) {
+      return null;
+    }
+    return this.initializeDatabase();
+  }
+
+  closeConnection() {
+    if (this.db) {
+      try {
+        this.db.close();
+        console.log("🔒 Database connection closed");
+      } catch (error) {
+        console.error("❌ Error closing database:", error);
+      }
+      this.db = null;
+      this.isInitialized = false;
+    }
+  }
+
+  isDatabaseEnabled() {
+    return !!process.env.CI;
+  }
+}
+
+export const dbManager = DatabaseManager.getInstance();
+
 let db = null;
 
 export function getDatabase() {

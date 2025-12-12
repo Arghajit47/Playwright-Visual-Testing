@@ -1,13 +1,21 @@
 const Tesseract = require("tesseract.js");
 import fs from "fs";
 const { uploadImage } = require("./supabase-function");
+import { explainVisualDiffWithClaude, explainVisualDiff } from "./gen-ai.js";
 import dotenv from "dotenv";
+dotenv.config();
 // Fix the import to match the export
 import dbService, {
   insertVisualRecord as dbInsertVisualRecord,
+  insertBaselineRecord,
+  dbManager,
 } from "./db-service";
 const looksSame = require("looks-same");
-import { mergeImages } from "./utility-page.js";
+import {
+  mergeImages,
+  generateHtmlReport,
+  jsonToMarkdown,
+} from "./utility-page.js";
 
 // Configuration constants
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
@@ -57,10 +65,10 @@ export class HelperFunction {
    * Compare two screenshots both visually (pixel-wise) and textually (OCR).
    * @param {string} currentPath - Path to the current screenshot
    * @param {string} baselinePath - Path to the baseline screenshot
-   * @param {Object} test - Playwright test object containing test metadata
-   * @returns {Promise<number>} - Resolves with the mismatch percentage
+   * @param {string} diffPath - Path where the diff image will be saved
+   * @returns {Promise<{mismatch: number, AI_RESPONSE: string}>} - Resolves with an object containing the mismatch percentage and optional AI explanation
    */
-  async compareScreenshotsWithText(currentPath, baselinePath, diffPath) {
+  async compareScreenshotsWithText(currentPath, baselinePath, diffPath, test) {
     try {
       // Extract text from both images
       const [currentText, baselineText] = await Promise.all([
@@ -68,24 +76,50 @@ export class HelperFunction {
         this.extractText(baselinePath),
       ]);
 
-      console.log("Baseline Text and Current Text matched!");
+      let textDiffReport = [];
+      textDiffReport.push("=== OCR Text Comparison Report ===");
+      textDiffReport.push(`Generated: ${new Date().toISOString()}`);
+      textDiffReport.push("");
 
       // Compare the text
       if (currentText !== baselineText) {
         console.log("Text Differences Found!");
+        textDiffReport.push("Status: TEXT DIFFERENCES DETECTED");
+        textDiffReport.push("");
+
         const baselineLines = baselineText.split("\n");
         const currentLines = currentText.split("\n");
+
         baselineLines.forEach((line, index) => {
           if (line !== currentLines[index]) {
-            console.log(`Line ${index + 1} differs:`);
-            console.log(`Baseline: ${line}`);
-            console.log(`Current: ${currentLines[index] || "Missing line"}`);
+            textDiffReport.push(`Line ${index + 1} differs:`);
+            textDiffReport.push(`  Baseline: ${line}`);
+            textDiffReport.push(
+              `  Current:  ${currentLines[index] || "Missing line"}`
+            );
+            textDiffReport.push("");
           }
         });
+
+        const textDiffPath = diffPath.replace("-diff.png", "-text-diff.txt");
+        fs.writeFileSync(textDiffPath, textDiffReport.join("\n"), "utf8");
+        console.log(`📝 Text diff report saved: ${textDiffPath}`);
+
+        if (test) {
+          test.info().attachments.push({
+            name: "Text Differences Report",
+            path: textDiffPath,
+            contentType: "text/plain",
+          });
+        }
       } else {
         console.log("No text differences found.");
+        textDiffReport.push("Status: NO TEXT DIFFERENCES");
       }
 
+      let AI_RESPONSE =
+        "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI='true' in your .env file.";
+      let mismatch;
       // Image comparison - Fixed: use the actual paths instead of helper functions
       const {
         equal,
@@ -111,23 +145,52 @@ export class HelperFunction {
         console.warn(
           "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences"
         );
-        return 0; // No mismatch if pixel data is unavailable
+        return { mismatch: 0, AI_RESPONSE };
+      } else {
+        mismatch = parseFloat(
+          ((differentPixels / totalPixels) * 100).toFixed(2)
+        );
+
+        console.log(
+          `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
+        );
+
+        if (!equal) {
+          await diffImage.save(diffPath);
+          await mergeImages([currentPath, baselinePath, diffPath], diffPath);
+
+          if (process.env.USE_AI === "true") {
+            if (process.env.GEMINI_API_KEY) {
+              console.log("🤖 Using Gemini AI for visual diff explanation...");
+              AI_RESPONSE = await explainVisualDiff(
+                baselinePath,
+                currentPath,
+                diffPath
+              );
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+            } else if (process.env.ANTHROPIC_API_KEY) {
+              console.log("🤖 Using Claude AI for visual diff explanation...");
+              AI_RESPONSE = await explainVisualDiffWithClaude(
+                baselinePath,
+                currentPath,
+                diffPath
+              );
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+            } else if (
+              process.env.USE_AI === "false" ||
+              process.env.USE_AI === undefined
+            ) {
+              AI_RESPONSE =
+                "⚠️ USE_AI is enabled but no API key found. Please set either GEMINI_API_KEY or ANTHROPIC_API_KEY in your .env file.";
+              console.warn(AI_RESPONSE);
+            }
+          }
+        }
+
+        return { mismatch, AI_RESPONSE };
       }
-
-      const mismatch = parseFloat(
-        ((differentPixels / totalPixels) * 100).toFixed(2)
-      );
-
-      console.log(
-        `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
-      );
-
-      if (!equal) {
-        await diffImage.save(diffPath);
-        await mergeImages([currentPath, baselinePath, diffPath], diffPath);
-      }
-
-      return mismatch; // Now returns number instead of string
     } catch (error) {
       console.error(`Failed to compare screenshots: ${error.message}`);
       throw error;
@@ -171,6 +234,110 @@ export class HelperFunction {
     });
   }
 
+  // Ensure you have access to Buffer in your environment (standard in Node.js/Playwright)
+
+  // Assuming generateHtmlReport(data) and jsonToMarkdown(data) are accessible in scope.
+
+  /**
+   * Generate and attach AI explanation (HTML report) to the test report.
+   *
+   * NOTE: It is assumed that AI_RESPONSE is the JSON object required by generateHtmlReport.
+   * If AI_RESPONSE is a simple string, you may need to adjust the call to generateHtmlReport.
+   *
+   * @param {Object} test - Playwright test object (or testInfo). We use test.info().
+   * @param {Object} AI_RESPONSE - AI-generated JSON data for the report.
+   */
+  async generateAndAttachAIExplanation(test, AI_RESPONSE) {
+    // 2. Handle missing response gracefully (using simple string for error report)
+    let reportData = AI_RESPONSE;
+    if (
+      !AI_RESPONSE ||
+      (typeof AI_RESPONSE === "string" && AI_RESPONSE.trim() === "")
+    ) {
+      // If the expected JSON is missing, we generate an HTML error message instead of the full report
+      reportData = {
+        changes: [
+          {
+            location: "Error",
+            baseline_state: "N/A",
+            current_state: "N/A",
+            description:
+              "⚠️ No AI explanation available. Please check your API key and settings.",
+          },
+        ],
+      };
+    }
+
+    // 3. Generate the HTML report content (String)
+    const htmlContent = generateHtmlReport(reportData);
+
+    // 4. Save to file and attach the file path
+    const htmlPath = `screenshots/ai-reports/${
+      test.info().title
+    }-ai-report-${Date.now()}.html`;
+    const dir = htmlPath.substring(0, htmlPath.lastIndexOf("/"));
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(htmlPath, htmlContent, "utf8");
+
+    await test.info().attachments.push({
+      name: "UI Change Report (HTML)",
+      path: htmlPath,
+      contentType: "text/html",
+    });
+  }
+
+  /**
+   * Generate and attach the Markdown report to the test report.
+   *
+   * NOTE: It is assumed that AI_RESPONSE is the JSON object required by jsonToMarkdown.
+   *
+   * @param {import('@playwright/test').TestInfo} testInfo - Playwright TestInfo object.
+   * @param {Object} AI_RESPONSE - AI-generated JSON data for the report.
+   */
+  async generateAndAttachMarkdownReport(test, AI_RESPONSE) {
+    // 1. Handle missing response gracefully (using simple string for error report)
+    let reportData = AI_RESPONSE;
+    console.log("AI_RESPONSE: \n" + AI_RESPONSE);
+    if (
+      !AI_RESPONSE ||
+      (typeof AI_RESPONSE === "string" && AI_RESPONSE.trim() === "")
+    ) {
+      // Since markdown generator expects JSON, we simulate a simple error structure
+      reportData = {
+        changes: [
+          {
+            location: "Error",
+            baseline_state: "N/A",
+            current_state: "N/A",
+            description:
+              "⚠️ No AI explanation available. Please check your API key and settings.",
+          },
+        ],
+      };
+    }
+
+    // 2. Generate the Markdown report content (String)
+    const markdownContent = jsonToMarkdown(reportData);
+
+    // 3. Save to file and attach the file path
+    const markdownPath = `screenshots/ai-reports/${
+      test.info().title
+    }-ai-report-${Date.now()}.md`;
+    const dir = markdownPath.substring(0, markdownPath.lastIndexOf("/"));
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(markdownPath, markdownContent, "utf8");
+
+    await test.info().attachments.push({
+      name: "UI Change Report (Markdown)",
+      path: markdownPath,
+      contentType: "text/markdown",
+    });
+  }
+
   /**
    * Validate if the mismatch percentage is within acceptable tolerance
    * @param {Object} test - Playwright test object
@@ -209,53 +376,35 @@ export class HelperFunction {
   }
 
   /**
-   * Generate a baseline image when one doesn't exist
-   * @param {string} baselineScreenshot - Path to the baseline screenshot
+   * Generate a baseline image record in the database
+   * @param baselineScreenshot Path to the baseline screenshot
    */
-  async generateBaselineImage(baselineScreenshot, test) {
-    console.log(
-      "📸 Baseline Image not found. Storing current image as baseline."
-    );
-    test.setTimeout(60000);
+  async generateBaselineImage(baselineScreenshot) {
+    console.log("📸 Baseline Image not found. Storing current image as baseline.");
+
+    // Only store baseline record in CI environment
+    if (!dbManager.isDatabaseEnabled()) {
+      console.log("⚠️ Skipping baseline database record - not in CI environment");
+      return;
+    }
 
     try {
-      // Insert record into database using the db-service
-      const { insertBaselineRecord } = await import("./db-service");
-      const db = dbService.getDatabase(); // Use lazy initialization
+      // Get database connection from singleton manager
+      const db = dbManager.getConnection();
+      
+      if (!db) {
+        console.warn("⚠️ Database not available for baseline record");
+        return;
+      }
+
+      // Insert baseline record using the db-service function
       const info = insertBaselineRecord(db, baselineScreenshot);
-
-      console.log(
-        `✅ Baseline record inserted with ID: ${info.lastInsertRowid}`
-      );
-
-      // Optional: Still maintain JSON file if needed for backward compatibility
-      const baselineFile = process.env.CI
-        ? `baseline-${process.env.DEVICE_TYPE}.json`
-        : `baseline.json`;
-
-      let baselineData = [];
-      if (fs.existsSync(baselineFile)) {
-        try {
-          const fileContent = fs.readFileSync(baselineFile, "utf8").trim();
-          if (fileContent) {
-            baselineData = JSON.parse(fileContent);
-          }
-        } catch (parseError) {
-          console.warn(
-            `⚠️ Invalid JSON in ${baselineFile}, starting with empty array`
-          );
-          baselineData = [];
-        }
-      }
-
-      if (!baselineData.includes(baselineScreenshot)) {
-        baselineData.push(baselineScreenshot);
-        fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
-        console.log(`✅ Added baseline to JSON file: ${baselineFile}`);
-      }
+      
+      console.log(`✅ Baseline record inserted with ID: ${info.lastInsertRowid}`);
     } catch (error) {
-      console.error(`❌ Baseline generation failed: ${error.message}`);
-      throw error;
+      console.error("❌ Database operation failed:", error);
+      // Don't throw error for database operations to avoid breaking tests
+      console.warn("⚠️ Continuing without database record...");
     }
   }
 

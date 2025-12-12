@@ -21,6 +21,7 @@ const {
 import computersPageElements from "../../page-elements/computers-page-elements.js";
 import { urls } from "../../constants/urls.js";
 
+
 // Load environment variables
 dotenv.config();
 
@@ -63,6 +64,11 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
+      
+      await helper.generateBaselineImage(
+        baselineDesktopScreenshot(test.info().title)
+      );
+      
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -91,6 +97,11 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
+      
+      await helper.generateBaselineImage(
+        baselineDesktopScreenshot(test.info().title)
+      );
+      
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -103,8 +114,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
         await helper.generateBaselineImage(
-          baselineDesktopScreenshot(testInfo.title),
-          test
+          baselineDesktopScreenshot(testInfo.title)
         );
         return;
       }
@@ -116,11 +126,14 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         currentDesktopScreenshot(test.info().title)
       );
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentDesktopScreenshot(test.info().title),
         baselineDesktopScreenshot(test.info().title),
-        diffDesktopScreenshot(test.info().title)
+        diffDesktopScreenshot(test.info().title),
+        test
       );
+
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,
@@ -139,8 +152,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
         await helper.generateBaselineImage(
-          baselineDesktopScreenshot(testInfo.title),
-          test
+          baselineDesktopScreenshot(testInfo.title)
         );
         return;
       }
@@ -152,11 +164,14 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         currentDesktopScreenshot(test.info().title)
       );
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentDesktopScreenshot(test.info().title),
         baselineDesktopScreenshot(test.info().title),
-        diffDesktopScreenshot(test.info().title)
+        diffDesktopScreenshot(test.info().title),
+        test
       );
+
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,

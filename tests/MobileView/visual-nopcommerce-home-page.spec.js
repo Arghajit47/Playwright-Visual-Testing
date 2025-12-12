@@ -56,6 +56,11 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
         )}-baseline.png`,
         baselineMobileScreenshot(test.info().title)
       );
+      
+      await helper.generateBaselineImage(
+        baselineMobileScreenshot(test.info().title)
+      );
+      
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -68,8 +73,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
       // Ensure the baseline exists before proceeding
       if (!fs.existsSync(baselineMobileScreenshot(test.info().title))) {
         await helper.generateBaselineImage(
-          baselineMobileScreenshot(test.info().title),
-          test
+          baselineMobileScreenshot(test.info().title)
         );
         return;
       }
@@ -81,12 +85,14 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce home
         fullPage: true,
       });
 
-      const mismatch = await helper.compareScreenshotsWithText(
+      const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
         currentMobileScreenshot(test.info().title),
         baselineMobileScreenshot(test.info().title),
-        diffMobileScreenshot(test.info().title)
+        diffMobileScreenshot(test.info().title),
+        test
       );
 
+      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,
