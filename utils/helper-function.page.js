@@ -20,7 +20,7 @@ import {
 // Configuration constants
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
 const tolerance = parseFloat(process.env.MISMATCH_THRESHOLD || "1");
-const USE_AI = process.env.USE_AI || "false";
+const USE_AI = process.env.USE_AI || false;
 
 /**
  * Helper class providing utilities for visual regression testing,
@@ -178,9 +178,9 @@ export class HelperFunction {
               );
               await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
               await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-            } else if (USE_AI == "false" || USE_AI == undefined) {
+            } else if (USE_AI == false || USE_AI == undefined) {
               AI_RESPONSE =
-                "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI='true' in your .env file.";
+                "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
               console.warn(AI_RESPONSE);
             }
           }
@@ -386,7 +386,7 @@ export class HelperFunction {
     } else {
       console.log("No AI used for baseline image generation." + USE_AI);
     }
-    if (USE_AI == "true") {
+    if (USE_AI == true) {
       console.log(
         "🤖 Using AI for baseline image generation, Just Kidding 😂!"
       );
