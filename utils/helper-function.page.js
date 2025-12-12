@@ -20,6 +20,7 @@ import {
 // Configuration constants
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
 const tolerance = parseFloat(process.env.MISMATCH_THRESHOLD || "1");
+const USE_AI = process.env.USE_AI === "true";
 
 /**
  * Helper class providing utilities for visual regression testing,
@@ -117,8 +118,7 @@ export class HelperFunction {
         textDiffReport.push("Status: NO TEXT DIFFERENCES");
       }
 
-      let AI_RESPONSE =
-        "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI='true' in your .env file.";
+      let AI_RESPONSE;
       let mismatch;
       // Image comparison - Fixed: use the actual paths instead of helper functions
       const {
@@ -159,7 +159,7 @@ export class HelperFunction {
           await diffImage.save(diffPath);
           await mergeImages([currentPath, baselinePath, diffPath], diffPath);
 
-          if (process.env.USE_AI === "true") {
+          if (USE_AI == "true") {
             if (process.env.GEMINI_API_KEY) {
               console.log("🤖 Using Gemini AI for visual diff explanation...");
               AI_RESPONSE = await explainVisualDiff(
@@ -178,12 +178,9 @@ export class HelperFunction {
               );
               await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
               await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-            } else if (
-              process.env.USE_AI === "false" ||
-              process.env.USE_AI === undefined
-            ) {
+            } else if (USE_AI == false || USE_AI == undefined) {
               AI_RESPONSE =
-                "⚠️ USE_AI is enabled but no API key found. Please set either GEMINI_API_KEY or ANTHROPIC_API_KEY in your .env file.";
+                "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
               console.warn(AI_RESPONSE);
             }
           }
@@ -380,18 +377,30 @@ export class HelperFunction {
    * @param baselineScreenshot Path to the baseline screenshot
    */
   async generateBaselineImage(baselineScreenshot) {
-    console.log("📸 Baseline Image not found. Storing current image as baseline.");
+    console.log(
+      "📸 Baseline Image not found. Storing current image as baseline."
+    );
+
+    if (USE_AI) {
+      console.log(
+        "🤖 Using AI for baseline image generation, Just Kidding 😂!"
+      );
+    } else {
+      console.log("No AI used for baseline image generation.");
+    }
 
     // Only store baseline record in CI environment
     if (!dbManager.isDatabaseEnabled()) {
-      console.log("⚠️ Skipping baseline database record - not in CI environment");
+      console.log(
+        "⚠️ Skipping baseline database record - not in CI environment"
+      );
       return;
     }
 
     try {
       // Get database connection from singleton manager
       const db = dbManager.getConnection();
-      
+
       if (!db) {
         console.warn("⚠️ Database not available for baseline record");
         return;
@@ -399,8 +408,10 @@ export class HelperFunction {
 
       // Insert baseline record using the db-service function
       const info = insertBaselineRecord(db, baselineScreenshot);
-      
-      console.log(`✅ Baseline record inserted with ID: ${info.lastInsertRowid}`);
+
+      console.log(
+        `✅ Baseline record inserted with ID: ${info.lastInsertRowid}`
+      );
     } catch (error) {
       console.error("❌ Database operation failed:", error);
       // Don't throw error for database operations to avoid breaking tests
