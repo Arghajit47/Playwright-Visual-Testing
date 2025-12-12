@@ -332,3 +332,175 @@ export function extractJsonString(fullResponse) {
 
   return null;
 }
+
+// ----------------------------------------------------------------------------
+// INTERNAL STATE TRACKING
+// ----------------------------------------------------------------------------
+// We use a WeakMap to store active requests for each page instance separately.
+const pageRequestTrackers = new WeakMap();
+
+/**
+ * 🛠️ SETUP FUNCTION
+ * MUST be called once (e.g., in test.beforeEach) to start counting requests.
+ * @param {import('@playwright/test').Page} page
+ */
+export function setupNetworkMonitoring(page) {
+  if (pageRequestTrackers.has(page)) return; // Already tracking
+
+  const requests = new Set();
+  pageRequestTrackers.set(page, requests);
+
+  page.on("request", (request) => {
+    // Track APIs only (fetch/xhr). Add 'script' if needed.
+    if (["xhr", "fetch"].includes(request.resourceType())) {
+      requests.add(request);
+    }
+  });
+
+  const removeRequest = (request) => {
+    requests.delete(request);
+  };
+
+  page.on("requestfinished", removeRequest);
+  page.on("requestfailed", removeRequest);
+}
+
+// ----------------------------------------------------------------------------
+// 🚀 EXPORTED HELPER FUNCTIONS
+// ----------------------------------------------------------------------------
+
+/**
+ * 1. STRICT API WAITER
+ * Waits until the tracked request count hits 0.
+ * @param {import('@playwright/test').Page} page
+ * @param {number} timeout Max wait time (default 15000ms)
+ */
+export async function waitForAllAPIs(page, timeout = 15000) {
+  // Auto-setup if forgot (Warning: might miss requests that already started!)
+  if (!pageRequestTrackers.has(page)) {
+    console.warn("⚠️ waitForAllAPIs called without setupNetworkMonitoring. Some pending requests might be missed.");
+    setupNetworkMonitoring(page);
+  }
+
+  const requests = pageRequestTrackers.get(page);
+
+  try {
+    const startTime = Date.now();
+    
+    while (requests.size > 0) {
+      if (Date.now() - startTime > timeout) {
+        throw new Error(`Timeout waiting for APIs. Pending requests: ${requests.size}`);
+      }
+      // Poll every 100ms
+      await new Promise((r) => setTimeout(r, 100));
+    }
+
+    // Safety buffer: Wait 200ms to ensure no chained requests fire immediately
+    await page.waitForTimeout(200);
+    
+  } catch (error) {
+    console.warn(`API Wait Warning: ${error.message}`);
+  }
+}
+
+/**
+ * 2. STRICT DOM STABILITY WAITER
+ * Waits for the DOM to stop moving/changing for a specific duration.
+ * Best for checking if UI is finished rendering after data load.
+ * @param {import('@playwright/test').Page} page
+ * @param {number} stabilityDuration How long the DOM must be silent to pass (default 500ms)
+ * @param {number} timeout Max total wait time (default 15000ms)
+ */
+export async function waitForDOMStability(page, stabilityDuration = 500, timeout = 15000) {
+  try {
+    await page.evaluate(
+      async ({ duration, maxWait }) => {
+        return new Promise((resolve) => {
+          let timer;
+          
+          const observer = new MutationObserver(() => {
+            // DOM changed! Reset the stability timer.
+            clearTimeout(timer);
+            startTimer();
+          });
+
+          // Watch EVERYTHING: attributes, text, child nodes, sub-trees
+          observer.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true,
+          });
+
+          const startTimer = () => {
+            timer = setTimeout(() => {
+              observer.disconnect();
+              resolve(); // DOM is stable!
+            }, duration);
+          };
+
+          // Failsafe: If animation never stops, resolve anyway after maxWait
+          setTimeout(() => {
+            observer.disconnect();
+            console.warn("DOM stability timed out (page has constant animations). Proceeding.");
+            resolve(); 
+          }, maxWait);
+
+          startTimer();
+        });
+      },
+      { duration: stabilityDuration, maxWait: timeout }
+    );
+  } catch (e) {
+    console.warn("Error waiting for DOM stability:", e);
+  }
+}
+
+/**
+ * 4. STRICT IMAGE LOAD WAITER
+ * Waits for all images on the page to load or fail.
+ * Best for ensuring images are ready for visual regression.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function waitForImagesToLoad(page) {
+  try {
+    await Promise.race([
+      page.evaluate(async () => {
+        const images = Array.from(document.querySelectorAll("img"));
+        const promises = images.map((img) => {
+          // FIX: Just check img.complete. 
+          // It covers both success (loaded) and failure (broken/error).
+          // In both cases, the network request is done.
+            if (img.complete) {
+              return Promise.resolve();
+            }
+            
+            return new Promise((resolve) => {
+              // If the image is still loading, wait for either result
+              img.addEventListener("load", resolve);
+              img.addEventListener("error", resolve); 
+            });
+          });
+          await Promise.all(promises);
+        }),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Timeout")), 10000),
+        ),
+      ]);
+    } catch (e) {
+      console.warn(
+        "Waiting for images timed out (or lazy-loaded images didn't trigger). Proceeding to screenshot.",
+      );
+    }
+  }
+
+/**
+ * 3. MASTER WAIT FUNCTION
+ * Combines API waiting, DOM stability and Img loading.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function waitForPageReady(page) {
+  await waitForAllAPIs(page);
+  await waitForDOMStability(page);
+  await waitForImagesToLoad(page);
+}
