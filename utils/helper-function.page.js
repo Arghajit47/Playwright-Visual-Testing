@@ -20,7 +20,7 @@ import {
 // Configuration constants
 const DEFAULT_WAIT_TIMEOUT = process.env.DEFAULT_WAIT_TIMEOUT || 5000;
 const tolerance = parseFloat(process.env.MISMATCH_THRESHOLD || "1");
-const USE_AI = process.env.USE_AI || false;
+const USE_AI = process.env.USE_AI === "true";
 
 /**
  * Helper class providing utilities for visual regression testing,
@@ -382,14 +382,11 @@ export class HelperFunction {
     );
 
     if (USE_AI) {
-      console.log("Gotcha!" + USE_AI);
-    } else {
-      console.log("No AI used for baseline image generation." + USE_AI);
-    }
-    if (USE_AI == true) {
       console.log(
         "🤖 Using AI for baseline image generation, Just Kidding 😂!"
       );
+    } else {
+      console.log("No AI used for baseline image generation.");
     }
 
     // Only store baseline record in CI environment
