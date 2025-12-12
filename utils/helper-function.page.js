@@ -117,8 +117,7 @@ export class HelperFunction {
         textDiffReport.push("Status: NO TEXT DIFFERENCES");
       }
 
-      let AI_RESPONSE =
-        "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI='true' in your .env file.";
+      let AI_RESPONSE;
       let mismatch;
       // Image comparison - Fixed: use the actual paths instead of helper functions
       const {
@@ -159,7 +158,7 @@ export class HelperFunction {
           await diffImage.save(diffPath);
           await mergeImages([currentPath, baselinePath, diffPath], diffPath);
 
-          if (process.env.USE_AI === "true") {
+          if (process.env.USE_AI == "true") {
             if (process.env.GEMINI_API_KEY) {
               console.log("🤖 Using Gemini AI for visual diff explanation...");
               AI_RESPONSE = await explainVisualDiff(
@@ -179,11 +178,11 @@ export class HelperFunction {
               await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
               await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
             } else if (
-              process.env.USE_AI === "false" ||
-              process.env.USE_AI === undefined
+              process.env.USE_AI == "false" ||
+              process.env.USE_AI == undefined
             ) {
               AI_RESPONSE =
-                "⚠️ USE_AI is enabled but no API key found. Please set either GEMINI_API_KEY or ANTHROPIC_API_KEY in your .env file.";
+                "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI='true' in your .env file.";
               console.warn(AI_RESPONSE);
             }
           }
@@ -381,6 +380,19 @@ export class HelperFunction {
    */
   async generateBaselineImage(baselineScreenshot) {
     console.log("📸 Baseline Image not found. Storing current image as baseline.");
+
+    if (process.env.USE_AI) {
+      console.log("Gotcha!");
+    } else {
+      console.log(
+        "No AI used for baseline image generation." + process.env.USE_AI
+      );
+    }
+    if (process.env.USE_AI == "true") {
+      console.log(
+        "🤖 Using AI for baseline image generation, Just Kidding 😂!"
+      );
+    }
 
     // Only store baseline record in CI environment
     if (!dbManager.isDatabaseEnabled()) {
