@@ -167,8 +167,8 @@ export class HelperFunction {
                 currentPath,
                 diffPath
               );
-              // await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-              // await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
             } else if (process.env.ANTHROPIC_API_KEY) {
               console.log("🤖 Using Claude AI for visual diff explanation...");
               AI_RESPONSE = await explainVisualDiffWithClaude(
@@ -176,9 +176,12 @@ export class HelperFunction {
                 currentPath,
                 diffPath
               );
-              // await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-              // await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-            } else {
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+            } else if (
+              process.env.USE_AI === "false" ||
+              process.env.USE_AI === undefined
+            ) {
               AI_RESPONSE =
                 "⚠️ USE_AI is enabled but no API key found. Please set either GEMINI_API_KEY or ANTHROPIC_API_KEY in your .env file.";
               console.warn(AI_RESPONSE);
@@ -269,7 +272,9 @@ export class HelperFunction {
     const htmlContent = generateHtmlReport(reportData);
 
     // 4. Save to file and attach the file path
-    const htmlPath = `screenshots/ai-reports/${Date.now()}-ai-report.html`;
+    const htmlPath = `screenshots/ai-reports/${
+      test.info().title
+    }-ai-report-${Date.now()}.html`;
     const dir = htmlPath.substring(0, htmlPath.lastIndexOf("/"));
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
@@ -294,6 +299,7 @@ export class HelperFunction {
   async generateAndAttachMarkdownReport(test, AI_RESPONSE) {
     // 1. Handle missing response gracefully (using simple string for error report)
     let reportData = AI_RESPONSE;
+    console.log("AI_RESPONSE: \n" + AI_RESPONSE);
     if (
       !AI_RESPONSE ||
       (typeof AI_RESPONSE === "string" && AI_RESPONSE.trim() === "")
@@ -316,7 +322,9 @@ export class HelperFunction {
     const markdownContent = jsonToMarkdown(reportData);
 
     // 3. Save to file and attach the file path
-    const markdownPath = `screenshots/ai-reports/${Date.now()}-ai-report.md`;
+    const markdownPath = `screenshots/ai-reports/${
+      test.info().title
+    }-ai-report-${Date.now()}.md`;
     const dir = markdownPath.substring(0, markdownPath.lastIndexOf("/"));
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });

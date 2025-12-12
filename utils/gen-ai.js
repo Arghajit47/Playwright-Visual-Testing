@@ -2,6 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
 import dotenv from "dotenv";
+import { extractJsonString } from "./utility-page";
 
 dotenv.config();
 
@@ -20,13 +21,13 @@ const anthropic = new Anthropic({
  * The model is instructed to:
  * 1. Scan the diff image for highlighted (red/pink) regions.
  * 2. Compare the same regions in the baseline vs. current images.
- * 3. Return a JSON list of changes that is then converted to a human-readable bullet list.
+ * 3. Return a JSON object containing a list of changes.
  *
  * @param {string} baselinePath - File path to the 'Expected' image
  * @param {string} currentPath - File path to the 'Actual' image
  * @param {string} diffPath    - File path to the 'Diff' image
- * @returns {Promise<string>} Markdown-style bullet list describing each detected change,
- *                             or an error message if analysis fails.
+ * @returns {Promise<Object|string>} JSON object with a "changes" array describing each detected change,
+ *                                   a fallback message if no changes are found, or an error message if analysis fails.
  */
 export async function explainVisualDiff(baselinePath, currentPath, diffPath) {
   try {
@@ -97,18 +98,17 @@ export async function explainVisualDiff(baselinePath, currentPath, diffPath) {
 
     // 4. Parse JSON and Format Output (Identical to your Claude function)
     const textResponse = response.text();
+    const textJsonResponse = extractJsonString(textResponse);
 
     try {
-      const jsonResponse = JSON.parse(textResponse);
+      const jsonResponse = JSON.parse(textJsonResponse);
 
       if (!jsonResponse.changes || jsonResponse.changes.length === 0) {
         return "No significant visual differences described by AI.";
       }
 
       // Convert JSON back to the readable bullet-list string
-      return jsonResponse.changes
-        .map((c) => `• ${c.description} (Was: ${c.baseline_state})`)
-        .join("\n");
+      return jsonResponse;
     } catch (parseError) {
       console.error("JSON Parse Failed:", parseError);
       return textResponse; // Fallback to raw text if parsing fails
@@ -121,16 +121,31 @@ export async function explainVisualDiff(baselinePath, currentPath, diffPath) {
 
 /**
  * Analyzes visual-regression results using Claude 4.5 Sonnet (claude-sonnet-4-5-20250929).
- * The function instructs the model to:
- * 1. Scan the diff image for highlighted (red/pink) regions.
- * 2. Compare the same regions in the baseline vs. current images.
- * 3. Return a JSON list of changes that is then converted to a human-readable bullet list.
  *
- * @param {string} baselinePath - File path to the 'Expected' image
- * @param {string} currentPath - File path to the 'Actual' image
- * @param {string} diffPath    - File path to the 'Diff' image
- * @returns {Promise<string>} Markdown-style bullet list describing each detected change,
- *                             or an error message if analysis fails.
+ * The function implements a forced reasoning workflow:
+ * 1. Scan the diff image to identify red/pink highlighted regions.
+ * 2. Examine the baseline image at those coordinates to describe the original state.
+ * 3. Examine the current image at the same coordinates to describe the new state.
+ * 4. Generate a structured JSON output with detailed change information.
+ *
+ * @param {string} baselinePath - File path to the 'Expected' (original) image
+ * @param {string} currentPath - File path to the 'Actual' (new) image
+ * @param {string} diffPath - File path to the 'Diff' image with red highlights
+ *
+ * @returns {Promise<Object|string>} Returns a JSON object with structure:
+ *   {
+ *     "changes": [
+ *       {
+ *         "location": string,        // Where the change occurred (e.g., "Top-right corner")
+ *         "baseline_state": string,  // Description of original state
+ *         "current_state": string,   // Description of new state
+ *         "description": string      // Human-readable summary of the change
+ *       }
+ *     ]
+ *   }
+ *   Falls back to raw text string if JSON parsing fails or returns error message on failure.
+ *
+ * @throws {Error} Logs error to console if Claude API call fails
  */
 export async function explainVisualDiffWithClaude(
   baselinePath,
@@ -220,11 +235,11 @@ export async function explainVisualDiffWithClaude(
     // Parse JSON to get the clean description or return the raw text if preferred
     const textResponse = message.content[0].text;
     try {
-      const jsonResponse = JSON.parse(textResponse);
+      const textJsonResponse = extractJsonString(textResponse);
+      const jsonResponse = JSON.parse(textJsonResponse);
+      console.log("jsonResponse: \n" + jsonResponse);
       // Convert JSON back to a readable string for your report
-      return jsonResponse.changes
-        .map((c) => `• ${c.description} (Was: ${c.baseline_state})`)
-        .join("\n");
+      return jsonResponse;
     } catch (e) {
       return textResponse; // Fallback if AI didn't output perfect JSON
     }

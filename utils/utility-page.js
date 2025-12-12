@@ -267,36 +267,68 @@ ${tableRows}
  * @returns {string} The Markdown formatted string.
  */
 export function jsonToMarkdown(jsonData) {
-    if (!jsonData || !Array.isArray(jsonData.changes)) {
-        return "## Error: Invalid JSON data format.\n";
-    }
+  if (!jsonData || !Array.isArray(jsonData.changes)) {
+    return "## Error: Invalid JSON data format.\n";
+  }
 
-    const changes = jsonData.changes;
-    let markdown = "## UI Change Detection Report: Category Switch\n\n";
+  const changes = jsonData.changes;
+  let markdown = "## UI Change Detection Report: Category Switch\n\n";
 
-    // Helper function to sanitize text for Markdown table cells
-    // Prevents internal pipe characters from breaking the table structure
-    const sanitizeCell = (text) => {
-        if (!text) return "";
-        // Replace internal pipes with HTML entity for safe rendering within the cell
-        return text.toString().replace(/\|/g, '&#124;').trim();
-    };
+  const sanitizeCell = (text) => {
+    if (!text) return "";
+    return text
+      .toString()
+      .replace(/\|/g, "&#124;") // Escape pipes
+      .replace(/\n/g, "<br>") // CRITICAL: Convert newlines to <br> so table doesn't break
+      .trim();
+  };
 
-    // 1. Define the Markdown Table Headers
-    markdown += "| Location | Baseline State (Old) | Current State (New) | Description |\n";
+  markdown +=
+    "| Location | Baseline State (Old) | Current State (New) | Description |\n";
+  markdown += "| :--- | :--- | :--- | :--- |\n";
 
-    // 2. Define the Table Alignment (Left-aligned columns)
-    markdown += "| :--- | :--- | :--- | :--- |\n";
+  changes.forEach((change) => {
+    const location = sanitizeCell(change.location);
+    const baseline = sanitizeCell(change.baseline_state);
+    const current = sanitizeCell(change.current_state);
+    const description = sanitizeCell(change.description);
 
-    // 3. Populate the table rows
-    changes.forEach(change => {
-        const location = sanitizeCell(change.location);
-        const baseline = sanitizeCell(change.baseline_state);
-        const current = sanitizeCell(change.current_state);
-        const description = sanitizeCell(change.description);
+    markdown += `| ${location} | ${baseline} | ${current} | ${description} |\n`;
+  });
 
-        markdown += `| ${location} | ${baseline} | ${current} | ${description} |\n`;
-    });
+  return markdown;
+}
 
-    return markdown;
+/**
+ * Extracts a clean JSON string from a Markdown response.
+ * It removes ```json, ```, and surrounding whitespace.
+ *
+ * @param {string} fullResponse - The full text from the AI.
+ * @returns {string|null} The clean JSON string ready for parsing.
+ */
+export function extractJsonString(fullResponse) {
+  // Regex Explanation:
+  // 1. ```             -> Matches opening backticks
+  // 2. (?:json)?       -> Non-capturing group: allows "json" to exist, but doesn't capture it.
+  // 3. \s*             -> Matches any whitespace/newlines after the opening tags.
+  // 4. ([\s\S]*?)      -> THE TARGET: Captures everything inside (non-greedy).
+  // 5. ```             -> Matches closing backticks
+  const regex = /```(?:json)?\s*([\s\S]*?)\s*```/i;
+
+  const match = fullResponse.match(regex);
+
+  if (match && match[1]) {
+    // Return the capture group, trimmed.
+    return match[1].trim();
+  }
+
+  // FALLBACK:
+  // Sometimes AI doesn't use backticks at all and just returns the JSON.
+  // If no backticks found, check if the string itself starts with { and ends with }
+  const trimmed = fullResponse.trim();
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+    return trimmed;
+  }
+
+  return null;
 }
