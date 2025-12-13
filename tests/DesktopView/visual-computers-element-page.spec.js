@@ -8,7 +8,10 @@ const {
 } = require("../../utils/helper-function.page.js");
 const allure = require("allure-js-commons");
 const { uploadImage } = require("../../utils/supabase-function.js");
-const { generateScreenshotName } = require("../../utils/utility-page.js");
+const {
+  generateScreenshotName,
+  setupNetworkMonitoring,
+} = require("../../utils/utility-page.js");
 const {
   BASELINE_DIR,
   DIFF_DIR,
@@ -20,7 +23,6 @@ const {
 } = require("../../utils/enum.js");
 import computersPageElements from "../../page-elements/computers-page-elements.js";
 import { urls } from "../../constants/urls.js";
-
 
 // Load environment variables
 dotenv.config();
@@ -37,6 +39,7 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   });
 
   test.beforeEach(async ({ page }) => {
+    setupNetworkMonitoring(page); // 1. Start tracking requests
     helper = new HelperFunction(page); // Define the HelperFunction instance
   });
 
@@ -64,11 +67,11 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       await helper.generateBaselineImage(
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -97,11 +100,11 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       await helper.generateBaselineImage(
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -133,7 +136,6 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         test
       );
 
-      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,
@@ -171,7 +173,6 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
         test
       );
 
-      console.log(AI_RESPONSE);
       await helper.validateMismatch(
         test,
         mismatch,

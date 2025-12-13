@@ -160,7 +160,7 @@ export class HelperFunction {
           await diffImage.save(diffPath);
           await mergeImages([currentPath, baselinePath, diffPath], diffPath);
 
-          if (USE_AI == "true") {
+          if (USE_AI == true) {
             if (process.env.GEMINI_API_KEY) {
               console.log("🤖 Using Gemini AI for visual diff explanation...");
               AI_RESPONSE = await explainVisualDiff(
@@ -203,7 +203,7 @@ export class HelperFunction {
     try {
       await this.page.waitForLoadState("domcontentloaded");
       await this.page.waitForLoadState("networkidle");
-      await this.page.waitForTimeout(parseInt(timeout));
+      // await this.page.waitForTimeout(parseInt(timeout));
       await waitForPageReady(this.page);
     } catch (error) {
       console.error(`Error during page wait: ${error.message}`);
@@ -294,7 +294,6 @@ export class HelperFunction {
   async generateAndAttachMarkdownReport(test, AI_RESPONSE) {
     // 1. Handle missing response gracefully (using simple string for error report)
     let reportData = AI_RESPONSE;
-    console.log("AI_RESPONSE: \n" + AI_RESPONSE);
     if (
       !AI_RESPONSE ||
       (typeof AI_RESPONSE === "string" && AI_RESPONSE.trim() === "")

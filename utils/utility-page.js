@@ -498,9 +498,21 @@ export async function waitForImagesToLoad(page) {
  * 3. MASTER WAIT FUNCTION
  * Combines API waiting, DOM stability and Img loading.
  * @param {import('@playwright/test').Page} page
+ * @param {number} timeout Overall timeout for all wait operations (default 30000ms)
  */
-export async function waitForPageReady(page) {
-  await waitForAllAPIs(page);
-  await waitForDOMStability(page);
-  await waitForImagesToLoad(page);
+export async function waitForPageReady(page, timeout = 30000) {
+  try {
+    await Promise.race([
+      (async () => {
+        await waitForAllAPIs(page);
+        await waitForDOMStability(page);
+        await waitForImagesToLoad(page);
+      })(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error(`waitForPageReady exceeded ${timeout}ms timeout`)), timeout)
+      ),
+    ]);
+  } catch (error) {
+    console.warn(`waitForPageReady: ${error.message}. Proceeding with test anyway.`);
+  }
 }

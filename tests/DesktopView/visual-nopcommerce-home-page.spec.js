@@ -17,7 +17,10 @@ const {
   baselineDesktopScreenshot,
   diffDesktopScreenshot,
 } = require("../../utils/enum.js");
-const { generateScreenshotName } = require("../../utils/utility-page.js");
+const {
+  generateScreenshotName,
+  setupNetworkMonitoring,
+} = require("../../utils/utility-page.js");
 import { urls } from "../../constants/urls.js";
 
 // Load environment variables
@@ -35,6 +38,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
   });
 
   test.beforeEach(async ({ page }) => {
+    setupNetworkMonitoring(page); // 1. Start tracking requests
     helper = new HelperFunction(page); // Define the HelperFunction instance
   });
 
@@ -61,11 +65,11 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
         )}-baseline.png`,
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       await helper.generateBaselineImage(
         baselineDesktopScreenshot(test.info().title)
       );
-      
+
       console.log("Baseline created. Run the test again for comparisons.");
     }
   );
@@ -96,7 +100,7 @@ test.describe("Take screenshots for Visual Regression Testing - Nopcommerce Home
         diffDesktopScreenshot(test.info().title),
         test
       );
-      console.log(AI_RESPONSE);
+
       await helper.validateMismatch(
         test,
         mismatch,

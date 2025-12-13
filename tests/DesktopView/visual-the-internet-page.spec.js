@@ -1,6 +1,8 @@
 // @ts-check
 const { test } = require("@playwright/test");
 const fs = require("fs");
+import dotenv from "dotenv";
+
 const {
   HelperFunction,
   createFolders,
@@ -14,16 +16,18 @@ const {
 const {
   BASELINE_DIR,
   DIFF_DIR,
-  BASELINE_MOBILE_DIR,
+  BASELINE_DESKTOP_DIR,
   CURRENT_DIR,
-  currentMobileScreenshot,
-  baselineMobileScreenshot,
-  diffMobileScreenshot,
+  currentDesktopScreenshot,
+  baselineDesktopScreenshot,
+  diffDesktopScreenshot,
 } = require("../../utils/enum.js");
 
+// Load environment variables
+dotenv.config();
 test.describe.configure({ mode: "serial" });
 
-test.describe("Take screenshots for Visual Regression Testing - Computers page", () => {
+test.describe("Take screenshots for Visual Regression Testing - The Internat webpage", () => {
   /** @type {HelperFunction} */
   let helper; // Define the HelperFunction instance with proper type annotation
 
@@ -38,32 +42,33 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   });
 
   test(
-    "Computers page - Mobile - Setup Baseline",
+    "The Internet webpage - Desktop - Setup Baseline",
     { tag: "@setupProject" },
     async ({ page }) => {
       await allure.severity("minor");
-
-      await page.goto("https://demo.nopcommerce.com/computers");
+      await page.goto("https://the-internet.herokuapp.com/dynamic_loading/1");
+      await helper.wait();
+      await page.getByRole("button", { name: "Start" }).click();
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
-        path: currentMobileScreenshot(test.info().title),
+        path: currentDesktopScreenshot(test.info().title),
         fullPage: true,
       });
 
       console.log(`Creating baseline for ${test.info().title} test...`);
       fs.copyFileSync(
-        currentMobileScreenshot(test.info().title),
-        baselineMobileScreenshot(test.info().title)
+        currentDesktopScreenshot(test.info().title),
+        baselineDesktopScreenshot(test.info().title)
       );
       await uploadImage(
-        `${BASELINE_MOBILE_DIR}/${generateScreenshotName(
+        `${BASELINE_DESKTOP_DIR}/${generateScreenshotName(
           test.info().title
         )}-baseline.png`,
-        baselineMobileScreenshot(test.info().title)
+        baselineDesktopScreenshot(test.info().title)
       );
 
       await helper.generateBaselineImage(
-        baselineMobileScreenshot(test.info().title)
+        baselineDesktopScreenshot(test.info().title)
       );
 
       console.log("Baseline created. Run the test again for comparisons.");
@@ -71,38 +76,40 @@ test.describe("Take screenshots for Visual Regression Testing - Computers page",
   );
 
   test(
-    "Computers page - Mobile - Validate Mismatch",
+    "The Internet webpage - Desktop - Validate Mismatch",
     { tag: "@validation" },
     async ({ page }, testInfo) => {
       await allure.severity("minor");
       // Ensure the baseline exists before proceeding
-      if (!fs.existsSync(baselineMobileScreenshot(test.info().title))) {
+      if (!fs.existsSync(baselineDesktopScreenshot(testInfo.title))) {
         await helper.generateBaselineImage(
-          baselineMobileScreenshot(test.info().title)
+          baselineDesktopScreenshot(testInfo.title)
         );
         return;
       }
 
-      await page.goto("https://demo.nopcommerce.com/computers");
+      await page.goto("https://the-internet.herokuapp.com/dynamic_loading/1");
+      await helper.wait();
+      await page.getByRole("button", { name: "Start" }).click();
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
-        path: currentMobileScreenshot(test.info().title),
+        path: currentDesktopScreenshot(test.info().title),
         fullPage: true,
       });
 
       const { mismatch, AI_RESPONSE } = await helper.compareScreenshotsWithText(
-        currentMobileScreenshot(test.info().title),
-        baselineMobileScreenshot(test.info().title),
-        diffMobileScreenshot(test.info().title),
+        currentDesktopScreenshot(test.info().title),
+        baselineDesktopScreenshot(test.info().title),
+        diffDesktopScreenshot(test.info().title),
         test
       );
 
       await helper.validateMismatch(
         test,
         mismatch,
-        diffMobileScreenshot(test.info().title),
+        diffDesktopScreenshot(test.info().title),
         testInfo,
-        "Mobile"
+        "Desktop"
       );
     }
   );
