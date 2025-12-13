@@ -237,7 +237,6 @@ export async function explainVisualDiffWithClaude(
     try {
       const textJsonResponse = extractJsonString(textResponse);
       const jsonResponse = JSON.parse(textJsonResponse);
-      console.log("jsonResponse: \n" + jsonResponse);
       // Convert JSON back to a readable string for your report
       return jsonResponse;
     } catch (e) {

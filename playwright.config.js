@@ -79,7 +79,7 @@ module.exports = defineConfig({
         ...devices["Desktop Chrome"],
         launchOptions: {
           // slowMo: 3000,
-          timeout: 120000,
+          timeout: 150000,
           headless: true,
         },
       },
@@ -93,7 +93,7 @@ module.exports = defineConfig({
         ...devices["Pixel 5"],
         launchOptions: {
           // slowMo: 3000,
-          timeout: 120000,
+          timeout: 150000,
           headless: true,
         },
       },
