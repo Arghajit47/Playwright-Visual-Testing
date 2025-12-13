@@ -15,6 +15,7 @@ import {
   mergeImages,
   generateHtmlReport,
   jsonToMarkdown,
+  waitForPageReady,
 } from "./utility-page.js";
 
 // Configuration constants
@@ -203,6 +204,7 @@ export class HelperFunction {
       await this.page.waitForLoadState("domcontentloaded");
       await this.page.waitForLoadState("networkidle");
       await this.page.waitForTimeout(parseInt(timeout));
+      await waitForPageReady(this.page);
     } catch (error) {
       console.error(`Error during page wait: ${error.message}`);
       throw new Error(`Failed to wait for page to load: ${error.message}`);
@@ -230,10 +232,6 @@ export class HelperFunction {
       contentType: "image/png",
     });
   }
-
-  // Ensure you have access to Buffer in your environment (standard in Node.js/Playwright)
-
-  // Assuming generateHtmlReport(data) and jsonToMarkdown(data) are accessible in scope.
 
   /**
    * Generate and attach AI explanation (HTML report) to the test report.
@@ -419,6 +417,12 @@ export class HelperFunction {
     }
   }
 
+  /**
+   * Capture a screenshot of a specific element on the page.
+   * @param {string} elementSelector - CSS selector of the element to capture
+   * @param {string} screenshotPath - File path where the screenshot will be saved
+   * @returns {Promise<void>}
+   */
   async captureElementSpecificScreenshot(elementSelector, screenshotPath) {
     const element = await this.page.waitForSelector(elementSelector);
     await element.screenshot({ path: screenshotPath });
