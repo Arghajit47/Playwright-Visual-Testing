@@ -16,8 +16,8 @@ const {
 const {
   BASELINE_DIR,
   DIFF_DIR,
-  BASELINE_DESKTOP_DIR,
   CURRENT_DIR,
+  BASELINE_MOBILE_DIR,
   currentMobileScreenshot,
   baselineMobileScreenshot,
   diffMobileScreenshot,
@@ -61,7 +61,7 @@ test.describe("Take screenshots for Visual Regression Testing - The Internat web
         baselineMobileScreenshot(test.info().title)
       );
       await uploadImage(
-        `${BASELINE_DESKTOP_DIR}/${generateScreenshotName(
+        `${BASELINE_MOBILE_DIR}/${generateScreenshotName(
           test.info().title
         )}-baseline.png`,
         baselineMobileScreenshot(test.info().title)

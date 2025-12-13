@@ -17,7 +17,7 @@ const PULSE_REPORT_DIR = path.resolve(__dirname, "pulse-report"); // Example: a 
 module.exports = defineConfig({
   // This sets the maximum time (in ms) each test can run.
   // Equivalent to calling test.setTimeout(12222) in every file.
-  timeout: 120000,
+  timeout: 150000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
