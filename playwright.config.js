@@ -47,6 +47,7 @@ module.exports = defineConfig({
       ]
     : [
         ["html", { open: "never" }],
+        ["json", { outputFile: "playwright-report.json" }],
         ["allure-playwright", { open: "never" }],
         [
           "@arghajit/playwright-pulse-report",
