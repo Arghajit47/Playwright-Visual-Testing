@@ -236,6 +236,10 @@ class DatabaseManager {
     this.isInitialized = false;
   }
 
+  /**
+   * Get the singleton instance of DatabaseManager
+   * @returns {DatabaseManager} The singleton instance
+   */
   static getInstance() {
     if (!DatabaseManager.instance) {
       DatabaseManager.instance = new DatabaseManager();
@@ -243,43 +247,41 @@ class DatabaseManager {
     return DatabaseManager.instance;
   }
 
+  /**
+   * Initialize the database connection if not already initialized
+   * @returns {Object|null} The SQLite database connection object, or null on failure
+   */
   initializeDatabase() {
-    if (!process.env.CI) {
-      console.log("⏭️  Skipping database initialization - not in CI environment");
-      return null;
-    }
-
     if (this.isInitialized && this.db) {
+      console.log("♻️  Reusing existing database connection");
       return this.db;
     }
 
     try {
-      console.log("🔄 Initializing database for CI environment...");
+      console.log("🔄 Connecting to existing database...");
       this.db = initDatabaseConnection();
-      initDatabaseSchema(this.db);
-
       this.isInitialized = true;
-      console.log("✅ Database initialized successfully");
-
-      process.on("exit", () => this.closeConnection());
-      process.on("SIGINT", () => this.closeConnection());
-      process.on("SIGTERM", () => this.closeConnection());
+      console.log("✅ Database connection established");
 
       return this.db;
     } catch (error) {
-      console.error("❌ Failed to initialize database:", error);
+      console.error("❌ Failed to connect to database:", error);
       this.db = null;
       return null;
     }
   }
 
+  /**
+   * Get the database connection, initializing it if necessary
+   * @returns {Object|null} The SQLite database connection object, or null on failure
+   */
   getConnection() {
-    if (!process.env.CI) {
-      return null;
-    }
     return this.initializeDatabase();
   }
 
+  /**
+   * Close the database connection and reset the initialization state
+   */
   closeConnection() {
     if (this.db) {
       try {
@@ -293,15 +295,28 @@ class DatabaseManager {
     }
   }
 
+  /**
+   * Check if the database is enabled based on the CI environment variable
+   * @returns {boolean} True if CI environment is set, false otherwise
+   */
   isDatabaseEnabled() {
     return !!process.env.CI;
   }
 }
 
+export { DatabaseManager };
 export const dbManager = DatabaseManager.getInstance();
 
 let db = null;
 
+/**
+ * Get or initialize the singleton database connection.
+ * On first call, creates the connection and initializes the schema.
+ * Subsequent calls return the existing connection.
+ *
+ * @returns {Object} The SQLite database connection object.
+ * @throws {Error} If database connection or schema initialization fails.
+ */
 export function getDatabase() {
   if (!db) {
     db = initDatabaseConnection();
