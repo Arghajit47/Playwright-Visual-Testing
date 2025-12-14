@@ -15,9 +15,11 @@ const PULSE_REPORT_DIR = path.resolve(__dirname, "pulse-report"); // Example: a 
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
+  globalSetup: require.resolve('./globalSetup.js'),
+  globalTeardown: require.resolve('./globalTeardown.js'),
   // This sets the maximum time (in ms) each test can run.
   // Equivalent to calling test.setTimeout(12222) in every file.
-  timeout: 120000,
+  timeout: 150000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -47,6 +49,7 @@ module.exports = defineConfig({
       ]
     : [
         ["html", { open: "never" }],
+        ["json", { outputFile: "playwright-report.json" }],
         ["allure-playwright", { open: "never" }],
         [
           "@arghajit/playwright-pulse-report",

@@ -1,0 +1,535 @@
+{
+  "config": {
+    "configFile": "/Users/arghajitsingha/Playwright-Visual-Testing/playwright.config.js",
+    "rootDir": "/Users/arghajitsingha/Playwright-Visual-Testing",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/arghajitsingha/Playwright-Visual-Testing/globalSetup.js",
+    "globalTeardown": "/Users/arghajitsingha/Playwright-Visual-Testing/globalTeardown.js",
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report.json"
+        }
+      ],
+      [
+        "/Users/arghajitsingha/Playwright-Visual-Testing/node_modules/allure-playwright/dist/cjs/index.js",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "/Users/arghajitsingha/Playwright-Visual-Testing/node_modules/@arghajit/playwright-pulse-report/dist/reporter/index.js",
+        {
+          "outputDir": "/Users/arghajitsingha/Playwright-Visual-Testing/pulse-report"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/arghajitsingha/Playwright-Visual-Testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Visual-Desktop-Test",
+        "name": "Visual-Desktop-Test",
+        "testDir": "/Users/arghajitsingha/Playwright-Visual-Testing/tests/DesktopView",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 150000
+      },
+      {
+        "outputDir": "/Users/arghajitsingha/Playwright-Visual-Testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Visual-Mobile-Test",
+        "name": "Visual-Mobile-Test",
+        "testDir": "/Users/arghajitsingha/Playwright-Visual-Testing/tests/MobileView",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 150000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "tests/MobileView/visual-computers-element-page.spec.js",
+      "file": "tests/MobileView/visual-computers-element-page.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Take screenshots for Visual Regression Testing - Computers page",
+          "file": "tests/MobileView/visual-computers-element-page.spec.js",
+          "line": 32,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Computers page Upper Header - Mobile - Validate Mismatch",
+              "ok": true,
+              "tags": [
+                "validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Visual-Mobile-Test",
+                  "projectName": "Visual-Mobile-Test",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10889,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "No text differences found.\n"
+                        },
+                        {
+                          "text": "✅ Test passed: Mismatch 0% is below tolerance 1%\n"
+                        },
+                        {
+                          "text": "✅ Connected to database: visual.db\n"
+                        },
+                        {
+                          "text": "PRAGMA journal_mode = WAL\n"
+                        },
+                        {
+                          "text": "PRAGMA synchronous = NORMAL\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS visual_matrix (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        device TEXT NOT NULL,\n        status TEXT NOT NULL,\n        imageUrl TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS baseline (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "✅ Database schema initialized\n"
+                        },
+                        {
+                          "text": "\n      INSERT INTO visual_matrix (\n        name, \n        device, \n        status, \n        imageUrl\n      ) VALUES (\n        'Computers page Upper Header - Mo'/*+24 bytes*/, \n        'Mobile', \n        'passed', \n        ''\n      )\n    \n"
+                        },
+                        {
+                          "text": "✅ Record inserted with ID: 127\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2025-12-14T17:58:22.930Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c",
+              "file": "tests/MobileView/visual-computers-element-page.spec.js",
+              "line": 107,
+              "column": 3
+            },
+            {
+              "title": "Computers page Lower Header - Mobile - Validate Mismatch",
+              "ok": true,
+              "tags": [
+                "validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Visual-Mobile-Test",
+                  "projectName": "Visual-Mobile-Test",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5485,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "No text differences found.\n"
+                        },
+                        {
+                          "text": "✅ Test passed: Mismatch 0% is below tolerance 1%\n"
+                        },
+                        {
+                          "text": "\n      INSERT INTO visual_matrix (\n        name, \n        device, \n        status, \n        imageUrl\n      ) VALUES (\n        'Computers page Lower Header - Mo'/*+24 bytes*/, \n        'Mobile', \n        'passed', \n        ''\n      )\n    \n"
+                        },
+                        {
+                          "text": "✅ Record inserted with ID: 129\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2025-12-14T17:58:34.851Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b",
+              "file": "tests/MobileView/visual-computers-element-page.spec.js",
+              "line": 144,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests/MobileView/visual-computers-page.spec.js",
+      "file": "tests/MobileView/visual-computers-page.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Take screenshots for Visual Regression Testing - Computers page",
+          "file": "tests/MobileView/visual-computers-page.spec.js",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Computers page - Mobile - Validate Mismatch",
+              "ok": true,
+              "tags": [
+                "validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Visual-Mobile-Test",
+                  "projectName": "Visual-Mobile-Test",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 17863,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "No text differences found.\n"
+                        },
+                        {
+                          "text": "✅ Test passed: Mismatch 0% is below tolerance 1%\n"
+                        },
+                        {
+                          "text": "✅ Connected to database: visual.db\n"
+                        },
+                        {
+                          "text": "PRAGMA journal_mode = WAL\n"
+                        },
+                        {
+                          "text": "PRAGMA synchronous = NORMAL\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS visual_matrix (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        device TEXT NOT NULL,\n        status TEXT NOT NULL,\n        imageUrl TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS baseline (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "✅ Database schema initialized\n"
+                        },
+                        {
+                          "text": "\n      INSERT INTO visual_matrix (\n        name, \n        device, \n        status, \n        imageUrl\n      ) VALUES (\n        'Computers page - Mobile - Valida'/*+11 bytes*/, \n        'Mobile', \n        'passed', \n        ''\n      )\n    \n"
+                        },
+                        {
+                          "text": "✅ Record inserted with ID: 130\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2025-12-14T17:58:22.966Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c",
+              "file": "tests/MobileView/visual-computers-page.spec.js",
+              "line": 73,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests/MobileView/visual-nopcommerce-home-page.spec.js",
+      "file": "tests/MobileView/visual-nopcommerce-home-page.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Take screenshots for Visual Regression Testing - Nopcommerce home page",
+          "file": "tests/MobileView/visual-nopcommerce-home-page.spec.js",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Nopcommerce home page - Mobile - Validate Mismatch",
+              "ok": true,
+              "tags": [
+                "validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Visual-Mobile-Test",
+                  "projectName": "Visual-Mobile-Test",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 29186,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "No text differences found.\n"
+                        },
+                        {
+                          "text": "✅ Test passed: Mismatch 0% is below tolerance 1%\n"
+                        },
+                        {
+                          "text": "✅ Connected to database: visual.db\n"
+                        },
+                        {
+                          "text": "PRAGMA journal_mode = WAL\n"
+                        },
+                        {
+                          "text": "PRAGMA synchronous = NORMAL\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS visual_matrix (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        device TEXT NOT NULL,\n        status TEXT NOT NULL,\n        imageUrl TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS baseline (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "✅ Database schema initialized\n"
+                        },
+                        {
+                          "text": "\n      INSERT INTO visual_matrix (\n        name, \n        device, \n        status, \n        imageUrl\n      ) VALUES (\n        'Nopcommerce home page - Mobile -'/*+18 bytes*/, \n        'Mobile', \n        'passed', \n        ''\n      )\n    \n"
+                        },
+                        {
+                          "text": "✅ Record inserted with ID: 131\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2025-12-14T17:58:22.927Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb",
+              "file": "tests/MobileView/visual-nopcommerce-home-page.spec.js",
+              "line": 72,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests/MobileView/visual-the-internet-page.spec.js",
+      "file": "tests/MobileView/visual-the-internet-page.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Take screenshots for Visual Regression Testing - The Internat webpage",
+          "file": "tests/MobileView/visual-the-internet-page.spec.js",
+          "line": 30,
+          "column": 6,
+          "specs": [
+            {
+              "title": "The Internet webpage - Mobile - Validate Mismatch",
+              "ok": true,
+              "tags": [
+                "validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Visual-Mobile-Test",
+                  "projectName": "Visual-Mobile-Test",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 14951,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "No text differences found.\n"
+                        },
+                        {
+                          "text": "✅ Test passed: Mismatch 0% is below tolerance 1%\n"
+                        },
+                        {
+                          "text": "✅ Connected to database: visual.db\n"
+                        },
+                        {
+                          "text": "PRAGMA journal_mode = WAL\n"
+                        },
+                        {
+                          "text": "PRAGMA synchronous = NORMAL\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS visual_matrix (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        device TEXT NOT NULL,\n        status TEXT NOT NULL,\n        imageUrl TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "CREATE TABLE IF NOT EXISTS baseline (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
+                        },
+                        {
+                          "text": "✅ Database schema initialized\n"
+                        },
+                        {
+                          "text": "\n      INSERT INTO visual_matrix (\n        name, \n        device, \n        status, \n        imageUrl\n      ) VALUES (\n        'The Internet webpage - Mobile - '/*+17 bytes*/, \n        'Mobile', \n        'passed', \n        ''\n      )\n    \n"
+                        },
+                        {
+                          "text": "✅ Record inserted with ID: 128\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2025-12-14T17:58:22.971Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662",
+              "file": "tests/MobileView/visual-the-internet-page.spec.js",
+              "line": 78,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-12-14T17:58:20.867Z",
+    "duration": 32444.724000000002,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -494,6 +494,79 @@ export async function waitForImagesToLoad(page) {
     }
   }
 
+  /**
+ * 4. CSS ANIMATION WAITER (NEW)
+ * Waits for any active CSS transitions or animations to finish.
+ * Solves issues where a "Spinner" is spinning but the DOM is technically stable.
+ */
+export async function waitForAnimations(page, timeout = 15000) {
+  try {
+    await page.evaluate(async (maxWait) => {
+      return new Promise((resolve) => {
+        const checkAnimations = () => {
+          // Get all animations on the document
+          const animations = document.getAnimations();
+          
+          // Filter only running animations (ignore paused/finished)
+          const running = animations.filter(a => a.playState === 'running');
+          
+          if (running.length === 0) {
+            resolve();
+          } else {
+            // Check again in 100ms
+            setTimeout(checkAnimations, 100);
+          }
+        };
+
+        // Safety timeout
+        setTimeout(resolve, maxWait);
+        checkAnimations();
+      });
+    }, timeout);
+  } catch (e) {
+    console.warn("Error waiting for animations:", e);
+  }
+}
+
+/**
+ * 5. HEURISTIC LOADER WAITER (NEW)
+ * Scans the page for common "Loading..." indicators or elements with aria-busy.
+ * Prevents the test from proceeding if a generic loader is visible.
+ */
+export async function waitForCommonLoaders(page, timeout = 15000) {
+  try {
+    const loaderSelectors = [
+      '[aria-busy="true"]',           // Standard accessibility attribute
+      '.loader', '.spinner',          // Common class names
+      '.loading', '.loading-bar',
+      '[data-testid*="loading"]',
+      '#loading'                      // Matches "The Internet" example specifically
+    ];
+
+    const startTime = Date.now();
+    
+    while (Date.now() - startTime < timeout) {
+      // Check if any standard loader is visible
+      const isLoaderVisible = await page.evaluate((selectors) => {
+        return selectors.some(selector => {
+          const el = document.querySelector(selector);
+          // Check if element exists AND is visible
+          return el && (el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0);
+        });
+      }, loaderSelectors);
+
+      if (!isLoaderVisible) {
+        break; // No loaders found, we are safe!
+      }
+
+      // If loader is found, wait 200ms and check again
+      await page.waitForTimeout(200);
+    }
+  } catch (e) {
+    console.warn("Error checking for common loaders:", e);
+  }
+}
+
 /**
  * 3. MASTER WAIT FUNCTION
  * Combines API waiting, DOM stability and Img loading.
@@ -505,6 +578,8 @@ export async function waitForPageReady(page, timeout = 30000) {
     await Promise.race([
       (async () => {
         await waitForAllAPIs(page);
+        await waitForCommonLoaders(page);
+        await waitForAnimations(page);
         await waitForDOMStability(page);
         await waitForImagesToLoad(page);
       })(),
