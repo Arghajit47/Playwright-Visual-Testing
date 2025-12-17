@@ -567,3 +567,136 @@ The JSDoc comment for `explainVisualDiffWithClaude()` didn't accurately describe
 - [ ] `USE_AI=true` and `USE_AI=false` both work as expected
 - [ ] Page timeouts are handled gracefully
 - [ ] Database connections are properly closed after tests
+- [ ] API-based image comparison service is running and accessible
+
+---
+
+## 5. API-Based Image Comparison Implementation
+
+### Issue
+The `compareScreenshotsWithTextViaAPI()` function at line 494 had an incomplete `fetch()` call without proper implementation.
+
+### Solution: Implement POST API with Base64 Encoding
+
+#### File: `utils/helper-function.page.js` (Line 494)
+
+**Before:**
+```javascript
+const response = await fetch();
+```
+
+**After:**
+```javascript
+const baseImageBase64 = fs.readFileSync(baselinePath, { encoding: "base64" });
+const actualImageBase64 = fs.readFileSync(currentPath, { encoding: "base64" });
+
+const response = await fetch("http://localhost:3000/api/compare-images", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    baseImageSource: `data:image/png;base64,${baseImageBase64}`,
+    actualImageSource: `data:image/png;base64,${actualImageBase64}`,
+    threshold: tolerance,
+    options: {
+      pixelmatch: {
+        threshold: 0.1,
+        diffColor: [255, 0, 255],
+      },
+      resize: {
+        enabled: true,
+        strategy: "fill",
+      },
+      output: {
+        format: "png",
+        includeMetadata: true,
+      },
+    },
+  }),
+});
+
+if (!response.ok) {
+  throw new Error(`API comparison failed: ${response.statusText}`);
+}
+
+const comparisonResult = await response.json();
+const { differentPixels, totalPixels, diffImageBase64 } = comparisonResult;
+
+if (diffImageBase64) {
+  const diffBuffer = Buffer.from(
+    diffImageBase64.replace(/^data:image\/\w+;base64,/, ""), 
+    "base64"
+  );
+  fs.writeFileSync(diffPath, diffBuffer);
+}
+```
+
+### API Specification
+
+**Endpoint:** `POST http://localhost:3000/api/compare-images`
+
+**Request Body:**
+```json
+{
+  "baseImageSource": "data:image/png;base64,...",
+  "actualImageSource": "data:image/png;base64,...",
+  "threshold": 5,
+  "options": {
+    "pixelmatch": {
+      "threshold": 0.1,
+      "diffColor": [255, 0, 255]
+    },
+    "resize": {
+      "enabled": true,
+      "strategy": "fill"
+    },
+    "output": {
+      "format": "png",
+      "includeMetadata": true
+    }
+  }
+}
+```
+
+**Expected Response:**
+```json
+{
+  "differentPixels": 1234,
+  "totalPixels": 1920000,
+  "diffImageBase64": "data:image/png;base64,...",
+  "metadata": {
+    "mismatchPercentage": 0.064
+  }
+}
+```
+
+### Benefits
+- ✅ Offloads image processing to external API service
+- ✅ Configurable comparison options (threshold, colors, resize)
+- ✅ Handles different image dimensions automatically
+- ✅ Returns diff image as base64 for easy storage
+- ✅ Proper error handling for API failures
+- ✅ Uses environment's `MISMATCH_THRESHOLD` value
+
+### Configuration Note
+
+For production environments, make the API URL configurable:
+
+**Add to `.env`:**
+```bash
+COMPARISON_API_URL=http://localhost:3000
+```
+
+**Update code:**
+```javascript
+const COMPARISON_API_URL = process.env.COMPARISON_API_URL || "http://localhost:3000";
+const response = await fetch(`${COMPARISON_API_URL}/api/compare-images`, {
+  // ... config
+});
+```
+
+---
+
+**Last Updated:** 2025-12-17  
+**Document Version:** 1.1
