@@ -539,45 +539,42 @@ export class HelperFunction {
           "base64"
         );
         fs.writeFileSync(diffPath, diffBuffer);
-      }
+        const differentPixels = await comparisonResult.metadata.diffPixels;
+        const totalPixels = await comparisonResult.metadata.totalPixels;
 
-      const differentPixels = await comparisonResult.metadata.diffPixels;
-      const totalPixels = await comparisonResult.metadata.totalPixels;
+        mismatch = parseFloat(
+          ((differentPixels / totalPixels) * 100).toFixed(2)
+        );
 
-      mismatch = parseFloat(((differentPixels / totalPixels) * 100).toFixed(2));
-
-      console.log(
-        `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
-      );
-
-      if (comparisonResult.status === "Failed") {
+        console.log(
+          `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
+        );
         await mergeImages([currentPath, baselinePath, diffPath], diffPath);
-
-        // if (USE_AI == true) {
-        //   if (process.env.GEMINI_API_KEY) {
-        //     console.log("🤖 Using Gemini AI for visual diff explanation...");
-        //     AI_RESPONSE = await explainVisualDiff(
-        //       baselinePath,
-        //       currentPath,
-        //       diffPath
-        //     );
-        //     await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-        //     await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-        //   } else if (process.env.ANTHROPIC_API_KEY) {
-        //     console.log("🤖 Using Claude AI for visual diff explanation...");
-        //     AI_RESPONSE = await explainVisualDiffWithClaude(
-        //       baselinePath,
-        //       currentPath,
-        //       diffPath
-        //     );
-        //     await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-        //     await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-        //   } else if (USE_AI == false || USE_AI == undefined) {
-        //     AI_RESPONSE =
-        //       "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
-        //     console.warn(AI_RESPONSE);
-        //   }
-        // }
+        if (USE_AI == true) {
+          if (process.env.GEMINI_API_KEY) {
+            console.log("🤖 Using Gemini AI for visual diff explanation...");
+            AI_RESPONSE = await explainVisualDiff(
+              baselinePath,
+              currentPath,
+              diffPath
+            );
+            await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+            await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+          } else if (process.env.ANTHROPIC_API_KEY) {
+            console.log("🤖 Using Claude AI for visual diff explanation...");
+            AI_RESPONSE = await explainVisualDiffWithClaude(
+              baselinePath,
+              currentPath,
+              diffPath
+            );
+            await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+            await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+          } else if (USE_AI == false || USE_AI == undefined) {
+            AI_RESPONSE =
+              "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
+            console.warn(AI_RESPONSE);
+          }
+        }
       }
 
       return { mismatch, AI_RESPONSE };
