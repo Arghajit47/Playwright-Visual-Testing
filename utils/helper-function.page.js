@@ -451,7 +451,12 @@ export class HelperFunction {
       textDiffReport.push("=== OCR Text Comparison Report ===");
       textDiffReport.push(`Generated: ${new Date().toISOString()}`);
       textDiffReport.push("");
+    } catch (error) {
+      console.error(`Failed to compare screenshot texts: ${error.message}`);
+      throw error;
+    }
 
+    try {
       // Compare the text
       if (currentText !== baselineText) {
         console.log("Text Differences Found!");
@@ -533,18 +538,19 @@ export class HelperFunction {
 
       const comparisonResult = await response.json();
 
+      console.log(JSON.stringify(comparisonResult));
+
+      const differentPixels = comparisonResult.metadata?.diffPixels || 0;
+      const totalPixels = comparisonResult.metadata?.totalPixels || 1;
+
+      mismatch = parseFloat(((differentPixels / totalPixels) * 100).toFixed(2));
+
       if (comparisonResult.status === "Failed") {
         const diffBuffer = Buffer.from(
           comparisonResult.diffImageUrl.replace(/^data:image\/\w+;base64,/, ""),
           "base64"
         );
         fs.writeFileSync(diffPath, diffBuffer);
-        const differentPixels = await comparisonResult.metadata.diffPixels;
-        const totalPixels = await comparisonResult.metadata.totalPixels;
-
-        mismatch = parseFloat(
-          ((differentPixels / totalPixels) * 100).toFixed(2)
-        );
 
         console.log(
           `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
@@ -575,6 +581,8 @@ export class HelperFunction {
             console.warn(AI_RESPONSE);
           }
         }
+      } else {
+        console.log(`No visual differences detected. Mismatch: ${mismatch}%`);
       }
 
       return { mismatch, AI_RESPONSE };
