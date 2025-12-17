@@ -86,7 +86,7 @@ test.describe("Take screenshots for Visual Regression Testing - The Internet - C
         return;
       }
 
-      await page.goto("https://the-internet.herokuapp.com/challenging_dom");
+      await page.goto("https://the-internet.herokuapp.com/floating_menu");
       await helper.wait(); // Use the helper's wait method
       await page.screenshot({
         path: currentMobileScreenshot(test.info().title),
