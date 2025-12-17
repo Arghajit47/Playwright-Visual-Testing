@@ -545,9 +545,6 @@ export class HelperFunction {
 
       const comparisonResult = await response.json();
 
-      console.log("🔍 API Response:");
-      console.log(JSON.stringify(comparisonResult, null, 2));
-
       const differentPixels =
         comparisonResult.metadata?.comparison?.diffPixels || 0;
       const totalPixels =
