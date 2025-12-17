@@ -540,7 +540,19 @@ export class HelperFunction {
       );
 
       if (!response.ok) {
-        throw new Error(`API comparison failed: ${response.statusText}`);
+        let errorDetails = response.statusText;
+        try {
+          const errorBody = await response.json();
+          errorDetails = JSON.stringify(errorBody, null, 2);
+        } catch (e) {
+          try {
+            errorDetails = await response.text();
+          } catch (e2) {
+            // Keep default statusText
+          }
+        }
+        console.error("❌ API Error Response:", errorDetails);
+        throw new Error(`API comparison failed (${response.status}): ${errorDetails}`);
       }
 
       const comparisonResult = await response.json();
