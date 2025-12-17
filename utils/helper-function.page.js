@@ -451,12 +451,7 @@ export class HelperFunction {
       textDiffReport.push("=== OCR Text Comparison Report ===");
       textDiffReport.push(`Generated: ${new Date().toISOString()}`);
       textDiffReport.push("");
-    } catch (error) {
-      console.error(`Failed to compare screenshot texts: ${error.message}`);
-      throw error;
-    }
 
-    try {
       // Compare the text
       if (currentText !== baselineText) {
         console.log("Text Differences Found!");
@@ -492,104 +487,114 @@ export class HelperFunction {
         console.log("No text differences found.");
         textDiffReport.push("Status: NO TEXT DIFFERENCES");
       }
-
-      let AI_RESPONSE;
-      let mismatch;
-      // Image comparison - Fixed: use the actual paths instead of helper functions
-      const baseImageBase64 = fs.readFileSync(baselinePath, {
-        encoding: "base64",
-      });
-      const actualImageBase64 = fs.readFileSync(currentPath, {
-        encoding: "base64",
-      });
-
-      const response = await fetch(
-        "https://visual-test.netlify.app/api/compare-images",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            baseImageSource: `data:image/png;base64,${baseImageBase64}`,
-            actualImageSource: `data:image/png;base64,${actualImageBase64}`,
-            threshold: tolerance,
-            options: {
-              pixelmatch: {
-                threshold: tolerance,
-                diffColor: [255, 0, 255],
-              },
-              resize: {
-                enabled: true,
-                strategy: "fill",
-              },
-              output: {
-                format: "png",
-                includeMetadata: true,
-              },
-            },
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`API comparison failed: ${response.statusText}`);
-      }
-
-      const comparisonResult = await response.json();
-
-      console.log(JSON.stringify(comparisonResult));
-
-      const differentPixels = comparisonResult.metadata?.diffPixels || 0;
-      const totalPixels = comparisonResult.metadata?.totalPixels || 1;
-
-      mismatch = parseFloat(((differentPixels / totalPixels) * 100).toFixed(2));
-
-      if (comparisonResult.status === "Failed") {
-        const diffBuffer = Buffer.from(
-          comparisonResult.diffImageUrl.replace(/^data:image\/\w+;base64,/, ""),
-          "base64"
-        );
-        fs.writeFileSync(diffPath, diffBuffer);
-
-        console.log(
-          `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
-        );
-        await mergeImages([currentPath, baselinePath, diffPath], diffPath);
-        if (USE_AI == true) {
-          if (process.env.GEMINI_API_KEY) {
-            console.log("🤖 Using Gemini AI for visual diff explanation...");
-            AI_RESPONSE = await explainVisualDiff(
-              baselinePath,
-              currentPath,
-              diffPath
-            );
-            await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-            await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-          } else if (process.env.ANTHROPIC_API_KEY) {
-            console.log("🤖 Using Claude AI for visual diff explanation...");
-            AI_RESPONSE = await explainVisualDiffWithClaude(
-              baselinePath,
-              currentPath,
-              diffPath
-            );
-            await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
-            await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
-          } else if (USE_AI == false || USE_AI == undefined) {
-            AI_RESPONSE =
-              "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
-            console.warn(AI_RESPONSE);
-          }
-        }
-      } else {
-        console.log(`No visual differences detected. Mismatch: ${mismatch}%`);
-      }
-
-      return { mismatch, AI_RESPONSE };
     } catch (error) {
-      console.error(`Failed to compare screenshots: ${error.message}`);
+      console.error(`Failed to compare screenshot texts: ${error.message}`);
       throw error;
     }
+
+    try {
+        let AI_RESPONSE;
+        let mismatch;
+        // Image comparison - Fixed: use the actual paths instead of helper functions
+        const baseImageBase64 = fs.readFileSync(baselinePath, {
+          encoding: "base64",
+        });
+        const actualImageBase64 = fs.readFileSync(currentPath, {
+          encoding: "base64",
+        });
+
+        const response = await fetch(
+          "https://visual-test.netlify.app/api/compare-images",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              baseImageSource: `data:image/png;base64,${baseImageBase64}`,
+              actualImageSource: `data:image/png;base64,${actualImageBase64}`,
+              threshold: tolerance,
+              options: {
+                pixelmatch: {
+                  threshold: tolerance,
+                  diffColor: [255, 0, 255],
+                },
+                resize: {
+                  enabled: true,
+                  strategy: "fill",
+                },
+                output: {
+                  format: "png",
+                  includeMetadata: true,
+                },
+              },
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`API comparison failed: ${response.statusText}`);
+        }
+
+        const comparisonResult = await response.json();
+
+        console.log(JSON.stringify(comparisonResult));
+
+        const differentPixels = comparisonResult.metadata?.diffPixels || 0;
+        const totalPixels = comparisonResult.metadata?.totalPixels || 1;
+
+        mismatch = parseFloat(
+          ((differentPixels / totalPixels) * 100).toFixed(2)
+        );
+
+        if (comparisonResult.status === "Failed") {
+          const diffBuffer = Buffer.from(
+            comparisonResult.diffImageUrl.replace(
+              /^data:image\/\w+;base64,/,
+              ""
+            ),
+            "base64"
+          );
+          fs.writeFileSync(diffPath, diffBuffer);
+
+          console.log(
+            `Mismatch found: ${differentPixels} out of ${totalPixels} pixels, Mismatch percentage: ${mismatch}%`
+          );
+          await mergeImages([currentPath, baselinePath, diffPath], diffPath);
+          if (USE_AI == true) {
+            if (process.env.GEMINI_API_KEY) {
+              console.log("🤖 Using Gemini AI for visual diff explanation...");
+              AI_RESPONSE = await explainVisualDiff(
+                baselinePath,
+                currentPath,
+                diffPath
+              );
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+            } else if (process.env.ANTHROPIC_API_KEY) {
+              console.log("🤖 Using Claude AI for visual diff explanation...");
+              AI_RESPONSE = await explainVisualDiffWithClaude(
+                baselinePath,
+                currentPath,
+                diffPath
+              );
+              await this.generateAndAttachMarkdownReport(test, AI_RESPONSE);
+              await this.generateAndAttachAIExplanation(test, AI_RESPONSE);
+            } else if (USE_AI == false || USE_AI == undefined) {
+              AI_RESPONSE =
+                "🧐 Seems like you have not enabled the `USE_AI` env variable, That is why it is blank. If you want to enable AI 🤖, set USE_AI=true in your .env file.";
+              console.warn(AI_RESPONSE);
+            }
+          }
+        } else {
+          console.log(`No visual differences detected. Mismatch: ${mismatch}%`);
+        }
+
+        return { mismatch, AI_RESPONSE };
+      } catch (error) {
+        console.error(`Failed to compare screenshots: ${error.message}`);
+        throw error;
+      }
   }
 }
 
