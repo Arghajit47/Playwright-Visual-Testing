@@ -451,45 +451,45 @@ export class HelperFunction {
       textDiffReport.push("=== OCR Text Comparison Report ===");
       textDiffReport.push(`Generated: ${new Date().toISOString()}`);
       textDiffReport.push("");
+
+      // Compare the text
+      if (currentText !== baselineText) {
+        console.log("Text Differences Found!");
+        textDiffReport.push("Status: TEXT DIFFERENCES DETECTED");
+        textDiffReport.push("");
+
+        const baselineLines = baselineText.split("\n");
+        const currentLines = currentText.split("\n");
+
+        baselineLines.forEach((line, index) => {
+          if (line !== currentLines[index]) {
+            textDiffReport.push(`Line ${index + 1} differs:`);
+            textDiffReport.push(`  Baseline: ${line}`);
+            textDiffReport.push(
+              `  Current:  ${currentLines[index] || "Missing line"}`
+            );
+            textDiffReport.push("");
+          }
+        });
+
+        const textDiffPath = diffPath.replace("-diff.png", "-text-diff.txt");
+        fs.writeFileSync(textDiffPath, textDiffReport.join("\n"), "utf8");
+        console.log(`📝 Text diff report saved: ${textDiffPath}`);
+
+        if (test) {
+          test.info().attachments.push({
+            name: "Text Differences Report",
+            path: textDiffPath,
+            contentType: "text/plain",
+          });
+        }
+      } else {
+        console.log("No text differences found.");
+        textDiffReport.push("Status: NO TEXT DIFFERENCES");
+      }
     } catch (error) {
       console.error(`Failed to compare screenshot texts: ${error.message}`);
       throw error;
-    }
-
-    // Compare the text
-    if (currentText !== baselineText) {
-      console.log("Text Differences Found!");
-      textDiffReport.push("Status: TEXT DIFFERENCES DETECTED");
-      textDiffReport.push("");
-
-      const baselineLines = baselineText.split("\n");
-      const currentLines = currentText.split("\n");
-
-      baselineLines.forEach((line, index) => {
-        if (line !== currentLines[index]) {
-          textDiffReport.push(`Line ${index + 1} differs:`);
-          textDiffReport.push(`  Baseline: ${line}`);
-          textDiffReport.push(
-            `  Current:  ${currentLines[index] || "Missing line"}`
-          );
-          textDiffReport.push("");
-        }
-      });
-
-      const textDiffPath = diffPath.replace("-diff.png", "-text-diff.txt");
-      fs.writeFileSync(textDiffPath, textDiffReport.join("\n"), "utf8");
-      console.log(`📝 Text diff report saved: ${textDiffPath}`);
-
-      if (test) {
-        test.info().attachments.push({
-          name: "Text Differences Report",
-          path: textDiffPath,
-          contentType: "text/plain",
-        });
-      }
-    } else {
-      console.log("No text differences found.");
-      textDiffReport.push("Status: NO TEXT DIFFERENCES");
     }
 
     try {
