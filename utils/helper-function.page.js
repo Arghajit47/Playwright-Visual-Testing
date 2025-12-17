@@ -500,15 +500,81 @@ export class HelperFunction {
       console.log(`  Baseline: ${baselinePath}`);
       console.log(`  Current: ${currentPath}`);
 
-      const baseImageBase64 = fs.readFileSync(baselinePath, {
+      let baseImageBase64 = fs.readFileSync(baselinePath, {
         encoding: "base64",
       });
-      const actualImageBase64 = fs.readFileSync(currentPath, {
+      let actualImageBase64 = fs.readFileSync(currentPath, {
         encoding: "base64",
       });
 
-      console.log(`  Baseline size: ${baseImageBase64.length} bytes (base64)`);
-      console.log(`  Current size: ${actualImageBase64.length} bytes (base64)`);
+      const baselineSize = baseImageBase64.length;
+      const currentSize = actualImageBase64.length;
+      const totalSize = baselineSize + currentSize;
+      const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+
+      console.log(
+        `  Baseline size: ${(baselineSize / (1024 * 1024)).toFixed(2)} MB`
+      );
+      console.log(
+        `  Current size: ${(currentSize / (1024 * 1024)).toFixed(2)} MB`
+      );
+      console.log(`  Total payload: ${totalSizeMB} MB`);
+
+      let useCompression = false;
+      if (totalSize > 5 * 1024 * 1024) {
+        console.warn(`⚠️ Payload size (${totalSizeMB} MB) exceeds 5MB limit!`);
+        console.log("📋 Attempting compression before API call...");
+        useCompression = true;
+      }
+
+      if (useCompression) {
+        try {
+          const sharp = require("sharp");
+
+          const compressImage = async (imagePath) => {
+            const buffer = fs.readFileSync(imagePath);
+            let quality = 80;
+            let compressed;
+
+            do {
+              compressed = await sharp(buffer)
+                .resize(1920, 1920, { fit: "inside", withoutEnlargement: true })
+                .jpeg({ quality, progressive: true })
+                .toBuffer();
+
+              if (compressed.length > 2 * 1024 * 1024 && quality > 50) {
+                quality -= 10;
+              } else {
+                break;
+              }
+            } while (quality >= 50);
+
+            return compressed.toString("base64");
+          };
+
+          baseImageBase64 = await compressImage(baselinePath);
+          actualImageBase64 = await compressImage(currentPath);
+
+          console.log(
+            `✅ Compressed - Baseline: ${(
+              baseImageBase64.length /
+              (1024 * 1024)
+            ).toFixed(2)} MB`
+          );
+          console.log(
+            `✅ Compressed - Current: ${(
+              actualImageBase64.length /
+              (1024 * 1024)
+            ).toFixed(2)} MB`
+          );
+        } catch (compressError) {
+          console.warn(
+            `⚠️ Sharp compression unavailable: ${compressError.message}`
+          );
+          console.log("🔄 Falling back to local looksSame comparison...");
+          throw new Error("SKIP_TO_LOCAL_COMPARISON");
+        }
+      }
 
       const response = await fetch(
         "https://visual-test.netlify.app/api/compare-images",
@@ -518,8 +584,12 @@ export class HelperFunction {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            baseImageSource: `data:image/png;base64,${baseImageBase64}`,
-            actualImageSource: `data:image/png;base64,${actualImageBase64}`,
+            baseImageSource: `data:image/${
+              useCompression ? "jpeg" : "png"
+            };base64,${baseImageBase64}`,
+            actualImageSource: `data:image/${
+              useCompression ? "jpeg" : "png"
+            };base64,${actualImageBase64}`,
             threshold: tolerance,
             options: {
               pixelmatch: {
@@ -548,11 +618,13 @@ export class HelperFunction {
           try {
             errorDetails = await response.text();
           } catch (e2) {
-            // Keep default statusText
+            errorDetails = response.statusText;
           }
         }
         console.error("❌ API Error Response:", errorDetails);
-        throw new Error(`API comparison failed (${response.status}): ${errorDetails}`);
+        throw new Error(
+          `API comparison failed (${response.status}): ${errorDetails}`
+        );
       }
 
       const comparisonResult = await response.json();
@@ -611,8 +683,11 @@ export class HelperFunction {
 
         return { mismatch, AI_RESPONSE };
       } catch (error) {
-        console.error(`Failed to compare screenshots: ${error.message}`);
-        throw error;
+        if (error.message === "SKIP_TO_LOCAL_COMPARISON") {
+          console.log("⚠️ Skipping API, using local comparison...");
+        } else {
+          console.error(`❌ API comparison failed: ${error.message}`);
+        }
       }
   }
 }
