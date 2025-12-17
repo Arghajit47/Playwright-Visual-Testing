@@ -31,10 +31,71 @@ const anthropic = new Anthropic({
  */
 export async function explainVisualDiff(baselinePath, currentPath, diffPath) {
   try {
-    // 1. Read files and convert to Base64
-    const baselineB64 = fs.readFileSync(baselinePath, { encoding: "base64" });
-    const currentB64 = fs.readFileSync(currentPath, { encoding: "base64" });
-    const diffB64 = fs.readFileSync(diffPath, { encoding: "base64" });
+    let baselineB64 = fs.readFileSync(baselinePath, { encoding: "base64" });
+    let currentB64 = fs.readFileSync(currentPath, { encoding: "base64" });
+    let diffB64 = fs.readFileSync(diffPath, { encoding: "base64" });
+
+    const baselineSize = baselineB64.length;
+    const currentSize = currentB64.length;
+    const diffSize = diffB64.length;
+    const totalSize = baselineSize + currentSize + diffSize;
+    const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+
+    console.log(`📊 Gemini AI Image Payload: ${totalSizeMB} MB`);
+
+    let useCompression = false;
+    if (totalSize > 5 * 1024 * 1024 || baselineSize > 5 * 1024 * 1024 || currentSize > 5 * 1024 * 1024 || diffSize > 5 * 1024 * 1024) {
+      useCompression = true;
+      console.warn(`⚠️ Gemini payload (${totalSizeMB} MB) exceeds 5MB limit!`);
+      console.log("📋 Compressing images for Gemini AI...");
+
+      try {
+        const sharp = require("sharp");
+
+        const compressImage = async (imagePath) => {
+          const buffer = fs.readFileSync(imagePath);
+          let quality = 70;
+          let compressed;
+
+          do {
+            compressed = await sharp(buffer)
+              .resize(1920, 1920, { fit: "inside", withoutEnlargement: true })
+              .jpeg({ quality, progressive: true })
+              .toBuffer();
+
+            if (compressed.length > 4 * 1024 * 1024 && quality > 40) {
+              quality -= 10;
+            } else {
+              break;
+            }
+          } while (quality >= 40);
+
+          return compressed.toString("base64");
+        };
+
+        baselineB64 = await compressImage(baselinePath);
+        currentB64 = await compressImage(currentPath);
+        diffB64 = await compressImage(diffPath);
+
+        console.log(
+          `✅ Compressed for Gemini - Baseline: ${(baselineB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+        console.log(
+          `✅ Compressed for Gemini - Current: ${(currentB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+        console.log(
+          `✅ Compressed for Gemini - Diff: ${(diffB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+      } catch (compressError) {
+        console.warn(
+          `⚠️ Sharp compression failed for Gemini: ${compressError.message}`
+        );
+        console.log("⚠️ Proceeding with original images (may fail)...");
+        useCompression = false;
+      }
+    }
+
+    const mimeType = useCompression ? "image/jpeg" : "image/png";
 
     // 2. Define the exact same System Prompt logic
     const systemInstruction = `
@@ -78,15 +139,14 @@ export async function explainVisualDiff(baselinePath, currentPath, diffPath) {
         {
           role: "user",
           parts: [
-            // Exact same interleaved labeling structure
             { text: "Image 1: BASELINE (Original)" },
-            { inlineData: { mimeType: "image/png", data: baselineB64 } },
+            { inlineData: { mimeType: mimeType, data: baselineB64 } },
 
             { text: "Image 2: CURRENT (Actual)" },
-            { inlineData: { mimeType: "image/png", data: currentB64 } },
+            { inlineData: { mimeType: mimeType, data: currentB64 } },
 
             { text: "Image 3: DIFF (Red highlights changes)" },
-            { inlineData: { mimeType: "image/png", data: diffB64 } },
+            { inlineData: { mimeType: mimeType, data: diffB64 } },
 
             {
               text: "Analyze the Diff image to find changes, then compare Baseline vs Current at those specific spots. Output ONLY valid JSON.",
@@ -153,9 +213,71 @@ export async function explainVisualDiffWithClaude(
   diffPath
 ) {
   try {
-    const baselineB64 = fs.readFileSync(baselinePath, { encoding: "base64" });
-    const currentB64 = fs.readFileSync(currentPath, { encoding: "base64" });
-    const diffB64 = fs.readFileSync(diffPath, { encoding: "base64" });
+    let baselineB64 = fs.readFileSync(baselinePath, { encoding: "base64" });
+    let currentB64 = fs.readFileSync(currentPath, { encoding: "base64" });
+    let diffB64 = fs.readFileSync(diffPath, { encoding: "base64" });
+
+    const baselineSize = baselineB64.length;
+    const currentSize = currentB64.length;
+    const diffSize = diffB64.length;
+    const totalSize = baselineSize + currentSize + diffSize;
+    const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+
+    console.log(`📊 Claude AI Image Payload: ${totalSizeMB} MB`);
+
+    let useCompression = false;
+    if (totalSize > 5 * 1024 * 1024 || baselineSize > 5 * 1024 * 1024 || currentSize > 5 * 1024 * 1024 || diffSize > 5 * 1024 * 1024) {
+      useCompression = true;
+      console.warn(`⚠️ Claude payload (${totalSizeMB} MB) exceeds 5MB limit!`);
+      console.log("📋 Compressing images for Claude AI...");
+
+      try {
+        const sharp = require("sharp");
+
+        const compressImage = async (imagePath) => {
+          const buffer = fs.readFileSync(imagePath);
+          let quality = 70;
+          let compressed;
+
+          do {
+            compressed = await sharp(buffer)
+              .resize(1920, 1920, { fit: "inside", withoutEnlargement: true })
+              .jpeg({ quality, progressive: true })
+              .toBuffer();
+
+            if (compressed.length > 4 * 1024 * 1024 && quality > 40) {
+              quality -= 10;
+            } else {
+              break;
+            }
+          } while (quality >= 40);
+
+          return compressed.toString("base64");
+        };
+
+        baselineB64 = await compressImage(baselinePath);
+        currentB64 = await compressImage(currentPath);
+        diffB64 = await compressImage(diffPath);
+
+        console.log(
+          `✅ Compressed for Claude - Baseline: ${(baselineB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+        console.log(
+          `✅ Compressed for Claude - Current: ${(currentB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+        console.log(
+          `✅ Compressed for Claude - Diff: ${(diffB64.length / (1024 * 1024)).toFixed(2)} MB`
+        );
+      } catch (compressError) {
+        console.warn(
+          `⚠️ Sharp compression failed for Claude: ${compressError.message}`
+        );
+        console.log("⚠️ Proceeding with original images (may fail)...");
+        useCompression = false;
+      }
+    }
+
+    const mediaType = useCompression ? "image/jpeg" : "image/png";
 
     // --- KEY CHANGE: FORCED REASONING PROMPT ---
     const systemPrompt = `
@@ -201,7 +323,7 @@ export async function explainVisualDiffWithClaude(
               type: "image",
               source: {
                 type: "base64",
-                media_type: "image/png",
+                media_type: mediaType,
                 data: baselineB64,
               },
             },
@@ -210,7 +332,7 @@ export async function explainVisualDiffWithClaude(
               type: "image",
               source: {
                 type: "base64",
-                media_type: "image/png",
+                media_type: mediaType,
                 data: currentB64,
               },
             },
@@ -219,7 +341,7 @@ export async function explainVisualDiffWithClaude(
               type: "image",
               source: {
                 type: "base64",
-                media_type: "image/png",
+                media_type: mediaType,
                 data: diffB64,
               },
             },
