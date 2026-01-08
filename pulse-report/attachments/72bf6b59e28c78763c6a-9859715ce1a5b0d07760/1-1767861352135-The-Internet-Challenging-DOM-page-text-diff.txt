@@ -1,0 +1,128 @@
+=== OCR Text Comparison Report ===
+Generated: 2026-01-08T08:35:24.915Z
+
+Status: TEXT DIFFERENCES DETECTED
+
+Line 1 differs:
+  Baseline: 5,
+  Current:  “,
+
+Line 2 differs:
+  Baseline: Challenging DOM
+  Current:  Floating Menu Home News Contact About ND
+
+Line 3 differs:
+  Baseline: QO
+  Current:  3
+
+Line 4 differs:
+  Baseline: 
+  Current:  Sit dolorum officiis in porro enim aspernatur sit cupiditate perspiciatis dolores eaque qui nam consequatur iusto VJ
+
+Line 5 differs:
+  Baseline: The hardest part in automated web testing is finding the best locators (e.g., ones that well named, unique, and unlikely to change). It's
+  Current:  deleniti quos vel aut ratione molestias esse qui impedt ilo quibusdam blanditis ullam temporibus facere qui aut
+
+Line 6 differs:
+  Baseline: more often than not that the application you'e testing was not built with this concept in mind. This example demonstrates that with
+  Current:  eligendi nesciunt nulla numquam quaerat delectus molitia atque voluptatibus ut magni enim inventore suscipit
+
+Line 7 differs:
+  Baseline: unique IDs, a table with no helpful locators, and a canvas element.
+  Current:  itaque et neque asperiores nihil commodi omnis veritatis et modi consequatur occaecati recusandae sint incidunt
+
+Line 8 differs:
+  Baseline: [ | Lorem Ipsum Dolor Sit Amet Diceret Action
+  Current:  uttempora possimus pariatur rerum quod ut et beatae et fugit recusandae labore eveniet quam culpa repellendus
+
+Line 9 differs:
+  Baseline: 
+  Current:  optio qui modi ut corporis cumque est adit inventore rerum dolorem assumenda quia nisi est a quod corrupt
+
+Line 10 differs:
+  Baseline: luvaret0  Apeirian0  Adipisci0  Definiebas0  Consequunturd  Phaedrum0 edit delete.
+  Current:  libero ipsum neque et accusamus voluptates saepe quae voluptatum soluta harum nisi maiores enim
+
+Line 11 differs:
+  Baseline: luvaretl Apeirianl  Adipiscil Definiebasl Consequunturl Phaedruml edi delete
+  Current:  exercitationem eum ipsum tenetur sed sit similique aut voluptate necessitatibus id et doloribus qui ut error
+
+Line 12 differs:
+  Baseline: 
+  Current:  architecto vel offciis voluptatem et sapiente reprehenderit eos eligendi perspiciatis voluptatem culpa et omnis
+
+Line 13 differs:
+  Baseline: luvaret2  Apeirian2  Adipisciz Definiebas? Consequuntur2 Phaedrum2 edit delete.
+  Current:  veritatis earum voluptatem laboriosam non qui alias vel sint tenetur necessitatibus qui repellendus ea laboriosam
+
+Line 14 differs:
+  Baseline: Ba luvaret3 Apeirian3  Adipisci3 Definiebas3  Consequuntur3 Phaedrum3 edit delete
+  Current:  dicta nobis eveniet ut repudiandae ex natus omnis velit exercitationem velit ducimus minus est pariatur eum non
+
+Line 15 differs:
+  Baseline: 
+  Current:  est at nemo suscipit quibusdam et et illum quo quisquam eos aut qui magni eum quo animi illo autem dolor
+
+Line 16 differs:
+  Baseline: luvareta  Apeiriand  Adipisci4 Definiebas4 Consequuntur4 Phaedrum4 edit delete.
+  Current:  laborum voluptatem rerum maxime vero aliquam reiciendis facere minus tempore optio sapiente hic
+
+Line 17 differs:
+  Baseline: 
+  Current:  consequuntur non ad quia consequuntur reprehenderit magnam sunt sequi quia delenit autem distinctio et sint
+
+Line 18 differs:
+  Baseline: luvaret5  Apeirian5  Adipisci5 Definiebas5 Consequuntur5 Phaedrums edit delete.
+  Current:  fugit sed qui sunt amet dicta sed ea vitae doloremque provident impedit laudantium distinctio placeat fugiat
+
+Line 19 differs:
+  Baseline: 
+  Current:  consectetur ipsam similique odio et dolorum aut laudantium aut eius vel aut dolorem est explicabo iure adipisci
+
+Line 20 differs:
+  Baseline: luvaret6  Apeirian6  Adipisci6 Definiebasé Consequuntur Phaedrumé edit delete.
+  Current:  eum quae praesentium ut molestiae eius aut quia nesciunt delectus natus sed sunt quisquam reiciendis est
+
+Line 21 differs:
+  Baseline: 
+  Current:  ‘omnis minima sed et alias incidunt enim esse rerum molestie earum minima eos fuga cum praesentium itaque
+
+Line 22 differs:
+  Baseline: luvaret7 Apeirian7  Adipisci7 Definiebas? Consequuntur7 Phaedrum? edit delete.
+  Current:  quaerat dolor provident tempore quidem ipsa maxime dignissimos ad consequatur aut tempora dolore voluptas
+
+Line 23 differs:
+  Baseline: 
+  Current:  veniam nam.
+
+Line 24 differs:
+  Baseline: luvarets  Apeiriang  Adipisci8 Definiebas8 Consequuntur8 Phaedrumg edit delete.
+  Current:  lure ea ut aut aspernatur voluptatum voluptatem expedita accusantium doloremaue rerum rerum nemo magni
+
+Line 25 differs:
+  Baseline: 
+  Current:  officia beatae iste porto necessitatibus quisquam omnis et quo fuga delectus beatae placeat qui enim deserunt et
+
+Line 26 differs:
+  Baseline: luvarety  Apeiriand  Adipisci9 Definiebasd Consequunturd Phaedrumg edit delete.
+  Current:  tempora quasi est eis perspiciatis recusandae sunt rerum vitae rerum dicta hic molestias ut saepe id commodi
+
+Line 27 differs:
+  Baseline: 
+  Current:  veritatis dolor et sit repudiandae cum laborum molestiae dolor ratione veniam excepturi necessitatibus aut velit
+
+Line 28 differs:
+  Baseline: Answer. 78117
+  Current:  fugit accusamus dolorem quod quis dolor deserunt molestiae voluptas aliquid magnam quidem eaque nam
+
+Line 29 differs:
+  Baseline: o
+  Current:  inventore recusandae eos suscipit quos offcis soluta possimus eaque quia eligendi aliquam commodi suscipit
+
+Line 30 differs:
+  Baseline: Powered by Elemental Selenium
+  Current:  incidunt sed ut magni incidunt explicabo autem aut iure non saepe eligend odit quisquam consequuntur sed
+
+Line 31 differs:
+  Baseline: 
+  Current:  nobis tempora sit excepturi natus velit corrupti facere sit sed rerum delectus quis sint in est quibusdam quis

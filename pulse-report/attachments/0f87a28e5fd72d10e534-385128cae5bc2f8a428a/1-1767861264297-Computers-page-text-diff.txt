@@ -1,0 +1,156 @@
+=== OCR Text Comparison Report ===
+Generated: 2026-01-08T08:34:11.148Z
+
+Status: TEXT DIFFERENCES DETECTED
+
+Line 1 differs:
+  Baseline: UsDolr + Register Login Wishlist (0)  () Shopping cart (0)
+  Current:  USDollr Register Login Wishlist (0)  () Shopping cart (0)
+
+Line 3 differs:
+  Baseline: 11] nopCommerce Search store SEARCH
+  Current:  11] nopCommerce ‘Search store SEARCH
+
+Line 6 differs:
+  Baseline: Home / Computers
+  Current:  Home / Electronics
+
+Line 7 differs:
+  Baseline: Categories Computers
+  Current:  Categories Electronics
+
+Line 9 differs:
+  Baseline: " Desktops Notebooks Software
+  Current:  Camera & photo Cell phones Others
+
+Line 10 differs:
+  Baseline: Deskiops —_ R
+  Current:  Electronics
+
+Line 11 differs:
+  Baseline: - ~~
+  Current:  SN 53 ’
+
+Line 12 differs:
+  Baseline: Notebooks \ \
+  Current:  Camera & photo ¢ ™ . Cx
+
+Line 13 differs:
+  Baseline: oy
+  Current:  [5 — ’ [2 ee
+
+Line 14 differs:
+  Baseline: Software * £| -
+  Current:  Cell phones NX i
+
+Line 15 differs:
+  Baseline: =
+  Current:  Others n () >
+
+Line 16 differs:
+  Baseline: Electronics ” = —
+  Current:  Apparel
+
+Line 17 differs:
+  Baseline: Apparel
+  Current:  Digital downloads
+
+Line 18 differs:
+  Baseline: Digital downloads
+  Current:  Books
+
+Line 19 differs:
+  Baseline: Books
+  Current:  Jewelry
+
+Line 20 differs:
+  Baseline: Jewelry
+  Current:  Gift Cards
+
+Line 21 differs:
+  Baseline: Gift Cards
+  Current:  Manufacturers
+
+Line 22 differs:
+  Baseline: Manufacturers
+  Current:  Apple
+
+Line 23 differs:
+  Baseline: Apple
+  Current:  HP
+
+Line 24 differs:
+  Baseline: HP
+  Current:  View all
+
+Line 25 differs:
+  Baseline: View all
+  Current:  Popular tags
+
+Line 26 differs:
+  Baseline: Popular tags
+  Current:  apparel gqwesome
+
+Line 27 differs:
+  Baseline: apparel Qwesome
+  Current:  book camera cell
+
+Line 28 differs:
+  Baseline: book camera cell
+  Current:  compact computer
+
+Line 29 differs:
+  Baseline: compact computer
+  Current:  cool dgtal game
+
+Line 30 differs:
+  Baseline: cool dgtal game
+  Current:  jeans jewelry nice shirt
+
+Line 31 differs:
+  Baseline: jeans jewelry nice shirt
+  Current:  shoes
+
+Line 32 differs:
+  Baseline: shoes
+  Current:  View all
+
+Line 33 differs:
+  Baseline: View all
+  Current:  Information Customer service My account Follow us
+
+Line 34 differs:
+  Baseline: Information Customer service My account Follow us
+  Current:  = = — 00000
+
+Line 35 differs:
+  Baseline: — " ween 00000
+  Current:  ‘Shipping & returns News Orders
+
+Line 36 differs:
+  Baseline: Shipping & retums News Orders
+  Current:  Privacy notice Blog Addresses
+
+Line 37 differs:
+  Baseline: Privacy notice Blog Addresses
+  Current:  Conditions of Use Recently viewed products Shopping cart Newsletter
+
+Line 38 differs:
+  Baseline: Conditions of Use Recently viewed products Shopping cart Newsletter
+  Current:  About us Compare products list Wishlist
+
+Line 39 differs:
+  Baseline: About us Compare products list Wishlist
+  Current:  i — en pE——
+
+Line 40 differs:
+  Baseline: Contact us. New products Apply for vendor account Enter your email here...
+  Current:  Powered by nopCommerce Copyright © 2026 nopCommerce demo store. All righis reserved.
+
+Line 41 differs:
+  Baseline: Powered by nopCommerce ‘Copyright © 2025 nopCommerce dem store. Al ights reserved.
+  Current:  Missing line
+
+Line 42 differs:
+  Baseline: 
+  Current:  Missing line
