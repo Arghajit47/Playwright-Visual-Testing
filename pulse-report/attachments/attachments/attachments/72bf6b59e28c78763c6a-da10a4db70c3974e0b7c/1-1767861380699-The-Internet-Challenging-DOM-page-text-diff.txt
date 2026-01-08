@@ -1,0 +1,140 @@
+=== OCR Text Comparison Report ===
+Generated: 2026-01-08T08:35:51.788Z
+
+Status: TEXT DIFFERENCES DETECTED
+
+Line 1 differs:
+  Baseline: On
+  Current:  ©,
+
+Line 2 differs:
+  Baseline: Challenging DOM 2
+  Current:  Floating M Home News 2%
+
+Line 3 differs:
+  Baseline: %
+  Current:  Nam aliquam s ru : x
+
+Line 4 differs:
+  Baseline: 
+  Current:  Contact About $
+
+Line 5 differs:
+  Baseline: The hardest part in automated web testing is %s
+  Current:  ipsa quibusdam weinpura au et cumyue ueuitis au
+
+Line 6 differs:
+  Baseline: 
+  Current:  et vero dolorum quia qui consequatur maxime
+
+Line 7 differs:
+  Baseline: finding the best locators (e.g., ones that well
+  Current:  cumque veniam quia doloribus et eos rerum et
+
+Line 8 differs:
+  Baseline: 
+  Current:  ipsum quo qui deleniti tempora iure non occaecati
+
+Line 9 differs:
+  Baseline: named, unique, and unlikely to change). It's more
+  Current:  qui iusto blanditiis dolores illum fugit dolorem quia
+
+Line 10 differs:
+  Baseline: 
+  Current:  vel corporis corrupti quo vero quis reiciendis dicta
+
+Line 11 differs:
+  Baseline: often than not that the application you're testing
+  Current:  aut autem eius repellendus tenetur molestias sit
+
+Line 12 differs:
+  Baseline: 
+  Current:  assumenda nihil recusandae maxime nesciunt
+
+Line 13 differs:
+  Baseline: was not built with this concept in mind. This
+  Current:  enim distinctio maiores molestiae incidunt
+
+Line 14 differs:
+  Baseline: 
+  Current:  consectetur quasi quia delectus facere quibusdam
+
+Line 15 differs:
+  Baseline: example demonstrates that with unique IDs, a
+  Current:  magnam similique culpa nesciunt nostrum officiis
+
+Line 16 differs:
+  Baseline: 
+  Current:  ipsam numquam similique ut molestiae sed
+
+Line 17 differs:
+  Baseline: table with no helpful locators, and a canvas
+  Current:  voluptatem adipisci itaque est mollitia dolorem sunt
+
+Line 18 differs:
+  Baseline: 
+  Current:  ratione dolorum aspernatur suscipit quis adipisci
+
+Line 19 differs:
+  Baseline: element.
+  Current:  ratione deserunt dolorem et quia odit officia rerum
+
+Line 20 differs:
+  Baseline: Lorem Ipsum Dolor Sit Amet Diceret Action
+  Current:  voluptatem quaerat aut voluptatum quae nihil
+
+Line 21 differs:
+  Baseline: luvaret0 ApeirianO0  Adipisci0 DefiniebasO Consequuntur0 PhaedrumO Om
+  Current:  corrupti explicabo voluptate perspiciatis tenetur vel
+
+Line 22 differs:
+  Baseline: luvaretl Apeirianl Adipiscil Definiebasl Consequunturl Phaedruml Om
+  Current:  dicta omnis qui officia quae non ut iste est
+
+Line 23 differs:
+  Baseline: luvaret2 Apeirian2 Adipisci2 Definiebas2 Consequuntur2 Phaedrum2 SO
+  Current:  laboriosam inventore fuga id necessitatibus et vitae
+
+Line 24 differs:
+  Baseline: luvaret3 Apeirian3 Adipisci3 Definiebas3 Consequuntur3 Phaedrum3 Om
+  Current:  atque est unde ex culpa minus sed eius
+
+Line 25 differs:
+  Baseline: luvaret4 Apeirian4 Adipisci4 Definiebas4 Consequuntur4 Phaedrum4 Om
+  Current:  temporibus maiores eligendi alias excepturi odio
+
+Line 26 differs:
+  Baseline: luvaret5 Apeirian5 Adipisci5 Definiebas5 Consequuntur5 Phaedrum5 Om
+  Current:  placeat quisquam delectus error enim voluptas
+
+Line 27 differs:
+  Baseline: luvareté  Apeirian6 Adipisci6 Definiebas6é Consequuntur6 Phaedrum6 SO
+  Current:  quis qui quidem repudiandae necessitatibus
+
+Line 28 differs:
+  Baseline: luvaret7 Apeirian7 Adipisci7 Definiebas7 Consequuntur7 Phaedrum7 Om
+  Current:  exercitationem impedit ut esse aperiam eveniet
+
+Line 29 differs:
+  Baseline: luvaret8 Apeirian8 Adipisci8 Definiebas8 Consequuntur8 Phaedrum8 Om
+  Current:  accusantium placeat omnis dignissimos veritatis
+
+Line 30 differs:
+  Baseline: luvaret9 Apeirian9 Adipisci9 Definiebas9 Consequuntur9 Phaedrum9 Om
+  Current:  temporibus possimus consequatur et velit sit
+
+Line 31 differs:
+  Baseline: 
+  Current:  voluptas numquam iusto reprehenderit occaecati
+
+Line 32 differs:
+  Baseline: | Answer: 52082
+  Current:  provident omnis et sed nostrum ipsam
+
+Line 33 differs:
+  Baseline: Powered by Elemental Selenium
+  Current:  exercitationem doloremque possimus sint itaque
+
+Line 34 differs:
+  Baseline: 
+  Current:  suscipit perferendis et libero explicabo ea nulla sed

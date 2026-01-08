@@ -1,0 +1,8 @@
+=== OCR Text Comparison Report ===
+Generated: 2026-01-08T09:49:03.783Z
+
+Status: TEXT DIFFERENCES DETECTED
+
+Line 52 differs:
+  Baseline: Powered by nopCommerce Copyright © 2025 nopCommerce demo store. All rghis reserved.
+  Current:  Powered by nopCommerce Copyright © 2026 nopCommerce demo store. All righis reserved.
