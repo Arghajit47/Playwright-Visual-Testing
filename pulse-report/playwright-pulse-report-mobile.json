@@ -1,0 +1,2548 @@
+{
+  "run": {
+    "id": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+    "timestamp": "2026-01-08T08:34:03.112Z",
+    "totalTests": 6,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 1,
+    "duration": 146976,
+    "environment": {
+      "host": "runnervmi13qx",
+      "os": "linux 6.11.0-1018-azure",
+      "cpu": {
+        "model": "AMD EPYC 7763 64-Core Processor",
+        "cores": 4
+      },
+      "memory": "15.62GB",
+      "node": "v24.12.0",
+      "v8": "13.6.233.17-node.37",
+      "cwd": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing"
+    }
+  },
+  "results": [
+    {
+      "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-computers-element-page.spec.js > Take screenshots for Visual Regression Testing - Computers page > Computers page Upper Header - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "passed",
+      "duration": 2545,
+      "startTime": "2026-01-08T08:34:03.874Z",
+      "endTime": "2026-01-08T08:34:06.419Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:03.877Z-1205-c6c3af92-a10b-483d-aee5-7bd7b247add4",
+          "title": "Before Hooks",
+          "status": "passed",
+          "duration": 1205,
+          "startTime": "2026-01-08T08:34:03.877Z",
+          "endTime": "2026-01-08T08:34:05.082Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:03.878Z-26-06bc0382-e8a4-4524-806a-f2b8bb4eb250",
+              "title": "beforeAll hook",
+              "status": "passed",
+              "duration": 26,
+              "startTime": "2026-01-08T08:34:03.878Z",
+              "endTime": "2026-01-08T08:34:03.904Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-computers-element-page.spec.js:36:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": []
+            },
+            {
+              "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:03.904Z-1178-e7643213-cbdb-4781-a1ed-53563cba731e",
+              "title": "beforeEach hook",
+              "status": "passed",
+              "duration": 1178,
+              "startTime": "2026-01-08T08:34:03.904Z",
+              "endTime": "2026-01-08T08:34:05.082Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-computers-element-page.spec.js:41:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:03.910Z-1127-f83724ad-4c8f-4300-9e67-fd23d9ea43cc",
+                  "title": "Fixture \"browser\"",
+                  "status": "passed",
+                  "duration": 1127,
+                  "startTime": "2026-01-08T08:34:03.910Z",
+                  "endTime": "2026-01-08T08:34:05.037Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:03.912Z-1125-bac4d0f9-5e0b-4be4-ba07-f3172218d608",
+                      "title": "Launch browser",
+                      "status": "passed",
+                      "duration": 1125,
+                      "startTime": "2026-01-08T08:34:03.912Z",
+                      "endTime": "2026-01-08T08:34:05.037Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.039Z-9-8c6ba03d-b3ae-4fd2-b9bc-6111c16b7c9d",
+                  "title": "Fixture \"context\"",
+                  "status": "passed",
+                  "duration": 9,
+                  "startTime": "2026-01-08T08:34:05.039Z",
+                  "endTime": "2026-01-08T08:34:05.048Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.041Z-6-3b5bd565-d307-4cf6-98e8-beb5186b882d",
+                      "title": "Create context",
+                      "status": "passed",
+                      "duration": 6,
+                      "startTime": "2026-01-08T08:34:05.041Z",
+                      "endTime": "2026-01-08T08:34:05.047Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.048Z-29-77cfb508-cc4b-4540-b8da-7cecb2963cf6",
+                  "title": "Fixture \"page\"",
+                  "status": "passed",
+                  "duration": 29,
+                  "startTime": "2026-01-08T08:34:05.048Z",
+                  "endTime": "2026-01-08T08:34:05.077Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.050Z-26-ce0b1153-616c-4048-80e4-34a6df4f1f74",
+                      "title": "Create page",
+                      "status": "passed",
+                      "duration": 26,
+                      "startTime": "2026-01-08T08:34:05.050Z",
+                      "endTime": "2026-01-08T08:34:05.076Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.096Z-1-f46dafaa-ffef-491f-8de5-6077fa5c7683",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:05.096Z",
+          "endTime": "2026-01-08T08:34:05.097Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.098Z-236-a7bf1120-ac88-4111-b2a2-38ef3b9b640d",
+          "title": "Navigate to \"/computers\"",
+          "status": "passed",
+          "duration": 236,
+          "startTime": "2026-01-08T08:34:05.098Z",
+          "endTime": "2026-01-08T08:34:05.334Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-computers-element-page.spec.js:120:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.339Z-0-cb94c347-4a2f-4952-8e00-b45cadbe47ae",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:05.339Z",
+          "endTime": "2026-01-08T08:34:05.339Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:05.340Z-750-9b6a3909-4b1e-4402-bf46-d256844c3c3e",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 750,
+          "startTime": "2026-01-08T08:34:05.340Z",
+          "endTime": "2026-01-08T08:34:06.090Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.091Z-201-4d713633-c922-481e-ade8-abf19f9f440f",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 201,
+          "startTime": "2026-01-08T08:34:06.091Z",
+          "endTime": "2026-01-08T08:34:06.292Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.293Z-5-bb975c6f-75ae-4cd0-8783-54179600a5fd",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 5,
+          "startTime": "2026-01-08T08:34:06.293Z",
+          "endTime": "2026-01-08T08:34:06.298Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.299Z-1-10b1dfa8-572e-4c02-896f-6f22dc23bb41",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:06.299Z",
+          "endTime": "2026-01-08T08:34:06.300Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.301Z-501-6c75f083-b495-4a3c-a73c-2b6d0bef5338",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 501,
+          "startTime": "2026-01-08T08:34:06.301Z",
+          "endTime": "2026-01-08T08:34:06.802Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.803Z-1-3402eeed-a23c-44a5-bb99-bd302dbdb132",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:06.803Z",
+          "endTime": "2026-01-08T08:34:06.804Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.808Z-25-a4fee59b-16e0-4eb3-b823-b97465b7cd49",
+          "title": "Wait for selector locator('div.header-upper')",
+          "status": "passed",
+          "duration": 25,
+          "startTime": "2026-01-08T08:34:06.808Z",
+          "endTime": "2026-01-08T08:34:06.833Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:426:37",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:06.834Z-80-482a714c-ba44-4084-9e61-f1e0b6cc3924",
+          "title": "Screenshot",
+          "status": "passed",
+          "duration": 80,
+          "startTime": "2026-01-08T08:34:06.834Z",
+          "endTime": "2026-01-08T08:34:06.914Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:427:19",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:07.575Z-18-8b6ef5b1-d683-4df2-b4f9-2e5aa1b50497",
+          "title": "After Hooks",
+          "status": "passed",
+          "duration": 18,
+          "startTime": "2026-01-08T08:34:07.575Z",
+          "endTime": "2026-01-08T08:34:07.593Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:07.575Z-0-da8e0889-87e4-4740-8842-79e55c75448d",
+              "title": "Fixture \"page\"",
+              "status": "passed",
+              "duration": 0,
+              "startTime": "2026-01-08T08:34:07.575Z",
+              "endTime": "2026-01-08T08:34:07.575Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:07.576Z-9-cae4ee36-a08a-4a98-8f5f-eee96b928d4b",
+              "title": "Fixture \"context\"",
+              "status": "passed",
+              "duration": 9,
+              "startTime": "2026-01-08T08:34:07.576Z",
+              "endTime": "2026-01-08T08:34:07.585Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "dc63e34a6327da4d871b-0b36d6dd67fcc325ba0c_step_2026-01-08T08:34:07.580Z-4-3c52f322-d636-48fd-abc0-15bdd2acc3b4",
+                  "title": "Close context",
+                  "status": "passed",
+                  "duration": 4,
+                  "startTime": "2026-01-08T08:34:07.580Z",
+                  "endTime": "2026-01-08T08:34:07.584Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-computers-element-page.spec.js:107:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [],
+      "videoPath": [],
+      "attachments": [],
+      "stdout": [
+        "No text differences found.\n",
+        "✅ Test passed: Mismatch 0% is below tolerance 1%\n",
+        "✅ Connected to database: visual_mobile.db\n",
+        "✅ Database schema initialized\n",
+        "✅ Record inserted with ID: 1\n"
+      ],
+      "stderr": [
+        "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    },
+    {
+      "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-computers-element-page.spec.js > Take screenshots for Visual Regression Testing - Computers page > Computers page Lower Header - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "passed",
+      "duration": 2330,
+      "startTime": "2026-01-08T08:34:07.593Z",
+      "endTime": "2026-01-08T08:34:09.923Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.594Z-39-4a28c268-c731-4a67-902f-22c7f7037394",
+          "title": "Before Hooks",
+          "status": "passed",
+          "duration": 39,
+          "startTime": "2026-01-08T08:34:07.594Z",
+          "endTime": "2026-01-08T08:34:07.633Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.594Z-38-e93df5c3-d5e2-42fd-b9ff-d2d64896c737",
+              "title": "beforeEach hook",
+              "status": "passed",
+              "duration": 38,
+              "startTime": "2026-01-08T08:34:07.594Z",
+              "endTime": "2026-01-08T08:34:07.632Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-computers-element-page.spec.js:41:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.601Z-8-05fa7d04-de80-4d8b-ac55-cff263a2d61e",
+                  "title": "Fixture \"context\"",
+                  "status": "passed",
+                  "duration": 8,
+                  "startTime": "2026-01-08T08:34:07.601Z",
+                  "endTime": "2026-01-08T08:34:07.609Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.601Z-7-d2e4c8ad-8434-43bf-a25c-75cdfad08af9",
+                      "title": "Create context",
+                      "status": "passed",
+                      "duration": 7,
+                      "startTime": "2026-01-08T08:34:07.601Z",
+                      "endTime": "2026-01-08T08:34:07.608Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.609Z-22-70825f63-b296-4911-8a2f-028acbfcd019",
+                  "title": "Fixture \"page\"",
+                  "status": "passed",
+                  "duration": 22,
+                  "startTime": "2026-01-08T08:34:07.609Z",
+                  "endTime": "2026-01-08T08:34:07.631Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.610Z-21-fac1468a-57a5-4259-9d93-58ce6446d859",
+                      "title": "Create page",
+                      "status": "passed",
+                      "duration": 21,
+                      "startTime": "2026-01-08T08:34:07.610Z",
+                      "endTime": "2026-01-08T08:34:07.631Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.633Z-0-a33c61ec-c28c-44d4-86f1-aca525381e2a",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:07.633Z",
+          "endTime": "2026-01-08T08:34:07.633Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.634Z-186-03a30fe8-d682-4512-b111-2217125760e9",
+          "title": "Navigate to \"/computers\"",
+          "status": "passed",
+          "duration": 186,
+          "startTime": "2026-01-08T08:34:07.634Z",
+          "endTime": "2026-01-08T08:34:07.820Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-computers-element-page.spec.js:157:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.821Z-0-37ec29ca-e944-49d1-a55a-1a4f436064fd",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:07.821Z",
+          "endTime": "2026-01-08T08:34:07.821Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:07.823Z-762-b4ada00d-6d88-4f25-b2bc-88905f66206b",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 762,
+          "startTime": "2026-01-08T08:34:07.823Z",
+          "endTime": "2026-01-08T08:34:08.585Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:08.586Z-200-0e964533-1791-45d7-af6e-bc371f7af66e",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:34:08.586Z",
+          "endTime": "2026-01-08T08:34:08.786Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:08.787Z-4-317710ae-db03-4e09-b7b8-305e71ae5f6d",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 4,
+          "startTime": "2026-01-08T08:34:08.787Z",
+          "endTime": "2026-01-08T08:34:08.791Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:08.791Z-1-e5af9431-3234-45fa-a36e-a53e9bf2cf46",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:08.791Z",
+          "endTime": "2026-01-08T08:34:08.792Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:08.793Z-502-99c51652-0bcc-4328-ba66-aa90188add37",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 502,
+          "startTime": "2026-01-08T08:34:08.793Z",
+          "endTime": "2026-01-08T08:34:09.295Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.296Z-1-6e9e9808-3c7b-4fd2-8273-ce857f797283",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:09.296Z",
+          "endTime": "2026-01-08T08:34:09.297Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.298Z-22-aa24d1db-3a04-4782-8aa5-1ed624d40b9b",
+          "title": "Wait for selector locator('div.header-lower')",
+          "status": "passed",
+          "duration": 22,
+          "startTime": "2026-01-08T08:34:09.298Z",
+          "endTime": "2026-01-08T08:34:09.320Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:426:37",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.321Z-100-9a4b9445-92b1-470a-b74c-54de3ad3060b",
+          "title": "Screenshot",
+          "status": "passed",
+          "duration": 100,
+          "startTime": "2026-01-08T08:34:09.321Z",
+          "endTime": "2026-01-08T08:34:09.421Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:427:19",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.925Z-14-73292778-17e0-4001-b8a0-44b663489da3",
+          "title": "After Hooks",
+          "status": "passed",
+          "duration": 14,
+          "startTime": "2026-01-08T08:34:09.925Z",
+          "endTime": "2026-01-08T08:34:09.939Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.926Z-0-fc758a3e-1e31-43e4-8477-43402fe5c334",
+              "title": "Fixture \"page\"",
+              "status": "passed",
+              "duration": 0,
+              "startTime": "2026-01-08T08:34:09.926Z",
+              "endTime": "2026-01-08T08:34:09.926Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.926Z-6-40439122-1d8c-46e0-9263-bb52b82dd2ab",
+              "title": "Fixture \"context\"",
+              "status": "passed",
+              "duration": 6,
+              "startTime": "2026-01-08T08:34:09.926Z",
+              "endTime": "2026-01-08T08:34:09.932Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "dc63e34a6327da4d871b-ab0164cb6162a4605a0b_step_2026-01-08T08:34:09.929Z-3-9c0191b7-3386-4c16-ae2b-5cf02ee85ce3",
+                  "title": "Close context",
+                  "status": "passed",
+                  "duration": 3,
+                  "startTime": "2026-01-08T08:34:09.929Z",
+                  "endTime": "2026-01-08T08:34:09.932Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-computers-element-page.spec.js:144:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [],
+      "videoPath": [],
+      "attachments": [],
+      "stdout": [
+        "No text differences found.\n",
+        "✅ Test passed: Mismatch 0% is below tolerance 1%\n",
+        "✅ Record inserted with ID: 2\n"
+      ],
+      "stderr": [
+        "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    },
+    {
+      "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-computers-page.spec.js > Take screenshots for Visual Regression Testing - Computers page > Computers page - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "passed",
+      "duration": 15818,
+      "startTime": "2026-01-08T08:34:09.952Z",
+      "endTime": "2026-01-08T08:34:25.770Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:09.957Z-70-af50818b-f78b-4c28-93a7-e6edada37444",
+          "title": "Before Hooks",
+          "status": "passed",
+          "duration": 70,
+          "startTime": "2026-01-08T08:34:09.957Z",
+          "endTime": "2026-01-08T08:34:10.027Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:09.958Z-24-e7e36651-2096-4d10-b2e3-6a5d1d6ba7ee",
+              "title": "beforeAll hook",
+              "status": "passed",
+              "duration": 24,
+              "startTime": "2026-01-08T08:34:09.958Z",
+              "endTime": "2026-01-08T08:34:09.982Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-computers-page.spec.js:30:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": []
+            },
+            {
+              "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:09.982Z-45-4024ed94-f9f5-49ec-9e7f-feee7abee619",
+              "title": "beforeEach hook",
+              "status": "passed",
+              "duration": 45,
+              "startTime": "2026-01-08T08:34:09.982Z",
+              "endTime": "2026-01-08T08:34:10.027Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-computers-page.spec.js:35:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:09.989Z-14-8828d874-66ed-4773-b0e9-52f0f439dd88",
+                  "title": "Fixture \"context\"",
+                  "status": "passed",
+                  "duration": 14,
+                  "startTime": "2026-01-08T08:34:09.989Z",
+                  "endTime": "2026-01-08T08:34:10.003Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:09.990Z-12-d71730f4-90c4-4263-ad83-ee043c4ca729",
+                      "title": "Create context",
+                      "status": "passed",
+                      "duration": 12,
+                      "startTime": "2026-01-08T08:34:09.990Z",
+                      "endTime": "2026-01-08T08:34:10.002Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.003Z-23-54b1d37b-374c-4300-9395-11d30f4c4fbf",
+                  "title": "Fixture \"page\"",
+                  "status": "passed",
+                  "duration": 23,
+                  "startTime": "2026-01-08T08:34:10.003Z",
+                  "endTime": "2026-01-08T08:34:10.026Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.004Z-21-7ce26fa7-47a2-4993-8f5f-9dfc10aeafb6",
+                      "title": "Create page",
+                      "status": "passed",
+                      "duration": 21,
+                      "startTime": "2026-01-08T08:34:10.004Z",
+                      "endTime": "2026-01-08T08:34:10.025Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.028Z-0-da9a5147-69c6-4a00-aff5-f6d6ec67313f",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:10.028Z",
+          "endTime": "2026-01-08T08:34:10.028Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.029Z-166-1c210c18-3aa1-483f-af03-f2bba452566c",
+          "title": "Navigate to \"/computers\"",
+          "status": "passed",
+          "duration": 166,
+          "startTime": "2026-01-08T08:34:10.029Z",
+          "endTime": "2026-01-08T08:34:10.195Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-computers-page.spec.js:86:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.196Z-1-c23f98fe-f117-4f44-8167-d950682f20be",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:10.196Z",
+          "endTime": "2026-01-08T08:34:10.197Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.197Z-777-ab435ac3-a69e-40f4-9a4b-e4dee439ba2b",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 777,
+          "startTime": "2026-01-08T08:34:10.197Z",
+          "endTime": "2026-01-08T08:34:10.974Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:10.975Z-201-16bb22f8-818d-4247-9125-e7a727256e44",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 201,
+          "startTime": "2026-01-08T08:34:10.975Z",
+          "endTime": "2026-01-08T08:34:11.176Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:11.177Z-3-c6729e53-a086-4b32-b653-88eb29963ac9",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 3,
+          "startTime": "2026-01-08T08:34:11.177Z",
+          "endTime": "2026-01-08T08:34:11.180Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:11.181Z-1-e3ef22f4-8bda-4dad-95c1-49007774b86b",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:11.181Z",
+          "endTime": "2026-01-08T08:34:11.182Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:11.183Z-501-925a4917-38ca-4c49-bf2e-a2fdca427340",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 501,
+          "startTime": "2026-01-08T08:34:11.183Z",
+          "endTime": "2026-01-08T08:34:11.684Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:11.685Z-1-09512f95-3574-45af-bae5-2e0c9c851880",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:11.685Z",
+          "endTime": "2026-01-08T08:34:11.686Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:11.687Z-459-83424655-7fa1-4822-8ff0-2105a9f3ba0b",
+          "title": "Screenshot",
+          "status": "passed",
+          "duration": 459,
+          "startTime": "2026-01-08T08:34:11.687Z",
+          "endTime": "2026-01-08T08:34:12.146Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-computers-page.spec.js:88:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:25.796Z-19-e5264af8-56da-43c9-961d-9ed3ae46bab7",
+          "title": "After Hooks",
+          "status": "passed",
+          "duration": 19,
+          "startTime": "2026-01-08T08:34:25.796Z",
+          "endTime": "2026-01-08T08:34:25.815Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:25.796Z-0-2b1699f5-33d4-4806-a474-58fc759e4af2",
+              "title": "Fixture \"page\"",
+              "status": "passed",
+              "duration": 0,
+              "startTime": "2026-01-08T08:34:25.796Z",
+              "endTime": "2026-01-08T08:34:25.796Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:25.797Z-11-93d26d8e-0766-438a-812f-9518cf110ceb",
+              "title": "Fixture \"context\"",
+              "status": "passed",
+              "duration": 11,
+              "startTime": "2026-01-08T08:34:25.797Z",
+              "endTime": "2026-01-08T08:34:25.808Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "0f87a28e5fd72d10e534-05f4cacb35aee703e72c_step_2026-01-08T08:34:25.801Z-7-faba5f2a-cb76-4406-97ea-a0a48e558b71",
+                  "title": "Close context",
+                  "status": "passed",
+                  "duration": 7,
+                  "startTime": "2026-01-08T08:34:25.801Z",
+                  "endTime": "2026-01-08T08:34:25.808Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-computers-page.spec.js:73:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [],
+      "videoPath": [],
+      "attachments": [
+        {
+          "name": "Text Differences Report",
+          "path": "attachments/0f87a28e5fd72d10e534-05f4cacb35aee703e72c/1-1767861265821-Computers-page-text-diff.txt",
+          "contentType": "text/plain"
+        },
+        {
+          "name": "UI Change Report (Markdown)",
+          "path": "attachments/0f87a28e5fd72d10e534-05f4cacb35aee703e72c/2-1767861265822-Computers_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861265794.md",
+          "contentType": "text/markdown"
+        },
+        {
+          "name": "UI Change Report (HTML)",
+          "path": "attachments/0f87a28e5fd72d10e534-05f4cacb35aee703e72c/3-1767861265892-Computers_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861265795.html",
+          "contentType": "text/html"
+        }
+      ],
+      "stdout": [
+        "Text Differences Found!\n",
+        "📝 Text diff report saved: screenshots/diff/mobile/Computers-page-text-diff.txt\n",
+        "Mismatch found: 59 out of 7654561 pixels, Mismatch percentage: 0%\n",
+        "Creating a new image with dimensions: 3243x7081\n",
+        "Successfully created combined image at: screenshots/diff/mobile/Computers-page-diff.png\n",
+        "🤖 Using Claude AI for visual diff explanation...\n",
+        "📊 Claude AI Image Payload: 6.90 MB\n",
+        "📋 Compressing images for Claude AI...\n",
+        "✅ Compressed for Claude - Baseline: 0.05 MB\n",
+        "✅ Compressed for Claude - Current: 0.05 MB\n",
+        "✅ Compressed for Claude - Diff: 0.15 MB\n",
+        "✅ Test passed: Mismatch 0% is below tolerance 1%\n",
+        "✅ Record inserted with ID: 3\n"
+      ],
+      "stderr": [
+        "⚠️ Claude payload (6.90 MB) exceeds 5MB limit!\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    },
+    {
+      "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-nopcommerce-home-page.spec.js > Take screenshots for Visual Regression Testing - Nopcommerce home page > Nopcommerce home page - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "passed",
+      "duration": 23665,
+      "startTime": "2026-01-08T08:34:25.827Z",
+      "endTime": "2026-01-08T08:34:49.492Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.828Z-62-e671f20b-42bf-4baa-bf84-8a8cb40344b4",
+          "title": "Before Hooks",
+          "status": "passed",
+          "duration": 62,
+          "startTime": "2026-01-08T08:34:25.828Z",
+          "endTime": "2026-01-08T08:34:25.890Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.829Z-13-96e21c0a-bab7-428a-880c-c903de4bef19",
+              "title": "beforeAll hook",
+              "status": "passed",
+              "duration": 13,
+              "startTime": "2026-01-08T08:34:25.829Z",
+              "endTime": "2026-01-08T08:34:25.842Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-nopcommerce-home-page.spec.js:30:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": []
+            },
+            {
+              "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.842Z-48-f486d057-5deb-44e5-91e5-ad31b9a26601",
+              "title": "beforeEach hook",
+              "status": "passed",
+              "duration": 48,
+              "startTime": "2026-01-08T08:34:25.842Z",
+              "endTime": "2026-01-08T08:34:25.890Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-nopcommerce-home-page.spec.js:35:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.847Z-4-abdcb0f8-ff12-4610-a378-e0e01e93d161",
+                  "title": "Fixture \"context\"",
+                  "status": "passed",
+                  "duration": 4,
+                  "startTime": "2026-01-08T08:34:25.847Z",
+                  "endTime": "2026-01-08T08:34:25.851Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.847Z-4-5a468f9a-ab29-445f-979f-39c96087ef1c",
+                      "title": "Create context",
+                      "status": "passed",
+                      "duration": 4,
+                      "startTime": "2026-01-08T08:34:25.847Z",
+                      "endTime": "2026-01-08T08:34:25.851Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.852Z-37-b4687b5e-3fff-48cb-80b4-97a40b12b55e",
+                  "title": "Fixture \"page\"",
+                  "status": "passed",
+                  "duration": 37,
+                  "startTime": "2026-01-08T08:34:25.852Z",
+                  "endTime": "2026-01-08T08:34:25.889Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.853Z-35-6ee12c9b-6edd-4fe5-9d92-1cad1be2146f",
+                      "title": "Create page",
+                      "status": "passed",
+                      "duration": 35,
+                      "startTime": "2026-01-08T08:34:25.853Z",
+                      "endTime": "2026-01-08T08:34:25.888Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.891Z-1-45d1062d-9bd1-4507-b884-9ba3e58dc91f",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:25.891Z",
+          "endTime": "2026-01-08T08:34:25.892Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:25.893Z-213-a57ae010-734d-4d49-a065-e152d906f71f",
+          "title": "Navigate to \"/\"",
+          "status": "passed",
+          "duration": 213,
+          "startTime": "2026-01-08T08:34:25.893Z",
+          "endTime": "2026-01-08T08:34:26.106Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-nopcommerce-home-page.spec.js:85:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:26.108Z-1-d5fc83c4-794d-41ab-90c1-642f23685af6",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:26.108Z",
+          "endTime": "2026-01-08T08:34:26.109Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:26.110Z-794-4c577dce-1a68-4e18-8704-88a7922b88e1",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 794,
+          "startTime": "2026-01-08T08:34:26.110Z",
+          "endTime": "2026-01-08T08:34:26.904Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:26.905Z-200-e0726399-c377-4784-bee6-ccd225c7cb8f",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:34:26.905Z",
+          "endTime": "2026-01-08T08:34:27.105Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:27.106Z-3-8a9042b8-635e-4a9a-b506-850687249aa8",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 3,
+          "startTime": "2026-01-08T08:34:27.106Z",
+          "endTime": "2026-01-08T08:34:27.109Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:27.110Z-1-d6b62d48-df0f-457c-8948-7763f20d4b57",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:27.110Z",
+          "endTime": "2026-01-08T08:34:27.111Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:27.111Z-502-c9515505-6f42-483b-9516-78c2d2082fa8",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 502,
+          "startTime": "2026-01-08T08:34:27.111Z",
+          "endTime": "2026-01-08T08:34:27.613Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:27.614Z-1-c1b667c1-4d6b-4c5b-be1f-0eed355901d0",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:27.614Z",
+          "endTime": "2026-01-08T08:34:27.615Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:27.615Z-1160-edba93ff-d854-475c-a84f-eb3794fcbdbe",
+          "title": "Screenshot",
+          "status": "passed",
+          "duration": 1160,
+          "startTime": "2026-01-08T08:34:27.615Z",
+          "endTime": "2026-01-08T08:34:28.775Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-nopcommerce-home-page.spec.js:87:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:49.505Z-13-ebe53f5f-9baf-457c-b333-8c8919873b27",
+          "title": "After Hooks",
+          "status": "passed",
+          "duration": 13,
+          "startTime": "2026-01-08T08:34:49.505Z",
+          "endTime": "2026-01-08T08:34:49.518Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:49.506Z-0-aff72ee7-05ab-47a3-bcaa-1b5c221c3974",
+              "title": "Fixture \"page\"",
+              "status": "passed",
+              "duration": 0,
+              "startTime": "2026-01-08T08:34:49.506Z",
+              "endTime": "2026-01-08T08:34:49.506Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:49.506Z-7-c1ac0048-0ffa-4e02-8f2f-7b10105ae851",
+              "title": "Fixture \"context\"",
+              "status": "passed",
+              "duration": 7,
+              "startTime": "2026-01-08T08:34:49.506Z",
+              "endTime": "2026-01-08T08:34:49.513Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb_step_2026-01-08T08:34:49.509Z-4-eea7fd6a-97d8-4fa0-bd8e-283c690bad37",
+                  "title": "Close context",
+                  "status": "passed",
+                  "duration": 4,
+                  "startTime": "2026-01-08T08:34:49.509Z",
+                  "endTime": "2026-01-08T08:34:49.513Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-nopcommerce-home-page.spec.js:72:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [],
+      "videoPath": [],
+      "attachments": [
+        {
+          "name": "Text Differences Report",
+          "path": "attachments/8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb/1-1767861289521-Nopcommerce-home-page-text-diff.txt",
+          "contentType": "text/plain"
+        },
+        {
+          "name": "UI Change Report (Markdown)",
+          "path": "attachments/8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb/2-1767861289521-Nopcommerce_home_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861289504.md",
+          "contentType": "text/markdown"
+        },
+        {
+          "name": "UI Change Report (HTML)",
+          "path": "attachments/8aa0cda2f98b5b703202-c2bd98d58a25d7aed3fb/3-1767861289522-Nopcommerce_home_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861289504.html",
+          "contentType": "text/html"
+        }
+      ],
+      "stdout": [
+        "Text Differences Found!\n",
+        "📝 Text diff report saved: screenshots/diff/mobile/Nopcommerce-home-page-text-diff.txt\n",
+        "Mismatch found: 59 out of 19120728 pixels, Mismatch percentage: 0%\n",
+        "Creating a new image with dimensions: 3243x17688\n",
+        "Successfully created combined image at: screenshots/diff/mobile/Nopcommerce-home-page-diff.png\n",
+        "🤖 Using Claude AI for visual diff explanation...\n",
+        "📊 Claude AI Image Payload: 20.55 MB\n",
+        "📋 Compressing images for Claude AI...\n",
+        "✅ Compressed for Claude - Baseline: 0.04 MB\n",
+        "✅ Compressed for Claude - Current: 0.04 MB\n",
+        "✅ Compressed for Claude - Diff: 0.10 MB\n",
+        "✅ Test passed: Mismatch 0% is below tolerance 1%\n",
+        "✅ Record inserted with ID: 4\n"
+      ],
+      "stderr": [
+        "⚠️ Claude payload (20.55 MB) exceeds 5MB limit!\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    },
+    {
+      "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-the-internet-challenging-dom-page.spec.js > Take screenshots for Visual Regression Testing - The Internet - Challenging DOM page > The Internet Challenging DOM page - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "skipped",
+      "duration": 91136,
+      "startTime": "2026-01-08T08:34:49.525Z",
+      "endTime": "2026-01-08T08:36:20.661Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.527Z-60-5430d869-a5e4-4075-82a4-b3a408091da9",
+          "title": "Before Hooks",
+          "status": "skipped",
+          "duration": 60,
+          "startTime": "2026-01-08T08:34:49.527Z",
+          "endTime": "2026-01-08T08:34:49.587Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.527Z-13-e9a7e4e6-449a-4a5c-bd6e-e3e25a88375f",
+              "title": "beforeAll hook",
+              "status": "skipped",
+              "duration": 13,
+              "startTime": "2026-01-08T08:34:49.527Z",
+              "endTime": "2026-01-08T08:34:49.540Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-the-internet-challenging-dom-page.spec.js:34:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": []
+            },
+            {
+              "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.540Z-47-b6b0c56a-2e17-4243-b1c0-432968824904",
+              "title": "beforeEach hook",
+              "status": "skipped",
+              "duration": 47,
+              "startTime": "2026-01-08T08:34:49.540Z",
+              "endTime": "2026-01-08T08:34:49.587Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-the-internet-challenging-dom-page.spec.js:39:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.545Z-11-248ddd1b-e5aa-4c2d-bd43-d9f043a91fe8",
+                  "title": "Fixture \"context\"",
+                  "status": "skipped",
+                  "duration": 11,
+                  "startTime": "2026-01-08T08:34:49.545Z",
+                  "endTime": "2026-01-08T08:34:49.556Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.545Z-11-19aae1a2-597f-40b0-859d-f22c07bf95d9",
+                      "title": "Create context",
+                      "status": "skipped",
+                      "duration": 11,
+                      "startTime": "2026-01-08T08:34:49.545Z",
+                      "endTime": "2026-01-08T08:34:49.556Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.557Z-29-3366a17d-cb6a-4217-81ed-1fc6d3c2a51f",
+                  "title": "Fixture \"page\"",
+                  "status": "skipped",
+                  "duration": 29,
+                  "startTime": "2026-01-08T08:34:49.557Z",
+                  "endTime": "2026-01-08T08:34:49.586Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.558Z-28-7293c1f3-0b7f-46f3-ba9c-3e995e401bbc",
+                      "title": "Create page",
+                      "status": "skipped",
+                      "duration": 28,
+                      "startTime": "2026-01-08T08:34:49.558Z",
+                      "endTime": "2026-01-08T08:34:49.586Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.589Z-0-e0d747d7-0125-4f0e-9466-2fbb5035355e",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "skipped",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:49.589Z",
+          "endTime": "2026-01-08T08:34:49.589Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:49.590Z-896-ee08b3ab-3d0f-408f-a01f-b789c0ea2623",
+          "title": "Navigate to \"/floating_menu\"",
+          "status": "skipped",
+          "duration": 896,
+          "startTime": "2026-01-08T08:34:49.590Z",
+          "endTime": "2026-01-08T08:34:50.486Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-the-internet-challenging-dom-page.spec.js:89:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:50.488Z-0-a605e970-6ce7-4ec2-b090-f71464db7317",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "skipped",
+          "duration": 0,
+          "startTime": "2026-01-08T08:34:50.488Z",
+          "endTime": "2026-01-08T08:34:50.488Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:50.489Z-474-a122e107-b7b9-4784-822b-c04e740f8f93",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "skipped",
+          "duration": 474,
+          "startTime": "2026-01-08T08:34:50.489Z",
+          "endTime": "2026-01-08T08:34:50.963Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:50.964Z-200-1aa434b6-c5fb-4d1d-b9ee-6919a3509a15",
+          "title": "Wait for timeout",
+          "status": "skipped",
+          "duration": 200,
+          "startTime": "2026-01-08T08:34:50.964Z",
+          "endTime": "2026-01-08T08:34:51.164Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:51.165Z-3-db3fdf24-d05c-457d-8a95-152881d9faef",
+          "title": "Evaluate",
+          "status": "skipped",
+          "duration": 3,
+          "startTime": "2026-01-08T08:34:51.165Z",
+          "endTime": "2026-01-08T08:34:51.168Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:51.168Z-1-ff9a8ff0-4eba-4f62-97b9-791e253887c6",
+          "title": "Evaluate",
+          "status": "skipped",
+          "duration": 1,
+          "startTime": "2026-01-08T08:34:51.168Z",
+          "endTime": "2026-01-08T08:34:51.169Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:51.170Z-502-b6cb76f8-cfe9-4fe5-a11f-e833ebb95505",
+          "title": "Evaluate",
+          "status": "skipped",
+          "duration": 502,
+          "startTime": "2026-01-08T08:34:51.170Z",
+          "endTime": "2026-01-08T08:34:51.672Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:51.673Z-2-312c41c5-f227-41e0-abc7-94a7b9ba3688",
+          "title": "Evaluate",
+          "status": "skipped",
+          "duration": 2,
+          "startTime": "2026-01-08T08:34:51.673Z",
+          "endTime": "2026-01-08T08:34:51.675Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:34:51.676Z-1721-e4dab126-a868-4455-9f69-a7a193b8ae88",
+          "title": "Screenshot",
+          "status": "skipped",
+          "duration": 1721,
+          "startTime": "2026-01-08T08:34:51.676Z",
+          "endTime": "2026-01-08T08:34:53.397Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-the-internet-challenging-dom-page.spec.js:91:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:36:20.674Z-13-c62dd4c0-c274-46d8-b9e3-f8d21a1f975b",
+          "title": "After Hooks",
+          "status": "skipped",
+          "duration": 13,
+          "startTime": "2026-01-08T08:36:20.674Z",
+          "endTime": "2026-01-08T08:36:20.687Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:36:20.675Z-0-b7c69314-ba94-4172-a7c7-a75d14b596a3",
+              "title": "Fixture \"page\"",
+              "status": "skipped",
+              "duration": 0,
+              "startTime": "2026-01-08T08:36:20.675Z",
+              "endTime": "2026-01-08T08:36:20.675Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:36:20.675Z-7-993e7e24-a251-49e5-aee4-1424f54945e5",
+              "title": "Fixture \"context\"",
+              "status": "skipped",
+              "duration": 7,
+              "startTime": "2026-01-08T08:36:20.675Z",
+              "endTime": "2026-01-08T08:36:20.682Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "72bf6b59e28c78763c6a-da10a4db70c3974e0b7c_step_2026-01-08T08:36:20.678Z-4-f19836dc-d820-4392-a178-42e142a3a812",
+                  "title": "Close context",
+                  "status": "skipped",
+                  "duration": 4,
+                  "startTime": "2026-01-08T08:36:20.678Z",
+                  "endTime": "2026-01-08T08:36:20.682Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-the-internet-challenging-dom-page.spec.js:76:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [
+        "attachments/72bf6b59e28c78763c6a-da10a4db70c3974e0b7c/4-1767861380700-The-Internet-Challenging-DOM-page-diff.png"
+      ],
+      "videoPath": [],
+      "attachments": [
+        {
+          "name": "Text Differences Report",
+          "path": "attachments/72bf6b59e28c78763c6a-da10a4db70c3974e0b7c/1-1767861380699-The-Internet-Challenging-DOM-page-text-diff.txt",
+          "contentType": "text/plain"
+        },
+        {
+          "name": "UI Change Report (Markdown)",
+          "path": "attachments/72bf6b59e28c78763c6a-da10a4db70c3974e0b7c/2-1767861380699-The_Internet_Challenging_DOM_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861377968.md",
+          "contentType": "text/markdown"
+        },
+        {
+          "name": "UI Change Report (HTML)",
+          "path": "attachments/72bf6b59e28c78763c6a-da10a4db70c3974e0b7c/3-1767861380700-The_Internet_Challenging_DOM_page_-_Mobile_-_Validate_Mismatch-ai-report-1767861377969.html",
+          "contentType": "text/html"
+        }
+      ],
+      "stdout": [
+        "Text Differences Found!\n",
+        "📝 Text diff report saved: screenshots/diff/mobile/The-Internet-Challenging-DOM-page-text-diff.txt\n",
+        "📊 Image Comparison API Call:\n",
+        "  Baseline: screenshots/baseline/mobile/The-Internet-Challenging-DOM-page-baseline.png\n",
+        "  Current: screenshots/current/mobile/The-Internet-Challenging-DOM-page-current.png\n",
+        "  Baseline size: 0.64 MB\n",
+        "  Current size: 6.72 MB\n",
+        "  Total payload: 7.36 MB\n",
+        "📋 Attempting compression before API call...\n",
+        "✅ Compressed - Baseline: 0.20 MB\n",
+        "✅ Compressed - Current: 0.05 MB\n",
+        "Mismatch found: 1429945 out of 1733760 pixels, Mismatch percentage: 82.48%\n",
+        "Creating a new image with dimensions: 3719x31807\n",
+        "Successfully created combined image at: screenshots/diff/mobile/The-Internet-Challenging-DOM-page-diff.png\n",
+        "🤖 Using Claude AI for visual diff explanation...\n",
+        "📊 Claude AI Image Payload: 19.83 MB\n",
+        "📋 Compressing images for Claude AI...\n",
+        "✅ Compressed for Claude - Baseline: 0.17 MB\n",
+        "✅ Compressed for Claude - Current: 0.04 MB\n",
+        "✅ Compressed for Claude - Diff: 0.05 MB\n",
+        "✅ Record inserted with ID: 5\n",
+        "✅ Screenshot uploaded to Supabase: {\n  path: \u001b[32m'diff/mobile/The-Internet-Challenging-DOM-page-diff.png'\u001b[39m,\n  id: \u001b[32m'53922157-b87a-4ce9-87ce-c218d04be4af'\u001b[39m,\n  fullPath: \u001b[32m'visual_test/diff/mobile/The-Internet-Challenging-DOM-page-diff.png'\u001b[39m\n}\n"
+      ],
+      "stderr": [
+        "Image too small to scale!! (1x36 vs min width of 3)\n",
+        "Line cannot be recognized!!\n",
+        "⚠️ Payload size (7.36 MB) exceeds 5MB limit!\n",
+        "⚠️ Claude payload (19.83 MB) exceeds 5MB limit!\n",
+        "❌ Mismatch for The Internet Challenging DOM page - Mobile - Validate Mismatch: 82.48%\n",
+        "   Test: The Internet Challenging DOM page - Mobile - Validate Mismatch\n",
+        "   Device: Mobile\n",
+        "   Diff image: screenshots/diff/mobile/The-Internet-Challenging-DOM-page-diff.png\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    },
+    {
+      "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662",
+      "runId": "run-1767861243112-581d5ad8-ce75-4ca5-94a6-ed29c466c815",
+      "name": " > Visual-Mobile-Test > tests/MobileView/visual-the-internet-page.spec.js > Take screenshots for Visual Regression Testing - The Internat webpage > The Internet webpage - Mobile - Validate Mismatch",
+      "suiteName": "Visual-Mobile-Test",
+      "status": "passed",
+      "duration": 8947,
+      "startTime": "2026-01-08T08:36:20.704Z",
+      "endTime": "2026-01-08T08:36:29.651Z",
+      "browser": "Chrome Mobile v141 on Android 11",
+      "retries": 0,
+      "steps": [
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.706Z-64-cbc1d053-bef3-489c-872e-b7c0a945a0d0",
+          "title": "Before Hooks",
+          "status": "passed",
+          "duration": 64,
+          "startTime": "2026-01-08T08:36:20.706Z",
+          "endTime": "2026-01-08T08:36:20.770Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "before",
+          "steps": [
+            {
+              "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.706Z-15-1e448b50-da30-4514-bad8-d01be3296112",
+              "title": "beforeAll hook",
+              "status": "passed",
+              "duration": 15,
+              "startTime": "2026-01-08T08:36:20.706Z",
+              "endTime": "2026-01-08T08:36:20.721Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-the-internet-page.spec.js:34:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": []
+            },
+            {
+              "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.721Z-49-f132958b-eaeb-4537-a267-c1115ec7bcc4",
+              "title": "beforeEach hook",
+              "status": "passed",
+              "duration": 49,
+              "startTime": "2026-01-08T08:36:20.721Z",
+              "endTime": "2026-01-08T08:36:20.770Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "codeLocation": "tests/MobileView/visual-the-internet-page.spec.js:39:8",
+              "isHook": true,
+              "hookType": "before",
+              "steps": [
+                {
+                  "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.726Z-11-623ad9a0-5f90-4114-b218-f1e1f771aa38",
+                  "title": "Fixture \"context\"",
+                  "status": "passed",
+                  "duration": 11,
+                  "startTime": "2026-01-08T08:36:20.726Z",
+                  "endTime": "2026-01-08T08:36:20.737Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.727Z-10-da8ced8b-a676-4b03-bd29-d58a4f2b6c38",
+                      "title": "Create context",
+                      "status": "passed",
+                      "duration": 10,
+                      "startTime": "2026-01-08T08:36:20.727Z",
+                      "endTime": "2026-01-08T08:36:20.737Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                },
+                {
+                  "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.738Z-31-bfd38a71-0e3e-4214-a104-9d45e8a8579b",
+                  "title": "Fixture \"page\"",
+                  "status": "passed",
+                  "duration": 31,
+                  "startTime": "2026-01-08T08:36:20.738Z",
+                  "endTime": "2026-01-08T08:36:20.769Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": [
+                    {
+                      "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.739Z-30-fa2a7d4e-7bb5-4e13-9e95-5143533f0221",
+                      "title": "Create page",
+                      "status": "passed",
+                      "duration": 30,
+                      "startTime": "2026-01-08T08:36:20.739Z",
+                      "endTime": "2026-01-08T08:36:20.769Z",
+                      "browser": "Chrome Mobile v141 on Android 11",
+                      "isHook": false,
+                      "steps": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.772Z-0-d3f14bdd-4d95-4840-8c45-f87094d41226",
+          "title": "Attach \"Allure Metadata (metadata)\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:20.772Z",
+          "endTime": "2026-01-08T08:36:20.772Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "node_modules/allure-playwright/src/runtime.ts:55:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:20.773Z-921-d77f7bb8-ff23-4f84-a8af-f526c90549a6",
+          "title": "Navigate to \"/dynamic_loading/1\"",
+          "status": "passed",
+          "duration": 921,
+          "startTime": "2026-01-08T08:36:20.773Z",
+          "endTime": "2026-01-08T08:36:21.694Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-the-internet-page.spec.js:91:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:21.696Z-0-5a769460-ca8c-4fff-8612-85fd91ef907a",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:21.696Z",
+          "endTime": "2026-01-08T08:36:21.696Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:21.697Z-481-b7a72551-26e1-4a09-aa59-305cb4e2c3ea",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 481,
+          "startTime": "2026-01-08T08:36:21.697Z",
+          "endTime": "2026-01-08T08:36:22.178Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.180Z-200-512eb83e-30f3-4b05-b16b-9c504bc1fece",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:22.180Z",
+          "endTime": "2026-01-08T08:36:22.380Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.381Z-3-f40ff89e-2957-447c-b7c0-471750d093fd",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 3,
+          "startTime": "2026-01-08T08:36:22.381Z",
+          "endTime": "2026-01-08T08:36:22.384Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.385Z-0-3e225a46-dc31-45d7-8721-3a6227ad3145",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:22.385Z",
+          "endTime": "2026-01-08T08:36:22.385Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.386Z-502-30d21e16-2592-40e2-ac91-649291ac0e26",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 502,
+          "startTime": "2026-01-08T08:36:22.386Z",
+          "endTime": "2026-01-08T08:36:22.888Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.889Z-1-f42688a3-47d3-4484-8d18-ca62549581be",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:22.889Z",
+          "endTime": "2026-01-08T08:36:22.890Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.892Z-43-e57780a2-f306-4789-a134-b24c9f05aacc",
+          "title": "Click getByRole('button', { name: 'Start' })",
+          "status": "passed",
+          "duration": 43,
+          "startTime": "2026-01-08T08:36:22.892Z",
+          "endTime": "2026-01-08T08:36:22.935Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-the-internet-page.spec.js:93:57",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.936Z-0-c78de602-e39b-4ab1-bbdd-55bb0efa1bee",
+          "title": "Wait for load state \"domcontentloaded\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:22.936Z",
+          "endTime": "2026-01-08T08:36:22.936Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:204:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:22.937Z-0-63395ff6-4fcc-4cc3-8c1b-6e614707a855",
+          "title": "Wait for load state \"networkidle\"",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:22.937Z",
+          "endTime": "2026-01-08T08:36:22.937Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/helper-function.page.js:205:23",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.038Z-200-dbec5653-cafd-4e2b-8137-dd3ce3bac3de",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:23.038Z",
+          "endTime": "2026-01-08T08:36:23.238Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:399:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.239Z-4-ebeef785-6b23-4a6f-a368-50ea0a5e6366",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 4,
+          "startTime": "2026-01-08T08:36:23.239Z",
+          "endTime": "2026-01-08T08:36:23.243Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.243Z-200-249f534d-2394-4d79-9ce6-84bf8eca6231",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:23.243Z",
+          "endTime": "2026-01-08T08:36:23.443Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.444Z-1-59a17086-7476-42de-9119-0335ca9979b1",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:23.444Z",
+          "endTime": "2026-01-08T08:36:23.445Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.446Z-200-519e4954-6a18-4e67-b7f4-2b886c520f08",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:23.446Z",
+          "endTime": "2026-01-08T08:36:23.646Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.647Z-1-5f95c571-e991-4d20-a751-6d39324895ba",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:23.647Z",
+          "endTime": "2026-01-08T08:36:23.648Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.648Z-200-e2a5b8e4-dc20-490f-a9ce-7ecbf75bc005",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:23.648Z",
+          "endTime": "2026-01-08T08:36:23.848Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.850Z-1-5c1017a7-534f-460a-992b-713492833167",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:23.850Z",
+          "endTime": "2026-01-08T08:36:23.851Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:23.851Z-200-e4e26fb2-f635-4658-95af-a19643afa247",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:23.851Z",
+          "endTime": "2026-01-08T08:36:24.051Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.052Z-1-e0b60682-9e2d-4bc1-8580-d44a18a2d1fd",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:24.052Z",
+          "endTime": "2026-01-08T08:36:24.053Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.054Z-200-4d6c6521-1ca5-4a71-ab90-3f5f309c0561",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:24.054Z",
+          "endTime": "2026-01-08T08:36:24.254Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.256Z-1-56eead41-982c-4bf7-9a72-fb9afbc7fc36",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:24.256Z",
+          "endTime": "2026-01-08T08:36:24.257Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.257Z-200-14180e00-8982-48a1-9edc-8b7ad96408e6",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:24.257Z",
+          "endTime": "2026-01-08T08:36:24.457Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.459Z-0-849b7d59-75ee-4bc3-8379-db9b7d6c1d5e",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 0,
+          "startTime": "2026-01-08T08:36:24.459Z",
+          "endTime": "2026-01-08T08:36:24.459Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.460Z-200-ef81b579-79a2-457e-be39-94d479a3c736",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:24.460Z",
+          "endTime": "2026-01-08T08:36:24.660Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.661Z-1-95ef64db-333c-4190-b9f5-6bbf3533c4fd",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:24.661Z",
+          "endTime": "2026-01-08T08:36:24.662Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.662Z-200-32604b34-8461-4495-b66c-0cea00e73ea9",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:24.662Z",
+          "endTime": "2026-01-08T08:36:24.862Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.863Z-1-29c1a38b-6b8f-46ab-b7c0-f797e52fc200",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:24.863Z",
+          "endTime": "2026-01-08T08:36:24.864Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:24.865Z-200-f9ecdeb0-3073-43ac-9491-137780f44306",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:24.865Z",
+          "endTime": "2026-01-08T08:36:25.065Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.066Z-1-cf322e12-b692-46d5-a2f7-f4acf73b614e",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:25.066Z",
+          "endTime": "2026-01-08T08:36:25.067Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.067Z-200-9087ef7e-1c06-4cb2-9de1-ecce67cd3715",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:25.067Z",
+          "endTime": "2026-01-08T08:36:25.267Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.268Z-1-7e7b88da-cab1-4844-b251-331a28e01d1e",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:25.268Z",
+          "endTime": "2026-01-08T08:36:25.269Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.270Z-200-859fc3b5-a723-43b4-859d-d2edd9d56ad7",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:25.270Z",
+          "endTime": "2026-01-08T08:36:25.470Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.471Z-1-bddb7f18-b90f-4f43-8f0d-d0bf0956b601",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:25.471Z",
+          "endTime": "2026-01-08T08:36:25.472Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.473Z-200-9789f8c0-959b-45aa-b654-7d47505e865c",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:25.473Z",
+          "endTime": "2026-01-08T08:36:25.673Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.674Z-1-f2a06e90-577a-42a3-b11a-ca71cd569208",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:25.674Z",
+          "endTime": "2026-01-08T08:36:25.675Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.676Z-200-071e6749-bd02-47fc-9661-495555141f76",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:25.676Z",
+          "endTime": "2026-01-08T08:36:25.876Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.876Z-2-e9752233-a0d4-45b2-838f-cecd6aea25a1",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 2,
+          "startTime": "2026-01-08T08:36:25.876Z",
+          "endTime": "2026-01-08T08:36:25.878Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:25.878Z-200-2e9fcc27-66e9-4430-b293-3984ae582749",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:25.878Z",
+          "endTime": "2026-01-08T08:36:26.078Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.079Z-1-892a22cf-5cdc-4a27-86db-66ec392899e8",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:26.079Z",
+          "endTime": "2026-01-08T08:36:26.080Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.081Z-201-feba74fe-f77e-4e93-884e-e5479d2ea01f",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 201,
+          "startTime": "2026-01-08T08:36:26.081Z",
+          "endTime": "2026-01-08T08:36:26.282Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.283Z-1-64e41d7b-ce96-4bed-b79f-8c2dfae091e4",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:26.283Z",
+          "endTime": "2026-01-08T08:36:26.284Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.284Z-200-251d250c-ef3b-4dbf-9d8b-105cbc02ac79",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:26.284Z",
+          "endTime": "2026-01-08T08:36:26.484Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.485Z-1-0756e1a8-3084-4eea-a13a-767e6d042063",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:26.485Z",
+          "endTime": "2026-01-08T08:36:26.486Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.487Z-200-7386edfe-6ad4-4995-8e15-55dbef82de07",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:26.487Z",
+          "endTime": "2026-01-08T08:36:26.687Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.688Z-3-8a33c496-62b5-42a2-9360-d76b9f8c7f82",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 3,
+          "startTime": "2026-01-08T08:36:26.688Z",
+          "endTime": "2026-01-08T08:36:26.691Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.692Z-200-ada79b16-d500-49bd-9785-90f7d2c4e62f",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:26.692Z",
+          "endTime": "2026-01-08T08:36:26.892Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.893Z-1-018a7147-0256-4fcd-b26b-e715a618ba09",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:26.893Z",
+          "endTime": "2026-01-08T08:36:26.894Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:26.895Z-200-2cd70723-cec8-4af2-897a-bb10d9f8a4b2",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:26.895Z",
+          "endTime": "2026-01-08T08:36:27.095Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.097Z-1-5e11ca3c-c709-4644-a429-0af7c58e6c2b",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:27.097Z",
+          "endTime": "2026-01-08T08:36:27.098Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.099Z-200-a1912f1d-07a7-4500-a95e-e04596c96f03",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:27.099Z",
+          "endTime": "2026-01-08T08:36:27.299Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.300Z-2-51080787-4aeb-4e50-8ac2-208c4006abd2",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 2,
+          "startTime": "2026-01-08T08:36:27.300Z",
+          "endTime": "2026-01-08T08:36:27.302Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.302Z-200-2b2c5487-98ff-4c09-881b-31924378c040",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:27.302Z",
+          "endTime": "2026-01-08T08:36:27.502Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.504Z-1-57d30e9c-1979-45a3-a326-48604333457f",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:27.504Z",
+          "endTime": "2026-01-08T08:36:27.505Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.505Z-200-8355b6a4-bcdf-41fb-a487-8132462a83a1",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:27.505Z",
+          "endTime": "2026-01-08T08:36:27.705Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.707Z-1-d3340446-26bb-41f7-a3fa-262d0cddb78d",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:27.707Z",
+          "endTime": "2026-01-08T08:36:27.708Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.709Z-199-c076fe62-34c4-41c3-bc81-4a30a931446d",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 199,
+          "startTime": "2026-01-08T08:36:27.709Z",
+          "endTime": "2026-01-08T08:36:27.908Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.909Z-1-2a600de5-50ee-4e8d-a28b-e2616509696a",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:27.909Z",
+          "endTime": "2026-01-08T08:36:27.910Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:27.911Z-200-4bd79d24-421e-4b43-98e7-1b60b262006a",
+          "title": "Wait for timeout",
+          "status": "passed",
+          "duration": 200,
+          "startTime": "2026-01-08T08:36:27.911Z",
+          "endTime": "2026-01-08T08:36:28.111Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:563:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:28.112Z-1-a8236d29-845c-4869-a386-695a2c39c80e",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:28.112Z",
+          "endTime": "2026-01-08T08:36:28.113Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:550:42",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:28.114Z-1-b011e61a-38a7-40a3-8831-95b11e0e8038",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:28.114Z",
+          "endTime": "2026-01-08T08:36:28.115Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:504:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:28.115Z-505-a6dfde9c-1f27-422c-bcdf-974ee59b8576",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 505,
+          "startTime": "2026-01-08T08:36:28.115Z",
+          "endTime": "2026-01-08T08:36:28.620Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:416:16",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:28.621Z-1-8d09c19f-0175-4f96-9bcb-2e2ffc3c355c",
+          "title": "Evaluate",
+          "status": "passed",
+          "duration": 1,
+          "startTime": "2026-01-08T08:36:28.621Z",
+          "endTime": "2026-01-08T08:36:28.622Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "utils/utility-page.js:468:12",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:28.623Z-78-5d0ed22b-0817-4874-af98-cbcad7d7f31a",
+          "title": "Screenshot",
+          "status": "passed",
+          "duration": 78,
+          "startTime": "2026-01-08T08:36:28.623Z",
+          "endTime": "2026-01-08T08:36:28.701Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "codeLocation": "tests/MobileView/visual-the-internet-page.spec.js:95:18",
+          "isHook": false,
+          "steps": []
+        },
+        {
+          "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:29.669Z-12-e491888e-9390-473c-84d0-d34b27c6c11a",
+          "title": "After Hooks",
+          "status": "passed",
+          "duration": 12,
+          "startTime": "2026-01-08T08:36:29.669Z",
+          "endTime": "2026-01-08T08:36:29.681Z",
+          "browser": "Chrome Mobile v141 on Android 11",
+          "isHook": true,
+          "hookType": "after",
+          "steps": [
+            {
+              "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:29.670Z-0-f1bcc248-ab10-4560-9acb-780d0d7859b1",
+              "title": "Fixture \"page\"",
+              "status": "passed",
+              "duration": 0,
+              "startTime": "2026-01-08T08:36:29.670Z",
+              "endTime": "2026-01-08T08:36:29.670Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": []
+            },
+            {
+              "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:29.670Z-5-70eaaea1-1f2e-4702-a37e-00de98c75363",
+              "title": "Fixture \"context\"",
+              "status": "passed",
+              "duration": 5,
+              "startTime": "2026-01-08T08:36:29.670Z",
+              "endTime": "2026-01-08T08:36:29.675Z",
+              "browser": "Chrome Mobile v141 on Android 11",
+              "isHook": false,
+              "steps": [
+                {
+                  "id": "8e4be46a8717a117becc-f1d0c55cb506552a4662_step_2026-01-08T08:36:29.672Z-3-690495b4-7dbd-4d5b-ab1b-ed633de589fb",
+                  "title": "Close context",
+                  "status": "passed",
+                  "duration": 3,
+                  "startTime": "2026-01-08T08:36:29.672Z",
+                  "endTime": "2026-01-08T08:36:29.675Z",
+                  "browser": "Chrome Mobile v141 on Android 11",
+                  "isHook": false,
+                  "steps": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "codeSnippet": "Test defined at: tests/MobileView/visual-the-internet-page.spec.js:78:3",
+      "tags": [
+        "validation"
+      ],
+      "screenshots": [],
+      "videoPath": [],
+      "attachments": [],
+      "stdout": [
+        "No text differences found.\n",
+        "✅ Test passed: Mismatch 0% is below tolerance 1%\n",
+        "✅ Record inserted with ID: 6\n"
+      ],
+      "stderr": [
+        "looksSame returned undefined pixel values for both differentPixels and totalPixels, treating as no differences\n"
+      ],
+      "workerId": 1,
+      "totalWorkers": 1,
+      "configFile": "/home/runner/work/Playwright-Visual-Testing/Playwright-Visual-Testing/playwright.config.js",
+      "metadata": "{\"ci\":{\"commitHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/commit/0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"commitHash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"buildHref\":\"https://github.com/Arghajit47/Playwright-Visual-Testing/actions/runs/20317771394\"},\"gitCommit\":{\"shortHash\":\"0ab87b3\",\"hash\":\"0ab87b32fbbdf0d1e7bdf22002a3988c650cb24f\",\"subject\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\",\"body\":\"Merge pull request #24 from Arghajit47/Add-advanced-stability\\n\\nfeat(gen-ai): add image compression for AI payload optimization\",\"author\":{\"name\":\"Arghajit Singha\",\"email\":\"101691771+Arghajit47@users.noreply.github.com\",\"time\":1766006760000},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"time\":1766006760000},\"branch\":\"master\"},\"actualWorkers\":1}"
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-01-08T08:36:30.089Z"
+  }
+}
