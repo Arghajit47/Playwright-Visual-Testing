@@ -1,0 +1,9 @@
+## UI Change Detection Report: Category Switch
+
+| Location | Baseline State (Old) | Current State (New) | Description |
+| :--- | :--- | :--- | :--- |
+| Top-left section / Main content area | Page displayed 'Challenging DOM' heading with descriptive text about automated web testing, followed by three colored buttons (blue 'foo', red 'foo', green 'baz') and a data table with columns Lorem, Ipsum, Dolor, Sit, Amet, Diceret, Action | Page displays 'Floating Menu' heading with extensive Lorem Ipsum text content filling the entire viewport, no buttons or data table visible | The entire page content changed from a 'Challenging DOM' demo page with interactive elements (buttons and table) to a 'Floating Menu' page with dense text content. |
+| Center-bottom section / Canvas area | Canvas element displayed 'Answer: 78117' in outlined text style | No canvas element or answer display visible, replaced by continuous Lorem Ipsum text | The canvas element showing 'Answer: 78117' was removed and replaced with text content. |
+| Left side / Button panel | Three stacked buttons present: blue 'foo' button, red 'foo' button, and green 'baz' button with checkbox icon | No buttons visible, area contains flowing text content | All three interactive buttons (foo, foo, baz) were removed from the interface. |
+| Center / Data table | Table with 10 rows of data showing columns for Lorem (Iuvaret0-9), Ipsum (Apeirian0-9), Dolor (Adipisci0-9), Sit (Definiebas0-9), Amet (Consequuntur0-9), Diceret (Phaedrum0-9), and Action (edit delete links) | No table visible, replaced with continuous text paragraphs | The entire data table with 10 rows and 7 columns was removed from the page. |
+| Top navigation area | No visible navigation menu | Navigation menu with links 'Home', 'News', 'Contact', 'About' appears at the top | A horizontal navigation menu was added to the top of the page. |
