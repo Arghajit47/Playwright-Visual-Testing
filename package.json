@@ -29,7 +29,7 @@
     "looks-same": "^10.0.1",
     "netlify-cli": "^23.11.1",
     "node-forge": "^1.3.2",
-    "playwright": "^1.49.1",
+    "playwright": "^1.57.0",
     "sharp": "^0.34.5",
     "tesseract.js": "^5.1.1"
   },
