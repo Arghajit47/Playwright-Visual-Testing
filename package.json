@@ -24,7 +24,7 @@
     "@supabase/supabase-js": "^2.49.1",
     "better-sqlite3": "^12.4.6",
     "dotenv": "^16.4.5",
-    "fs-extra": "^11.3.0",
+    "fs-extra": "^11.3.3",
     "jimp": "^0.22.12",
     "looks-same": "^10.0.1",
     "netlify-cli": "^23.11.1",
