@@ -85,7 +85,7 @@ jobs:
           DB_SUPABASE_TOKEN: ${{ secrets.DB_SUPABASE_TOKEN }}
           DEVICE_TYPE: ${{ matrix.config.type }}
           DB_VERBOSE: ${{ secrets.DB_VERBOSE }}
-        run: npm run upload-db    
+        run: npm run upload-db
 
     continue-on-error: true
 
@@ -181,32 +181,24 @@ jobs:
             report/
           retention-days: 5
 
-      - name: Download Pulse Report artifacts
-        uses: actions/download-artifact@v4
+      # Download all shard artifacts to a single directory
+      - uses: actions/download-artifact@v4
         with:
-          pattern: pulse-report-*
-          path: downloaded-artifacts
+          path: all-reports
+          pattern: pulse-report-shard-*
 
-      - name: Organize Pulse Report
-        run: |
-          mkdir -p pulse-report
-          for dir in downloaded-artifacts/pulse-report-*; do
-            config_type=$(basename "$dir" | sed 's/pulse-report-//')
-            cp -r "$dir/attachments" "pulse-report/attachments" || true
-            cp "$dir/playwright-pulse-report.json" "pulse-report/playwright-pulse-report-${config_type}.json"
-          done
+      # Merge all shard reports into a single report
+      - run: npx merge-pulse-report -o all-reports
 
-      - name: Generate Pulse Report
-        run: |
-          npm run script merge-report
-          npm run script generate-report
+      # Generate the final HTML report
+      - run: npx generate-pulse-report -o all-reports
 
-      - name: Upload Pulse report
-        uses: actions/upload-artifact@v4
+      # Upload the final merged report
+      - uses: actions/upload-artifact@v4
         with:
-          name: pulse-report
-          path: pulse-report/
-          retention-days: 1
+          name: final-playwright-pulse-report
+          path: all-reports/
+          retention-days: 7
 
       - name: Deploy Reports to Netlify
         if: always()
@@ -214,7 +206,7 @@ jobs:
           rm -rf combined-report
           mkdir combined-report
           cp -r allure-report/ combined-report/
-          cp -r pulse-report/ combined-report/
+          cp -r all-reports/ combined-report/
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/ combined-report/
           else
