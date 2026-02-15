@@ -185,7 +185,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: all-reports
-          pattern: pulse-report-shard-*
+          pattern: pulse-report-*
 
       # Merge all shard reports into a single report
       - run: npx merge-pulse-report -o all-reports
